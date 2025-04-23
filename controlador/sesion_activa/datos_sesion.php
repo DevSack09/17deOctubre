@@ -2,8 +2,7 @@
 include "../modelo/conexion.php";
 
 $nombreCompleto = "";
-$nombreArea = ""; 
-$rolDescripcion = ""; 
+$rolDescripcion = "";
 
 if (isset($_SESSION['idusuario']) && is_numeric($_SESSION['idusuario'])) {
     $idusuario = $_SESSION['idusuario'];
@@ -11,10 +10,8 @@ if (isset($_SESSION['idusuario']) && is_numeric($_SESSION['idusuario'])) {
     $query = "
         SELECT 
             CONCAT(u.nombre, ' ', u.apellidoP, ' ', u.apellidoM) AS nombre_completo,
-            a.nombre_area,
             r.descripcion AS rol_descripcion
         FROM usuario u
-        LEFT JOIN area a ON u.area = a.idarea  -- Cambio a LEFT JOIN
         INNER JOIN rol r ON u.rol = r.idrol
         WHERE u.idusuario = $idusuario
     ";
@@ -23,7 +20,6 @@ if (isset($_SESSION['idusuario']) && is_numeric($_SESSION['idusuario'])) {
     if ($result) {
         $row = mysqli_fetch_assoc($result);
         $nombreCompleto = $row['nombre_completo'];
-        $nombreArea = $row['nombre_area'] ?? 'Sin área'; 
         $rolDescripcion = $row['rol_descripcion'];
     } else {
         echo "Error al ejecutar la consulta: " . mysqli_error($db_connection);

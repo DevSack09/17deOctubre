@@ -1,0 +1,1211 @@
+<?php
+session_start();
+if (empty($_SESSION["idusuario"])) {
+    header("location: ../index.php");
+} else {
+
+    include "../controlador/sesion_activa/datos_sesion.php";
+    ?>
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Premio 17 de octubre | IEEH</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="all,follow">
+        <!-- Google fonts - Popppins for copy-->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&amp;display=swap"
+            rel="stylesheet">
+        <!-- Ladda-->
+        <link rel="stylesheet" href="vendor/ladda/ladda-themeless.min.css">
+        <!-- Prism Syntax Highlighting-->
+        <link rel="stylesheet" href="vendor/prismjs/plugins/toolbar/prism-toolbar.css">
+        <link rel="stylesheet" href="vendor/prismjs/themes/prism-okaidia.css">
+        <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+            integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <!-- The Main Theme stylesheet (Contains also Bootstrap CSS)-->
+        <link rel="stylesheet" href="css/style.violet.css" id="theme-stylesheet">
+        <!-- Custom stylesheet - for your changes-->
+        <link rel="stylesheet" href="css/custom.css">
+        <!-- Favicon-->
+        <link rel="shortcut icon" href="../img/IEEH.png">
+
+        <style>
+        </style>
+    </head>
+
+    <body>
+        <header class="header">
+            <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
+                <a class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#"><i class="fas fa-align-left"></i></a>
+                <a class="navbar-brand fw-bold text-uppercase text-base" style="text-align: center;" href="index.php">
+                    <span class="d-none d-brand-partial">Premio 17 de octubre </span><br>
+                    <span class="d-none d-sm-inline">Dédima Tercera Edición </span>
+                </a>
+                <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">
+                    <li class="nav-item dropdown ms-auto">
+                        <a class="nav-link pe-0" id="userInfo" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <img class="avatar p-1" src="img/generico.png" alt="Jason Doe">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated" aria-labelledby="userInfo">
+                            <div class="dropdown-header text-gray-700">
+                                <h6 class="text-uppercase font-weight-bold"><?php echo $nombreCompleto; ?></h6><small
+                                    align='right'><?php echo $nombreArea; ?></small><br><small
+                                    align='right'><b><?php echo $rolDescripcion; ?></b></small>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="../controlador/controlador_cerrar.php">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="d-flex align-items-stretch">
+            <!-- Menú -->
+            <?php include 'menu.php'; ?>
+            <div class="page-holder bg-gray-100">
+                <div class="container-fluid px-lg-4 px-xl-5">
+                    <!-- Page Header-->
+                    <div class="page-header">
+                        <h1 class="page-heading text-center">Formulario de registro</h1>
+                    </div>
+                    <section>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h4 style="color: #495057;"><strong>Progreso del formulario:</strong></h4>
+                                <div class="progress custom-height mb-3">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        0%
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form class="g-3 needs-validation" enctype="multipart/form-data">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label" for="curp">CURP <span class="required">*</span></label>
+                                        <div class="input-icon">
+                                            <i class="fas fa-id-card"></i>
+                                            <input class="form-control" id="curp" type="text"
+                                                placeholder="Ej. RAMJ920313HDFRMR01" required minlength="18" maxlength="18"
+                                                data-validacion-manual="true">
+                                        </div>
+                                        <a href="https://www.gob.mx/curp/" target="_blank">Si no conoces tu CURP, haz clic
+                                            aquí para obtenerla</a>
+                                        <div class="valid-feedback">Muy bien!</div>
+                                        <div class="invalid-feedback">Por favor, introduzca su CURP.</div>
+                                        <div class="invalid-feedback min-max-length">El CURP debe tener 18 caracteres.</div>
+                                    </div>
+                                    <div class="accordion" id="accordionExample">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingDatosPersonales">
+                                                <button class="accordion-button fw-bold fs-5" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseDatosPersonales"
+                                                    aria-expanded="true" aria-controls="collapseDatosPersonales">
+                                                    Datos personales
+                                                </button>
+                                            </h2>
+                                            <div id="collapseDatosPersonales" class="accordion-collapse collapse show"
+                                                aria-labelledby="headingDatosPersonales" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="apellidopaterno">Apellido paterno
+                                                                <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-user-tag"></i>
+                                                                <input class="form-control" id="apellidopaterno" type="text"
+                                                                    placeholder="Ej. Ramirez" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su apellido
+                                                                paterno.
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="apellidomaterno">Apellido
+                                                                Materno</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-user-tag"></i>
+                                                                <input class="form-control" id="apellidomaterno" type="text"
+                                                                    placeholder="Ej. Pérez">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su apellido
+                                                                materno.
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="nombre">Nombre(s) <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-user"></i>
+                                                                <input class="form-control" id="nombre" type="text"
+                                                                    placeholder="Ej. Juan" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su
+                                                                nombre(s).
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-2">
+                                                            <label class="form-label" for="fechanacimiento">Fecha de
+                                                                nacimiento
+                                                                <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-calendar-alt"></i>
+                                                                <input class="form-control" id="fechanacimiento" type="date"
+                                                                    required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su fecha de
+                                                                nacimiento.
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="edad">Edad <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-sort-numeric-up"></i>
+                                                                <input class="form-control" id="edad" type="text"
+                                                                    placeholder="Ej. 25" required minlength="2"
+                                                                    maxlength="2">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su edad.
+                                                            </div>
+                                                            <div class="invalid-feedback min-max-length">La edad debe tener
+                                                                2
+                                                                caracteres
+                                                                y
+                                                                ser mayor a 18 años.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingDomicilio">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseDomicilio"
+                                                    aria-expanded="false" aria-controls="collapseDomicilio">
+                                                    Domicilio
+                                                </button>
+                                            </h2>
+                                            <div id="collapseDomicilio" class="accordion-collapse collapse"
+                                                aria-labelledby="headingDomicilio" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="calle">Calle <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-road"></i>
+                                                                <input class="form-control" id="calle" type="text"
+                                                                    placeholder="Ej. Reforma" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su calle.
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="form-label" for="numeroExterior">No. Exterior
+                                                                <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-door-open"></i>
+                                                                <input class="form-control" id="numeroExterior" type="text"
+                                                                    placeholder="Ej. 123" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca el número
+                                                                exterior.</div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label class="form-label" for="numeroInterior">No.
+                                                                Interior</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-door-closed"></i>
+                                                                <input class="form-control" id="numeroInterior" type="text"
+                                                                    placeholder="Ej. 4B">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca el número
+                                                                interior.</div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="colonia">Colonia <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-city"></i>
+                                                                <input class="form-control" id="colonia" type="text"
+                                                                    placeholder="Ej. Centro" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su colonia.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="cp">Código Postal <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-mail-bulk"></i>
+                                                                <input class="form-control" id="cp" type="text"
+                                                                    placeholder="Ej. 42000" required minlength="5"
+                                                                    maxlength="5">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su código
+                                                                postal.</div>
+                                                            <div class="invalid-feedback min-max-length">El código postal
+                                                                debe tener 5 dígitos.</div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="estado">Estado<span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-map-marker-alt"></i>
+                                                                <select class="form-control" id="estado" disabled>
+                                                                    <option value="HIDALGO" selected>HIDALGO</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="municipio">Municipio <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-map"></i>
+                                                                <select class="form-control" id="municipio" required>
+                                                                    <option value="">Seleccione un municipio</option>
+                                                                    <option value="Cardonal">Cardonal</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, seleccione un
+                                                                municipio.</div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="localidad">Localidad <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-map-pin"></i>
+                                                                <input class="form-control" id="localidad" type="text"
+                                                                    placeholder="Ej. Pachuca de Soto" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su
+                                                                localidad.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Estudios Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingEstudios">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseEstudios"
+                                                    aria-expanded="false" aria-controls="collapseEstudios">
+                                                    Estudios
+                                                </button>
+                                            </h2>
+                                            <div id="collapseEstudios" class="accordion-collapse collapse"
+                                                aria-labelledby="headingEstudios" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Último grado de estudios -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="gradoEstudios">¿Último grado de
+                                                                estudios que concluyó? <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-graduation-cap"></i>
+                                                                <select class="form-control" id="gradoEstudios" required>
+                                                                    <option value="">Seleccione una opción</option>
+                                                                    <option value="secundaria">Secundaria</option>
+                                                                    <option value="bachillerato">Bachillerato</option>
+                                                                    <option value="licenciatura">Licenciatura</option>
+                                                                    <option value="maestria">Maestría</option>
+                                                                    <option value="doctorado">Doctorado</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, seleccione un grado de
+                                                                estudios.</div>
+                                                        </div>
+
+                                                        <!-- Ocupación actual -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="ocupacionActual">¿Cuál es su
+                                                                ocupación actual? <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-briefcase"></i>
+                                                                <input class="form-control" id="ocupacionActual" type="text"
+                                                                    placeholder="Ej. Profesor" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su ocupación
+                                                                actual.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Estudios que cursa actualmente y/o cargo que desempeña -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingEstudiosActuales">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseEstudiosActuales"
+                                                    aria-expanded="false" aria-controls="collapseEstudiosActuales">
+                                                    Estudios que cursa actualmente y/o cargo que desempeña
+                                                </button>
+                                            </h2>
+                                            <div id="collapseEstudiosActuales" class="accordion-collapse collapse"
+                                                aria-labelledby="headingEstudiosActuales"
+                                                data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Grado Actual -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="gradoActual">Grado</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-layer-group"></i>
+                                                                <input class="form-control" id="gradoActual" type="text"
+                                                                    placeholder="Ej. Tercer semestre">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Campo no válido.</div>
+                                                        </div>
+
+                                                        <!-- Estudios Actuales -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label"
+                                                                for="estudiosActuales">Estudios</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-book"></i>
+                                                                <input class="form-control" id="estudiosActuales"
+                                                                    type="text" placeholder="Ej. Derecho">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Campo no válido.</div>
+                                                        </div>
+
+                                                        <!-- Cargo Actual -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="cargoActual">Cargo</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-user-tie"></i>
+                                                                <input class="form-control" id="cargoActual" type="text"
+                                                                    placeholder="Ej. Asistente administrativo">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Campo no válido.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Centro de Estudios o Lugar de Trabajo -->
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="centroEstudiosTrabajo">Nombre del
+                                                                centro de estudios y/o lugar de trabajo <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-school"></i>
+                                                                <input class="form-control" id="centroEstudiosTrabajo"
+                                                                    type="text"
+                                                                    placeholder="Ej. Universidad Autónoma de Hidalgo"
+                                                                    required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca Nombre del
+                                                                centro de estudios y/o lugar de trabajo.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Datos de contacto -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingDatosContacto">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseDatosContacto"
+                                                    aria-expanded="false" aria-controls="collapseDatosContacto">
+                                                    Datos de contacto
+                                                </button>
+                                            </h2>
+                                            <div id="collapseDatosContacto" class="accordion-collapse collapse"
+                                                aria-labelledby="headingDatosContacto" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Correo Electrónico -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="correo">Correo electrónico <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-envelope"></i>
+                                                                <input class="form-control" id="correo" type="email"
+                                                                    placeholder="Ej. ejemplo@correo.com" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca un correo
+                                                                válido.</div>
+                                                        </div>
+
+                                                        <!-- Número Fijo -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="numerofijo">Número fijo</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-phone"></i>
+                                                                <input class="form-control" id="numerofijo" type="text"
+                                                                    placeholder="Ej. XXXXXXXXXX" minlength="10"
+                                                                    maxlength="10">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca un número
+                                                                válido.</div>
+                                                        </div>
+
+                                                        <!-- Confirmar Número Fijo -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="confirmarnumerofijo">Confirmar
+                                                                número fijo</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-phone-volume"></i>
+                                                                <input class="form-control" id="confirmarnumerofijo"
+                                                                    type="text" placeholder="Confirme su número fijo"
+                                                                    minlength="10" maxlength="10">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Los números fijos no coinciden.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Número Móvil -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="numeromovil">Número móvil <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-mobile-alt"></i>
+                                                                <input class="form-control" id="numeromovil" type="text"
+                                                                    placeholder="Ej. XXXXXXXXXX" required minlength="10"
+                                                                    maxlength="10">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su número
+                                                                móvil.</div>
+                                                        </div>
+
+                                                        <!-- Confirmar Número Móvil -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="confirmarnumeromovil">Confirmar
+                                                                número móvil <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-check-circle"></i>
+                                                                <input class="form-control" id="confirmarnumeromovil"
+                                                                    type="text" placeholder="Confirme su número móvil"
+                                                                    required minlength="10" maxlength="10">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Los números móviles no coinciden.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Redes Sociales Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingRedesSociales">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseRedesSociales"
+                                                    aria-expanded="false" aria-controls="collapseRedesSociales">
+                                                    Redes sociales
+                                                </button>
+                                            </h2>
+                                            <div id="collapseRedesSociales" class="accordion-collapse collapse"
+                                                aria-labelledby="headingRedesSociales" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Facebook -->
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="facebook">Facebook</label>
+                                                            <div class="input-icon">
+                                                                <i class="fab fa-facebook-f"></i>
+                                                                <input class="form-control" id="facebook" type="text"
+                                                                    placeholder="Ej. facebook.com/tuusuario">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                        </div>
+
+                                                        <!-- TikTok -->
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="tiktok">TikTok</label>
+                                                            <div class="input-icon">
+                                                                <i class="fab fa-tiktok"></i>
+                                                                <input class="form-control" id="tiktok" type="text"
+                                                                    placeholder="Ej. tiktok.com/@tuusuario">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                        </div>
+
+                                                        <!-- Instagram -->
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="instagram">Instagram</label>
+                                                            <div class="input-icon">
+                                                                <i class="fab fa-instagram"></i>
+                                                                <input class="form-control" id="instagram" type="text"
+                                                                    placeholder="Ej. instagram.com/tuusuario">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                        </div>
+
+                                                        <!-- Otra red social -->
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="otra">Otra</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-globe"></i>
+                                                                <input class="form-control" id="otra" type="text"
+                                                                    placeholder="Otra red social o enlace">
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Ensayo Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingEnsayo">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseEnsayo"
+                                                    aria-expanded="false" aria-controls="collapseEnsayo">
+                                                    Ensayo
+                                                </button>
+                                            </h2>
+                                            <div id="collapseEnsayo" class="accordion-collapse collapse"
+                                                aria-labelledby="headingEnsayo" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Seudónimo -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="seudonimo">Seudónimo con el que
+                                                                se identificará durante el desarrollo de este concurso:
+                                                                <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-user-secret"></i>
+                                                                <input class="form-control" id="seudonimo" name="seudonimo"
+                                                                    type="text" placeholder="Ej. PlumaLibre" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca su
+                                                                seudónimo.</div>
+                                                        </div>
+
+                                                        <!-- Título del Ensayo -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="titulo_ensayo">Título del Ensayo
+                                                                <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-pen-nib"></i>
+                                                                <input class="form-control" id="titulo_ensayo"
+                                                                    name="titulo_ensayo" type="text"
+                                                                    placeholder="Título de tu ensayo" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, introduzca el título
+                                                                del ensayo.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Categoría -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="categoria">Categoría en la que
+                                                                concursas <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-list"></i>
+                                                                <select class="form-control" id="categoria" name="categoria"
+                                                                    required>
+                                                                    <option value="" disabled selected>Seleccione una
+                                                                        categoría</option>
+                                                                    <option value="Letras jóvenes">Letras jóvenes (15-19
+                                                                        años)</option>
+                                                                    <option value="Letras contemporáneas">Letras
+                                                                        contemporáneas (20-29 años)</option>
+                                                                    <option value="Letras trascendencia">Letras
+                                                                        trascendencia (30 años en adelante)</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, seleccione una
+                                                                categoría.</div>
+                                                        </div>
+
+                                                        <!-- Archivo del Ensayo -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="archivo_ensayo">Cargue su ensayo
+                                                                en formato PDF <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-file-pdf"></i>
+                                                                <input class="form-control" id="archivo_ensayo"
+                                                                    name="archivo_ensayo" type="file" accept=".pdf"
+                                                                    required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue un archivo PDF.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Carga de documentos: Participantes mayores de edad -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingDocumentosAdultos">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseDocumentosAdultos"
+                                                    aria-expanded="false" aria-controls="collapseDocumentosAdultos">
+                                                    Carga de documentos: Participantes mayores de edad
+                                                </button>
+                                            </h2>
+                                            <div id="collapseDocumentosAdultos" class="accordion-collapse collapse"
+                                                aria-labelledby="headingDocumentosAdultos"
+                                                data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Credencial para Votar -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="credencial_votar">
+                                                                Credencial para Votar, o en su caso, el Comprobante del
+                                                                Trámite para obtenerla junto con otra Identificación Oficial
+                                                                Vigente y Comprobante de domicilio: <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-id-card"></i>
+                                                                <input class="form-control" id="credencial_votar"
+                                                                    name="credencial_votar" type="file"
+                                                                    accept=".pdf,.jpg,.png" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue el archivo
+                                                                solicitado.</div>
+                                                        </div>
+
+                                                        <!-- Declaración de Originalidad -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="declaracion_originalidad">
+                                                                Declaración de Originalidad y Cesión de Derechos: <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-file-signature"></i>
+                                                                <input class="form-control" id="declaracion_originalidad"
+                                                                    name="declaracion_originalidad" type="file"
+                                                                    accept=".pdf" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue el archivo
+                                                                solicitado.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Formato para Otorgar Consentimiento Expreso -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="consentimiento_expreso_adultos">
+                                                                Formato para Otorgar Consentimiento Expreso: <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-file-alt"></i>
+                                                                <input class="form-control"
+                                                                    id="consentimiento_expreso_adultos"
+                                                                    name="consentimiento_expreso_adultos" type="file"
+                                                                    accept=".pdf" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue el archivo
+                                                                solicitado.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Carga de documentos: Participantes menores de edad -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingDocumentosMenores">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseDocumentosMenores"
+                                                    aria-expanded="false" aria-controls="collapseDocumentosMenores">
+                                                    Carga de documentos: Participantes menores de edad
+                                                </button>
+                                            </h2>
+                                            <div id="collapseDocumentosMenores" class="accordion-collapse collapse"
+                                                aria-labelledby="headingDocumentosMenores"
+                                                data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Identificación con fotografía -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="identificacion_fotografia">
+                                                                Identificación con fotografía (credencial de estudiante
+                                                                vigente u otra): <span class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-id-badge"></i>
+                                                                <input class="form-control" id="identificacion_fotografia"
+                                                                    name="identificacion_fotografia" type="file"
+                                                                    accept=".pdf,.jpg,.png" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue el archivo
+                                                                solicitado.</div>
+                                                        </div>
+
+                                                        <!-- Carta de Autorización -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="carta_autorizacion">
+                                                                Carta de Autorización, debidamente requisitada y firmada:
+                                                                <span class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-file-signature"></i>
+                                                                <input class="form-control" id="carta_autorizacion"
+                                                                    name="carta_autorizacion" type="file" accept=".pdf"
+                                                                    required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue el archivo
+                                                                solicitado.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Declaración de Originalidad y Cesión de Derechos -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label"
+                                                                for="declaracion_originalidad_menores">
+                                                                Carta de Declaración de Originalidad y Cesión de Derechos,
+                                                                debidamente requisitada y firmada: <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-file-signature"></i>
+                                                                <input class="form-control"
+                                                                    id="declaracion_originalidad_menores"
+                                                                    name="declaracion_originalidad_menores" type="file"
+                                                                    accept=".pdf" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue el archivo
+                                                                solicitado.</div>
+                                                        </div>
+
+                                                        <!-- Comprobante de Domicilio del Tutor -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="comprobante_domicilio_tutor">
+                                                                Comprobante de Domicilio (Vigente) de la Madre, Padre,
+                                                                Persona Tutora o Cuidadora: <span class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-home"></i>
+                                                                <input class="form-control" id="comprobante_domicilio_tutor"
+                                                                    name="comprobante_domicilio_tutor" type="file"
+                                                                    accept=".pdf,.jpg,.png" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue el archivo
+                                                                solicitado.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Formato para Otorgar Consentimiento Expreso -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="consentimiento_expreso_menores">
+                                                                Formato para Otorgar Consentimiento Expreso, debidamente
+                                                                requisitado y firmado: <span class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-file-alt"></i>
+                                                                <input class="form-control"
+                                                                    id="consentimiento_expreso_menores"
+                                                                    name="consentimiento_expreso_menores" type="file"
+                                                                    accept=".pdf" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue el archivo
+                                                                solicitado.</div>
+                                                        </div>
+
+                                                        <!-- INE del Tutor -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="ine_tutor">
+                                                                INE de la persona que firma la Carta de Autorización, la
+                                                                Carta de Declaración de Originalidad y Cesión de Derechos y
+                                                                el Formato para Otorgar Consentimiento Expreso: <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-id-card"></i>
+                                                                <input class="form-control" id="ine_tutor" name="ine_tutor"
+                                                                    type="file" accept=".pdf,.jpg,.png" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Por favor, cargue el archivo
+                                                                solicitado.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Acciones afirmativas -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingAccionesAfirmativas">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseAccionesAfirmativas"
+                                                    aria-expanded="false" aria-controls="collapseAccionesAfirmativas">
+                                                    Acciones afirmativas
+                                                </button>
+                                            </h2>
+                                            <div id="collapseAccionesAfirmativas" class="accordion-collapse collapse"
+                                                aria-labelledby="headingAccionesAfirmativas"
+                                                data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Persona con discapacidad -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Es una persona con
+                                                                discapacidad? <span class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="discapacidad" id="discapacidad_si" value="sí"
+                                                                    required>
+                                                                <label class="form-check-label"
+                                                                    for="discapacidad_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="discapacidad" id="discapacidad_no" value="no"
+                                                                    required>
+                                                                <label class="form-check-label"
+                                                                    for="discapacidad_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+
+                                                        <!-- ¿Cuál es la discapacidad? -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="discapacidad_cual">¿Cuál?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-wheelchair"></i>
+                                                                <input type="text" class="form-control"
+                                                                    id="discapacidad_cual" name="discapacidad_cual"
+                                                                    required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+
+                                                        <!-- Tipo de discapacidad -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="tipo_discapacidad">¿De qué tipo
+                                                                es?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-universal-access"></i>
+                                                                <select class="form-control" id="tipo_discapacidad"
+                                                                    name="tipo_discapacidad" required>
+                                                                    <option value="" disabled selected>Seleccione una opción
+                                                                    </option>
+                                                                    <option value="física o motora">Física o motora</option>
+                                                                    <option value="sensorial">Sensorial</option>
+                                                                    <option value="intelectual">Intelectual</option>
+                                                                    <option value="mental">Mental</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Habla lengua indígena -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Habla alguna lengua indígena?
+                                                                <span class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="lengua_indigena" id="lengua_si" value="sí"
+                                                                    required>
+                                                                <label class="form-check-label" for="lengua_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="lengua_indigena" id="lengua_no" value="no"
+                                                                    required>
+                                                                <label class="form-check-label" for="lengua_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+
+                                                        <!-- ¿Cuál es la lengua? -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="lengua_cual">¿Cuál?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-language"></i>
+                                                                <input type="text" class="form-control" id="lengua_cual"
+                                                                    name="lengua_cual" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-4">
+                                                        <!-- Auto adscripción indígena -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Se auto adscribe como
+                                                                indígena? <span class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="auto_indigena" id="auto_indigena_si" value="sí"
+                                                                    required>
+                                                                <label class="form-check-label"
+                                                                    for="auto_indigena_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="auto_indigena" id="auto_indigena_no" value="no"
+                                                                    required>
+                                                                <label class="form-check-label"
+                                                                    for="auto_indigena_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+
+                                                        <!-- Comunidad indígena -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Forma parte de una comunidad
+                                                                indígena? <span class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="comunidad_indigena" id="comunidad_si" value="sí"
+                                                                    required>
+                                                                <label class="form-check-label"
+                                                                    for="comunidad_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="comunidad_indigena" id="comunidad_no" value="no"
+                                                                    required>
+                                                                <label class="form-check-label"
+                                                                    for="comunidad_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+
+                                                        <!-- ¿Cuál es la comunidad? -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="comunidad_cual">¿Cuál?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-users"></i>
+                                                                <input type="text" class="form-control" id="comunidad_cual"
+                                                                    name="comunidad_cual" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Diversidad sexual y de género -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Se autoadscribe como persona
+                                                                de la diversidad sexual y de género? <span
+                                                                    class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="diversidad" id="diversidad_si" value="sí"
+                                                                    required>
+                                                                <label class="form-check-label"
+                                                                    for="diversidad_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="diversidad" id="diversidad_no" value="no"
+                                                                    required>
+                                                                <label class="form-check-label"
+                                                                    for="diversidad_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+
+                                                        <!-- ¿Cuál es la diversidad? -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="diversidad_cual">¿Cuál?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-rainbow"></i>
+                                                                <input type="text" class="form-control" id="diversidad_cual"
+                                                                    name="diversidad_cual" required>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Medio convocatoria -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="medio_convocatoria">¿Cómo se
+                                                                enteró de la convocatoria? <span
+                                                                    class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-bullhorn"></i>
+                                                                <select class="form-control" id="medio_convocatoria"
+                                                                    name="medio_convocatoria" required>
+                                                                    <option value="" disabled selected>Seleccione una opción
+                                                                    </option>
+                                                                    <option value="pagina web">Página web</option>
+                                                                    <option value="rrss">RRSS</option>
+                                                                    <option value="cartel">Cartel</option>
+                                                                    <option value="platica informativa">Plática informativa
+                                                                    </option>
+                                                                    <option value="publicacion">Publicación</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Términos -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingTerminos">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseTerminos"
+                                                    aria-expanded="false" aria-controls="collapseTerminos">
+                                                    Términos
+                                                </button>
+                                            </h2>
+                                            <div id="collapseTerminos" class="accordion-collapse collapse"
+                                                aria-labelledby="headingTerminos" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <!-- Aceptación del Aviso de Privacidad Integral -->
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-12">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="terminos_privacidad" required>
+                                                                <label class="form-check-label" for="terminos_privacidad">
+                                                                    He leído y comprendo los términos del
+                                                                    <a href="ruta_al_archivo/aviso_de_privacidad_integral.pdf"
+                                                                        target="_blank">
+                                                                        Aviso de Privacidad Integral
+                                                                    </a>.
+                                                                </label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Debe aceptar los términos del
+                                                                Aviso de Privacidad Integral.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Aceptación del Formato para Otorgar Consentimiento Expreso -->
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-12">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="terminos_consentimiento" required>
+                                                                <label class="form-check-label"
+                                                                    for="terminos_consentimiento">
+                                                                    He leído y comprendo los términos de
+                                                                    <a href="ruta_al_archivo/formato_para_otorgar_consentimiento_expreso.pdf"
+                                                                        target="_blank">
+                                                                        Formato para Otorgar Consentimiento Expreso
+                                                                    </a>.
+                                                                </label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Debe aceptar los términos del
+                                                                Formato para Otorgar Consentimiento Expreso.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end gap-2 mt-4">
+                                        <button type="button" class="btn btn-warning">Actualizar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        <button type="button" class="btn btn-danger">Finalizar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 text-center text-md-start fw-bold">
+                                <p class="mb-2 mb-md-0 fw-bold">Unidad de Tecnologías de la Información y Comunicaciones
+                                    &copy; 2025</p>
+                            </div>
+                            <div class="col-md-6 text-center text-md-end text-gray-400">
+                                <p class="mb-0">Version 1.0.0</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <!-- JavaScript files-->
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+        <!-- Main Theme JS File-->
+        <script src="js/theme.js"></script>
+        <script src="js/forms-validation.js"></script>
+        <!-- Prism for syntax highlighting-->
+        <script src="vendor/prismjs/prism.js"></script>
+        <script src="vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
+        <script src="vendor/prismjs/plugins/toolbar/prism-toolbar.min.js"></script>
+        <script src="vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+        <script type="text/javascript">
+            // Optional
+            Prism.plugins.NormalizeWhitespace.setDefaults({
+                'remove-trailing': true,
+                'remove-indent': true,
+                'left-trim': true,
+                'right-trim': true,
+            }); 
+        </script>
+
+
+
+    </body>
+
+    </html>
+    <?php
+}
+?>

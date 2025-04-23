@@ -4,7 +4,7 @@ require 'phpmailer/Exception.php';
 require 'phpmailer/PHPMailer.php';
 require 'phpmailer/SMTP.php';
 
-include "../modelo/conexion.php"; 
+include "../modelo/conexion.php";
 
 header('Content-Type: application/json');
 
@@ -13,19 +13,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST["nombre"] ?? '';
     $apellidoP = $_POST["apellidoP"] ?? '';
     $apellidoM = $_POST["apellidoM"] ?? '';
-    $area = ''; 
 
+    // Verificar campos vacíos
     if (empty($email) || empty($nombre) || empty($apellidoP) || empty($apellidoM)) {
         echo json_encode(["status" => "error", "message" => "Todos los campos son obligatorios."]);
         exit;
     }
-    
+
+    // Validar formato de correo
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode(["status" => "error", "message" => "Correo electrónico inválido."]);
         exit;
     }
 
+    // Verificar si el correo ya está registrado
     $stmt = $db_connection->prepare("SELECT COUNT(*) FROM usuario WHERE email = ?");
+    if (!$stmt) {
+        die("Error en la consulta SQL: " . $db_connection->error);
+    }
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->bind_result($count);
@@ -37,45 +42,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    // Generar contraseña aleatoria
     $password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
 
+    // Fecha de creación
     $fecha_creacion = date('Y-m-d H:i:s');
 
-    $stmt = $db_connection->prepare("INSERT INTO usuario (email, nombre, apellidoP, apellidoM, area, password, rol, fecha_creacion, activo, `delete`) VALUES (?, ?, ?, ?, ?, ?, '2', ?, 1, 1)");
-    $stmt->bind_param("sssssss", $email, $nombre, $apellidoP, $apellidoM, $area, $password, $fecha_creacion);
-    
+    // Insertar usuario
+    $stmt = $db_connection->prepare("INSERT INTO usuario (email, nombre, apellidoP, apellidoM, password, rol, fecha_creacion, activo, `delete`) VALUES (?, ?, ?, ?, ?, '2', ?, 1, 1)");
+    if (!$stmt) {
+        die("Error en la consulta SQL: " . $db_connection->error);
+    }
+    $stmt->bind_param("ssssss", $email, $nombre, $apellidoP, $apellidoM, $password, $fecha_creacion);
+
     if ($stmt->execute()) {
         $idusuario = $db_connection->insert_id;
 
-        // Insertar permisos para el módulo de "almacén"
-        $almacen = 1; 
-        $usuarios = 0; 
-        $areas = 0; 
-        $departamentos = 0; 
-        $proveedores = 0; 
-        $articulos = 0; 
-        $entrada = 0; 
-        $salidas = 0; 
-        $reportes = 0; 
-        $bitacora = 0; 
+        // Insertar permisos predeterminados
+        $dashboard = 0; // Deshabilitado
+        $usuarios = 0;  // Deshabilitado
+        $formulario = 1; // Habilitado
+        $inicio = 1;     // Habilitado
+        $reportes = 0;   // Deshabilitado
+        $descarga = 1;   // Habilitado
 
         $stmt_permisos = $db_connection->prepare("
             INSERT INTO permisos (
-                idusuario, almacen, usuarios, areas, departamentos, proveedores, articulos, entrada, salidas, reportes, bitacora
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                idusuario, dashboard, usuarios, formulario, inicio, reportes, descarga
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
+        if (!$stmt_permisos) {
+            die("Error en la consulta SQL de permisos: " . $db_connection->error);
+        }
         $stmt_permisos->bind_param(
-            "iiiiiiiiiii",
-            $idusuario, $almacen, $usuarios, $areas, $departamentos, $proveedores, $articulos, $entrada, $salidas, $reportes, $bitacora
+            "iiiiiii",
+            $idusuario,
+            $dashboard,
+            $usuarios,
+            $formulario,
+            $inicio,
+            $reportes,
+            $descarga
         );
 
         if ($stmt_permisos->execute()) {
-            // Preparar el correo con la contraseña generada
+            // Preparar y enviar correo
             $template = file_get_contents('../template/index.html');
-            
             $template = str_replace('{nombre}', $nombre, $template);
             $template = str_replace('{password}', $password, $template);
-            
+
             $mail = new PHPMailer(true);
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
@@ -85,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $mail->CharSet = "UTF-8";
-            
+
             $mail->setFrom('reclutanotifi23@gmail.com', 'Sistema Control de Almacén | IEEH');
             $mail->addAddress($email);
             $mail->Subject = 'Registro Exitoso';
@@ -103,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo json_encode(["status" => "error", "message" => "Error al registrar el usuario."]);
     }
-    
+
     $stmt->close();
 }
 ?>

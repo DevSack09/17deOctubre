@@ -1,1 +1,104 @@
 /* your styles go here */
+.required {
+  color: red;
+}
+
+.mensajeInformativo {
+  color: #3d77a2;
+  font-size: 14px;
+  background-color: #e0f2f7;
+  padding: 8px 0 8px 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.tituloApartado {
+  color: #3d77a2;
+  font-size: 14px;
+  background-color: #e6c5e9;
+  padding: 8px 0 8px 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.progress.custom-height {
+  height: 25px;
+}
+
+.progress-bar {
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon select {
+  padding-left: 2.5rem;
+}
+
+.input-icon i {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.input-icon input {
+  padding-left: 2.2rem !important;
+}
+
+.section-title {
+  font-weight: 600;
+  font-size: 1.5rem;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #e6c5e9;
+  border-radius: 2px;
+}
+
+/* ************************************************************************************** */
+/* Switch para cambiar entre dark y light */
+.theme-switch {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.theme-switch i {
+  font-size: 24px;
+  margin-left: 5px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.theme-switch i.light-icon {
+  color: #f39c12;
+}
+
+.theme-switch i.dark-icon {
+  color: #2c3e50;
+}
+
+.theme-switch i.animate {
+  transform: scale(1.2) rotate(360deg);
+}

@@ -95,9 +95,8 @@ if (empty($_SESSION["idusuario"])) {
             </a>
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated" aria-labelledby="userInfo">
               <div class="dropdown-header text-gray-700">
-                <h6 class="text-uppercase font-weight-bold"><?php echo $nombreCompleto; ?></h6><small
-                  align='right'><?php echo $nombreArea; ?></small><br><small
-                  align='right'><b><?php echo $rolDescripcion; ?></b></small>
+                <h6 class="text-uppercase font-weight-bold"><?php echo $nombreCompleto; ?></h6>
+                <smallsmall align='right'><b><?php echo $rolDescripcion; ?></b></small>
 
               </div>
               <div class="dropdown-divider"></div>
@@ -160,14 +159,6 @@ if (empty($_SESSION["idusuario"])) {
                                 <input type="text" class="form-control" id="apellidoM" name="apellidoM" required>
                               </div>
                               <div class="col-md-6 mb-3">
-                                <label for="area" class="form-label">Área</label>
-                                <select class="form-select" id="area" name="area" required>
-                                  <option value="">Selecciona un área</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-6 mb-3">
                                 <label for="rol" class="form-label">Rol</label>
                                 <select class="form-select" id="rol" name="rol" required>
                                   <option value="">Selecciona un rol</option>
@@ -175,6 +166,8 @@ if (empty($_SESSION["idusuario"])) {
                                   <option value="2">Usuario</option>
                                 </select>
                               </div>
+                            </div>
+                            <div class="row">
                               <div class="col-md-6 mb-3">
                                 <label class="form-label d-block">Activo</label>
                                 <div class="form-check form-switch switch-lg">
@@ -210,7 +203,6 @@ if (empty($_SESSION["idusuario"])) {
                           <th>PRIMER APELLIDO</th>
                           <th>SEGUNDO APELLIDO</th>
                           <th>PASSWORD</th>
-                          <th>AREA</th>
                           <th>ROL</th>
                           <th>ACTIVO</th>
                           <th>FECHA DE CREACIÓN</th>
@@ -254,11 +246,13 @@ if (empty($_SESSION["idusuario"])) {
                               <label for="modificar_apellidoM" class="form-label">Segundo Apellido</label>
                               <input type="text" class="form-control" id="modificar_apellidoM" name="apellidoM" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                              <label for="modificar_area" class="form-label">Área</label>
-                              <select class="form-select" id="modificar_area" name="area" required>
-                                <option value="">Selecciona un área</option>
-                              </select>
+
+                            <div class="col-md-6 mb-3 position-relative">
+                              <label for="modificar_password" class="form-label">Contraseña</label>
+                              <input type="password" class="form-control" id="modificar_password" name="password"
+                                required>
+                              <i class="fas fa-eye toggle-password"
+                                style="position: absolute; right: 18px; top: 70%; transform: translateY(-50%); cursor: pointer;"></i>
                             </div>
                           </div>
                           <div class="row">
@@ -276,12 +270,6 @@ if (empty($_SESSION["idusuario"])) {
                                 <input class="form-check-input" type="checkbox" id="modificar_activo" name="activo">
                               </div>
                             </div>
-                          </div>
-                          <div class="mb-3 position-relative">
-                            <label for="modificar_password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="modificar_password" name="password" required>
-                            <i class="fas fa-eye toggle-password"
-                              style="position: absolute; right: 10px; top: 70%; transform: translateY(-50%); cursor: pointer;"></i>
                           </div>
                           <div class="mb-3">
                             <label for="modificar_fecha_creacion" class="form-label">Fecha de Creación</label>
@@ -310,11 +298,10 @@ if (empty($_SESSION["idusuario"])) {
                         <form id="formModulos">
                           <input type="hidden" id="modulos_idusuario" name="idusuario">
                           <div class="row">
-                            <!-- Iterar sobre los módulos -->
                             <div class="col-md-6 mb-3">
-                              <label class="form-label d-block">Almacén</label>
+                              <label class="form-label d-block">Dashboard</label>
                               <div class="form-check form-switch switch-lg">
-                                <input class="form-check-input" type="checkbox" id="modulo_almacen" name="almacen">
+                                <input class="form-check-input" type="checkbox" id="modulo_dashboard" name="dashboard">
                               </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -324,41 +311,15 @@ if (empty($_SESSION["idusuario"])) {
                               </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                              <label class="form-label d-block">Áreas</label>
+                              <label class="form-label d-block">Formulario</label>
                               <div class="form-check form-switch switch-lg">
-                                <input class="form-check-input" type="checkbox" id="modulo_areas" name="areas">
+                                <input class="form-check-input" type="checkbox" id="modulo_formulario" name="formulario">
                               </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                              <label class="form-label d-block">Departamentos</label>
+                              <label class="form-label d-block">Inicio</label>
                               <div class="form-check form-switch switch-lg">
-                                <input class="form-check-input" type="checkbox" id="modulo_departamentos"
-                                  name="departamentos">
-                              </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                              <label class="form-label d-block">Proveedores</label>
-                              <div class="form-check form-switch switch-lg">
-                                <input class="form-check-input" type="checkbox" id="modulo_proveedores"
-                                  name="proveedores">
-                              </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                              <label class="form-label d-block">Artículos</label>
-                              <div class="form-check form-switch switch-lg">
-                                <input class="form-check-input" type="checkbox" id="modulo_articulos" name="articulos">
-                              </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                              <label class="form-label d-block">Entrada de Artículos</label>
-                              <div class="form-check form-switch switch-lg">
-                                <input class="form-check-input" type="checkbox" id="modulo_entrada" name="entrada">
-                              </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                              <label class="form-label d-block">Salidas por Vale</label>
-                              <div class="form-check form-switch switch-lg">
-                                <input class="form-check-input" type="checkbox" id="modulo_salidas" name="salidas">
+                                <input class="form-check-input" type="checkbox" id="modulo_inicio" name="inicio">
                               </div>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -368,9 +329,9 @@ if (empty($_SESSION["idusuario"])) {
                               </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                              <label class="form-label d-block">Bitácora</label>
+                              <label class="form-label d-block">Descarga de documentos</label>
                               <div class="form-check form-switch switch-lg">
-                                <input class="form-check-input" type="checkbox" id="modulo_bitacora" name="bitacora">
+                                <input class="form-check-input" type="checkbox" id="modulo_descarga" name="descarga">
                               </div>
                             </div>
                           </div>
@@ -484,7 +445,7 @@ if (empty($_SESSION["idusuario"])) {
         var table = $('#user').DataTable({
           order: [[0, 'asc']],
           columnDefs: [
-            { orderable: false, targets: [5, 7, 8, 9, 10] }
+            { orderable: false, targets: [5, 9] }
           ],
           language: {
             "sProcessing": "<br>Procesando...",
@@ -536,7 +497,6 @@ if (empty($_SESSION["idusuario"])) {
                 return "**********";
               }
             },
-            { data: "area", title: "ÁREA" },
             {
               data: "rol", title: "ROL",
               render: function (data) {
@@ -684,8 +644,6 @@ if (empty($_SESSION["idusuario"])) {
                 $('#modificar_password').val(usuario.password);
                 $('#modificar_fecha_creacion').val(usuario.fecha_creacion);
 
-                llenarSelectAreas(usuario.area);
-
                 $('#modalModificar').modal('show');
               } else {
                 Swal.fire('Error', response.message || 'No se pudieron cargar los datos del usuario.', 'error');
@@ -698,47 +656,6 @@ if (empty($_SESSION["idusuario"])) {
           error: function (xhr, status, error) {
             console.error('Error en la solicitud AJAX:', error);
             Swal.fire('Error', 'Ocurrió un error al cargar los datos del usuario.', 'error');
-          }
-        });
-      }
-
-      function llenarSelectAreas(areaSeleccionada) {
-        $.ajax({
-          url: '../controlador/usuarios/obtener_areas.php',
-          type: 'GET',
-          dataType: 'json',
-          success: function (response) {
-            console.log('Respuesta del servidor:', response);
-
-            try {
-              if (response && response.success) {
-                const selectArea = $('#modificar_area');
-                selectArea.empty();
-                selectArea.append('<option value="">Selecciona un área</option>');
-
-                response.areas.forEach(area => {
-                  const option = $('<option>', {
-                    value: area.idarea,
-                    text: area.nombre_area
-                  });
-
-                  if (area.idarea == areaSeleccionada) {
-                    option.prop('selected', true);
-                  }
-
-                  selectArea.append(option);
-                });
-              } else {
-                console.error('Error al obtener las áreas:', response.message || 'Respuesta no válida');
-              }
-            } catch (error) {
-              console.error('Error al procesar la respuesta:', error);
-              console.error('Respuesta del servidor:', response);
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error('Error en la solicitud AJAX:', error);
-            console.error('Respuesta del servidor:', xhr.responseText);
           }
         });
       }
@@ -792,36 +709,6 @@ if (empty($_SESSION["idusuario"])) {
       });
     </script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const llenarSelectAreas = async () => {
-          const selectArea = document.getElementById("area");
-
-          try {
-            const response = await fetch('../controlador/usuarios/obtener_areas.php');
-            const data = await response.json();
-
-            if (data.success) {
-              selectArea.innerHTML = '<option value="">Selecciona un área</option>';
-
-              data.areas.forEach(area => {
-                const option = document.createElement("option");
-                option.value = area.idarea;
-                option.textContent = area.nombre_area;
-                selectArea.appendChild(option);
-              });
-            } else {
-              console.error("Error al obtener las áreas:", data.message);
-            }
-          } catch (error) {
-            console.error("Error en la solicitud:", error);
-          }
-        };
-
-        const modalRegistro = document.getElementById('modalRegistro');
-        modalRegistro.addEventListener('shown.bs.modal', llenarSelectAreas);
-      });
-    </script>
-    <script>
       $(document).ready(function () {
         $(document).on('click', '.modulosBtn', function () {
           const idusuario = $(this).data('id');
@@ -835,18 +722,14 @@ if (empty($_SESSION["idusuario"])) {
               const permisos = JSON.parse(response);
               if (permisos.success) {
                 // Marcar los switches según los permisos
-                $('#modulo_almacen').prop('checked', permisos.data.almacen == 1);
+                $('#modulo_dashboard').prop('checked', permisos.data.dashboard == 1);
                 $('#modulo_usuarios').prop('checked', permisos.data.usuarios == 1);
-                $('#modulo_areas').prop('checked', permisos.data.areas == 1);
-                $('#modulo_departamentos').prop('checked', permisos.data.departamentos == 1);
-                $('#modulo_proveedores').prop('checked', permisos.data.proveedores == 1);
-                $('#modulo_articulos').prop('checked', permisos.data.articulos == 1);
-                $('#modulo_entrada').prop('checked', permisos.data.entrada == 1);
-                $('#modulo_salidas').prop('checked', permisos.data.salidas == 1);
+                $('#modulo_formulario').prop('checked', permisos.data.formulario == 1);
+                $('#modulo_inicio').prop('checked', permisos.data.inicio == 1);
                 $('#modulo_reportes').prop('checked', permisos.data.reportes == 1);
-                $('#modulo_bitacora').prop('checked', permisos.data.bitacora == 1);
+                $('#modulo_descarga').prop('checked', permisos.data.descarga == 1);
               } else {
-                Swal.fire('Error', 'No se pudieron cargar los permisos.', 'error');
+                Swal.fire('Error', permisos.message || 'No se pudieron cargar los permisos.', 'error');
               }
             },
             error: function () {
@@ -858,16 +741,12 @@ if (empty($_SESSION["idusuario"])) {
         $('#guardarModulos').on('click', function () {
           const idusuario = $('#modulos_idusuario').val();
           const permisos = {
-            almacen: $('#modulo_almacen').is(':checked') ? 1 : 0,
+            dashboard: $('#modulo_dashboard').is(':checked') ? 1 : 0,
             usuarios: $('#modulo_usuarios').is(':checked') ? 1 : 0,
-            areas: $('#modulo_areas').is(':checked') ? 1 : 0,
-            departamentos: $('#modulo_departamentos').is(':checked') ? 1 : 0,
-            proveedores: $('#modulo_proveedores').is(':checked') ? 1 : 0,
-            articulos: $('#modulo_articulos').is(':checked') ? 1 : 0,
-            entrada: $('#modulo_entrada').is(':checked') ? 1 : 0,
-            salidas: $('#modulo_salidas').is(':checked') ? 1 : 0,
+            formulario: $('#modulo_formulario').is(':checked') ? 1 : 0,
+            inicio: $('#modulo_inicio').is(':checked') ? 1 : 0,
             reportes: $('#modulo_reportes').is(':checked') ? 1 : 0,
-            bitacora: $('#modulo_bitacora').is(':checked') ? 1 : 0
+            descarga: $('#modulo_descarga').is(':checked') ? 1 : 0
           };
 
           $.ajax({

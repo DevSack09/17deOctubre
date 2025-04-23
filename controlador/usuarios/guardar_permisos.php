@@ -10,7 +10,8 @@ if (isset($_POST['idusuario']) && isset($_POST['permisos'])) {
     $idusuario = intval($_POST['idusuario']);
     $permisos = $_POST['permisos'];
 
-    $requiredPermisos = ['almacen', 'usuarios', 'areas', 'departamentos', 'proveedores', 'articulos', 'entrada', 'salidas', 'reportes', 'bitacora'];
+    // Lista de permisos requeridos según los módulos activos
+    $requiredPermisos = ['dashboard', 'usuarios', 'formulario', 'inicio', 'reportes', 'descarga'];
     foreach ($requiredPermisos as $modulo) {
         if (!isset($permisos[$modulo])) {
             $response['message'] = "Falta el permiso para el módulo: $modulo";
@@ -19,6 +20,7 @@ if (isset($_POST['idusuario']) && isset($_POST['permisos'])) {
         }
     }
 
+    // Verificar si el usuario ya tiene permisos asignados
     $stmt = $db_connection->prepare("SELECT COUNT(*) AS count FROM permisos WHERE idusuario = ?");
     $stmt->bind_param("i", $idusuario);
     $stmt->execute();
@@ -28,46 +30,40 @@ if (isset($_POST['idusuario']) && isset($_POST['permisos'])) {
     $stmt->close();
 
     if ($exists) {
+        // Actualizar permisos existentes
         $stmt = $db_connection->prepare("
             UPDATE permisos 
-            SET almacen = ?, usuarios = ?, areas = ?, departamentos = ?, proveedores = ?, articulos = ?, entrada = ?, salidas = ?, reportes = ?, bitacora = ?
+            SET dashboard = ?, usuarios = ?, formulario = ?, inicio = ?, reportes = ?, descarga = ?
             WHERE idusuario = ?
         ");
         $stmt->bind_param(
-            "iiiiiiiiiii", 
-            $permisos['almacen'],
+            "iiiiiii",
+            $permisos['dashboard'],
             $permisos['usuarios'],
-            $permisos['areas'],
-            $permisos['departamentos'],
-            $permisos['proveedores'],
-            $permisos['articulos'],
-            $permisos['entrada'],
-            $permisos['salidas'],
+            $permisos['formulario'],
+            $permisos['inicio'],
             $permisos['reportes'],
-            $permisos['bitacora'],
+            $permisos['descarga'],
             $idusuario
         );
     } else {
         // Insertar un nuevo registro
         $stmt = $db_connection->prepare("
-            INSERT INTO permisos (idusuario, almacen, usuarios, areas, departamentos, proveedores, articulos, entrada, salidas, reportes, bitacora)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO permisos (idusuario, dashboard, usuarios, formulario, inicio, reportes, descarga)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         $stmt->bind_param(
-            "iiiiiiiiiii", 
+            "iiiiiii",
             $idusuario,
-            $permisos['almacen'],
+            $permisos['dashboard'],
             $permisos['usuarios'],
-            $permisos['areas'],
-            $permisos['departamentos'],
-            $permisos['proveedores'],
-            $permisos['articulos'],
-            $permisos['entrada'],
-            $permisos['salidas'],
+            $permisos['formulario'],
+            $permisos['inicio'],
             $permisos['reportes'],
-            $permisos['bitacora']
+            $permisos['descarga']
         );
     }
+
     if ($stmt->execute()) {
         $response['success'] = true;
         $response['message'] = 'Permisos guardados correctamente.';

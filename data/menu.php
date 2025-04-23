@@ -13,7 +13,6 @@ if (isset($_SESSION['idusuario'])) {
     $stmt->close();
 }
 
-
 function moduloHabilitado($modulo, $permisos)
 {
     return isset($permisos[$modulo]) && $permisos[$modulo] == 1;
@@ -22,15 +21,17 @@ function moduloHabilitado($modulo, $permisos)
 <div class="sidebar py-3 shrink show" id="sidebar">
     <h6 class="sidebar-heading">Menú</h6>
     <ul class="list-unstyled">
-        <li class="sidebar-list-item">
-            <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>"
-                href="index.php">
-                <svg class="svg-icon svg-icon-md me-3">
-                    <use xlink:href="icons/orion-svg-sprite.svg#real-estate-1"> </use>
-                </svg>
-                <span class="sidebar-link-title">Dashboard</span>
-            </a>
-        </li>
+        <?php if (moduloHabilitado('dashboard', $permisos_usuario)): ?>
+            <li class="sidebar-list-item">
+                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>"
+                    href="dashboard.php">
+                    <svg class="svg-icon svg-icon-md me-3">
+                        <use xlink:href="icons/orion-svg-sprite.svg#mental-illness-1"> </use>
+                    </svg>
+                    <span class="sidebar-link-title">Dashboard</span>
+                </a>
+            </li>
+        <?php endif; ?>
         <?php if (moduloHabilitado('usuarios', $permisos_usuario)): ?>
             <li class="sidebar-list-item">
                 <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'usuarios.php' ? 'active' : ''; ?>"
@@ -42,69 +43,25 @@ function moduloHabilitado($modulo, $permisos)
                 </a>
             </li>
         <?php endif; ?>
-        <?php if (moduloHabilitado('areas', $permisos_usuario)): ?>
+        <?php if (moduloHabilitado('inicio', $permisos_usuario)): ?>
             <li class="sidebar-list-item">
-                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'areas.php' ? 'active' : ''; ?>"
-                    href="areas.php">
-                    <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="icons/orion-svg-sprite.svg#portfolio-grid-1"> </use>
-                    </svg>
-                    <span class="sidebar-link-title">Áreas</span>
-                </a>
-            </li>
-        <?php endif; ?>
-        <?php if (moduloHabilitado('departamentos', $permisos_usuario)): ?>
-            <li class="sidebar-list-item">
-                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'departamentos.php' ? 'active' : ''; ?>"
-                    href="departamentos.php">
+                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'inicio.php' ? 'active' : ''; ?>"
+                    href="inicio.php">
                     <svg class="svg-icon svg-icon-md me-3">
                         <use xlink:href="icons/orion-svg-sprite.svg#grid-1"> </use>
                     </svg>
-                    <span class="sidebar-link-title">Subáreas</span>
+                    <span class="sidebar-link-title">Inicio</span>
                 </a>
             </li>
         <?php endif; ?>
-        <?php if (moduloHabilitado('proveedores', $permisos_usuario)): ?>
+        <?php if (moduloHabilitado('formulario', $permisos_usuario)): ?>
             <li class="sidebar-list-item">
-                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'proveedores.php' ? 'active' : ''; ?>"
-                    href="proveedores.php">
+                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'formulario.php' ? 'active' : ''; ?>"
+                    href="formulario.php">
                     <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="icons/orion-svg-sprite.svg#man-1"> </use>
+                        <use xlink:href="icons/orion-svg-sprite.svg#portfolio-grid-1"> </use>
                     </svg>
-                    <span class="sidebar-link-title">Proveedores</span>
-                </a>
-            </li>
-        <?php endif; ?>
-        <?php if (moduloHabilitado('articulos', $permisos_usuario)): ?>
-            <li class="sidebar-list-item">
-                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'articulos.php' ? 'active' : ''; ?>"
-                    href="articulos.php">
-                    <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="icons/orion-svg-sprite.svg#shopping-bag-1"> </use>
-                    </svg>
-                    <span class="sidebar-link-title">Artículos</span>
-                </a>
-            </li>
-        <?php endif; ?>
-        <?php if (moduloHabilitado('entrada', $permisos_usuario)): ?>
-            <li class="sidebar-list-item">
-                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'entrada.php' ? 'active' : ''; ?>"
-                    href="entrada.php">
-                    <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="icons/orion-svg-sprite.svg#delivery-truck-1"> </use>
-                    </svg>
-                    <span class="sidebar-link-title">Entrada de Artículos</span>
-                </a>
-            </li>
-        <?php endif; ?>
-        <?php if (moduloHabilitado('salidas', $permisos_usuario)): ?>
-            <li class="sidebar-list-item">
-                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'salidas.php' ? 'active' : ''; ?>"
-                    href="salidas.php">
-                    <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="icons/orion-svg-sprite.svg#exit-1"> </use>
-                    </svg>
-                    <span class="sidebar-link-title">Salidas por Vale</span>
+                    <span class="sidebar-link-title">Formulario</span>
                 </a>
             </li>
         <?php endif; ?>
@@ -119,14 +76,14 @@ function moduloHabilitado($modulo, $permisos)
                 </a>
             </li>
         <?php endif; ?>
-        <?php if (moduloHabilitado('bitacora', $permisos_usuario)): ?>
+        <?php if (moduloHabilitado('descarga', $permisos_usuario)): ?>
             <li class="sidebar-list-item">
-                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'bitacora.php' ? 'active' : ''; ?>"
-                    href="bitacora.php">
+                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'descarga.php' ? 'active' : ''; ?>"
+                    href="descarga.php">
                     <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="icons/orion-svg-sprite.svg#table-content-1"> </use>
+                        <use xlink:href="icons/orion-svg-sprite.svg#download-1"> </use>
                     </svg>
-                    <span class="sidebar-link-title">Bitácora</span>
+                    <span class="sidebar-link-title">Descarga de documentos</span>
                 </a>
             </li>
         <?php endif; ?>

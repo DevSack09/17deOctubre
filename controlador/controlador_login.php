@@ -33,7 +33,11 @@ if (isset($_GET['code'])) {
         $_SESSION["apellidoP"] = $datos->apellidoP;
         $_SESSION["rol"] = $datos->rol;
 
-        header("Location: data/index.php");
+        if ($datos->rol == '1') { // Administrador
+            header("Location: data/index.php");
+        } elseif ($datos->rol == '2') { // Capturista
+            header("Location: data/inicio.php");
+        }
         exit();
     } else {
         // Registrar un nuevo usuario utilizando los datos de Google
@@ -44,9 +48,9 @@ if (isset($_GET['code'])) {
             $_SESSION["idusuario"] = $db_connection->insert_id;
             $_SESSION["nombre"] = $nombre;
             $_SESSION["apellidoP"] = $apellido;
-            $_SESSION["rol"] = 'Usuario';
+            $_SESSION["rol"] = '2'; // Rol Capturista
 
-            header("Location: data/index.php");
+            header("Location: data/inicio.php");
             exit();
         } else {
             echo '<div class="error-msg"><i class="fa fa-times-circle"></i> Error al registrar el usuario.</div>';
@@ -80,11 +84,15 @@ if (isset($_GET['code'])) {
                         if ($datos->password === $password) {
                             $_SESSION["idusuario"] = $datos->idusuario;
                             $_SESSION["nombre"] = $datos->nombre;
-                            $_SESSION["apellidoP"] = $datos->apellido;
+                            $_SESSION["apellidoP"] = $datos->apellidoP;
                             $_SESSION["area"] = $datos->area;
                             $_SESSION['rol'] = $datos->descripcion;
 
-                            header("Location: data/index.php");
+                            if ($datos->rol == '1') { // Administrador
+                                header("Location: data/index.php");
+                            } elseif ($datos->rol == '2') { // Capturista
+                                header("Location: data/inicio.php");
+                            }
                             exit();
                         } else {
                             echo '<div class="error-msg"><i class="fa fa-times-circle"></i> Contraseña incorrecta.</div>';
