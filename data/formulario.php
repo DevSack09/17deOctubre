@@ -55,9 +55,7 @@ if (empty($_SESSION["idusuario"])) {
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated" aria-labelledby="userInfo">
                             <div class="dropdown-header text-gray-700">
-                                <h6 class="text-uppercase font-weight-bold"><?php echo $nombreCompleto; ?></h6><small
-                                    align='right'><?php echo $nombreArea; ?></small><br><small
-                                    align='right'><b><?php echo $rolDescripcion; ?></b></small>
+                                <h6 class="text-uppercase font-weight-bold"><?php echo $nombreCompleto; ?></h6>
                             </div>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../controlador/controlador_cerrar.php">Cerrar Sesión</a>
@@ -87,21 +85,31 @@ if (empty($_SESSION["idusuario"])) {
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form class="g-3 needs-validation" enctype="multipart/form-data">
+                                <form class="g-3 needs-validation" id="formRegistro"
+                                    action="../controlador/controlador_form.php" method="post"
+                                    enctype="multipart/form-data">
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label" for="curp">CURP <span class="required">*</span></label>
                                         <div class="input-icon">
                                             <i class="fas fa-id-card"></i>
-                                            <input class="form-control" id="curp" type="text"
+                                            <input class="form-control" id="curp" name="curp" type="text"
                                                 placeholder="Ej. RAMJ920313HDFRMR01" required minlength="18" maxlength="18"
-                                                data-validacion-manual="true">
+                                                data-validacion-manual="true" onblur="validarCurp()">
                                         </div>
                                         <a href="https://www.gob.mx/curp/" target="_blank">Si no conoces tu CURP, haz clic
                                             aquí para obtenerla</a>
+                                        <div id="curp-feedback" class="text-danger mt-2" style="display: none;">
+                                            <!-- Mensaje de error se mostrará aquí -->
+                                        </div>
                                         <div class="valid-feedback">Muy bien!</div>
                                         <div class="invalid-feedback">Por favor, introduzca su CURP.</div>
-                                        <div class="invalid-feedback min-max-length">El CURP debe tener 18 caracteres.</div>
                                     </div>
+
+                                    <!-- Alertas -->
+                                    <div id="alert-container" style="position: relative; margin-top: 20px;">
+                                        <!-- Aquí se mostrarán las alertas -->
+                                    </div>
+
                                     <div class="accordion" id="accordionExample">
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingDatosPersonales">
@@ -121,7 +129,8 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="input-icon">
                                                                 <i class="fas fa-user-tag"></i>
                                                                 <input class="form-control" id="apellidopaterno" type="text"
-                                                                    placeholder="Ej. Ramirez" required>
+                                                                    placeholder="Ej. Ramirez" name="apellidopaterno"
+                                                                    disabled>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su apellido
@@ -134,7 +143,7 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="input-icon">
                                                                 <i class="fas fa-user-tag"></i>
                                                                 <input class="form-control" id="apellidomaterno" type="text"
-                                                                    placeholder="Ej. Pérez">
+                                                                    placeholder="Ej. Pérez" name="apellidomaterno" disabled>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su apellido
@@ -147,7 +156,7 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="input-icon">
                                                                 <i class="fas fa-user"></i>
                                                                 <input class="form-control" id="nombre" type="text"
-                                                                    placeholder="Ej. Juan" required>
+                                                                    placeholder="Ej. Juan" name="nombre" disabled>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su
@@ -163,7 +172,7 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="input-icon">
                                                                 <i class="fas fa-calendar-alt"></i>
                                                                 <input class="form-control" id="fechanacimiento" type="date"
-                                                                    required>
+                                                                    name="fechanacimiento" disabled>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su fecha de
@@ -176,8 +185,8 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="input-icon">
                                                                 <i class="fas fa-sort-numeric-up"></i>
                                                                 <input class="form-control" id="edad" type="text"
-                                                                    placeholder="Ej. 25" required minlength="2"
-                                                                    maxlength="2">
+                                                                    placeholder="Ej. 25" minlength="2" maxlength="2"
+                                                                    name="edad" disabled>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su edad.
@@ -187,912 +196,6 @@ if (empty($_SESSION["idusuario"])) {
                                                                 caracteres
                                                                 y
                                                                 ser mayor a 18 años.</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingDomicilio">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseDomicilio"
-                                                    aria-expanded="false" aria-controls="collapseDomicilio">
-                                                    Domicilio
-                                                </button>
-                                            </h2>
-                                            <div id="collapseDomicilio" class="accordion-collapse collapse"
-                                                aria-labelledby="headingDomicilio" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="calle">Calle <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-road"></i>
-                                                                <input class="form-control" id="calle" type="text"
-                                                                    placeholder="Ej. Reforma" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su calle.
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label class="form-label" for="numeroExterior">No. Exterior
-                                                                <span class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-door-open"></i>
-                                                                <input class="form-control" id="numeroExterior" type="text"
-                                                                    placeholder="Ej. 123" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca el número
-                                                                exterior.</div>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label class="form-label" for="numeroInterior">No.
-                                                                Interior</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-door-closed"></i>
-                                                                <input class="form-control" id="numeroInterior" type="text"
-                                                                    placeholder="Ej. 4B">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca el número
-                                                                interior.</div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="colonia">Colonia <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-city"></i>
-                                                                <input class="form-control" id="colonia" type="text"
-                                                                    placeholder="Ej. Centro" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su colonia.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="cp">Código Postal <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-mail-bulk"></i>
-                                                                <input class="form-control" id="cp" type="text"
-                                                                    placeholder="Ej. 42000" required minlength="5"
-                                                                    maxlength="5">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su código
-                                                                postal.</div>
-                                                            <div class="invalid-feedback min-max-length">El código postal
-                                                                debe tener 5 dígitos.</div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="estado">Estado<span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-map-marker-alt"></i>
-                                                                <select class="form-control" id="estado" disabled>
-                                                                    <option value="HIDALGO" selected>HIDALGO</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="municipio">Municipio <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-map"></i>
-                                                                <select class="form-control" id="municipio" required>
-                                                                    <option value="">Seleccione un municipio</option>
-                                                                    <option value="Cardonal">Cardonal</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, seleccione un
-                                                                municipio.</div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="localidad">Localidad <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-map-pin"></i>
-                                                                <input class="form-control" id="localidad" type="text"
-                                                                    placeholder="Ej. Pachuca de Soto" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su
-                                                                localidad.</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Estudios Section -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingEstudios">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseEstudios"
-                                                    aria-expanded="false" aria-controls="collapseEstudios">
-                                                    Estudios
-                                                </button>
-                                            </h2>
-                                            <div id="collapseEstudios" class="accordion-collapse collapse"
-                                                aria-labelledby="headingEstudios" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <!-- Último grado de estudios -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="gradoEstudios">¿Último grado de
-                                                                estudios que concluyó? <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-graduation-cap"></i>
-                                                                <select class="form-control" id="gradoEstudios" required>
-                                                                    <option value="">Seleccione una opción</option>
-                                                                    <option value="secundaria">Secundaria</option>
-                                                                    <option value="bachillerato">Bachillerato</option>
-                                                                    <option value="licenciatura">Licenciatura</option>
-                                                                    <option value="maestria">Maestría</option>
-                                                                    <option value="doctorado">Doctorado</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, seleccione un grado de
-                                                                estudios.</div>
-                                                        </div>
-
-                                                        <!-- Ocupación actual -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="ocupacionActual">¿Cuál es su
-                                                                ocupación actual? <span class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-briefcase"></i>
-                                                                <input class="form-control" id="ocupacionActual" type="text"
-                                                                    placeholder="Ej. Profesor" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su ocupación
-                                                                actual.</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Estudios que cursa actualmente y/o cargo que desempeña -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingEstudiosActuales">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseEstudiosActuales"
-                                                    aria-expanded="false" aria-controls="collapseEstudiosActuales">
-                                                    Estudios que cursa actualmente y/o cargo que desempeña
-                                                </button>
-                                            </h2>
-                                            <div id="collapseEstudiosActuales" class="accordion-collapse collapse"
-                                                aria-labelledby="headingEstudiosActuales"
-                                                data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <!-- Grado Actual -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="gradoActual">Grado</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-layer-group"></i>
-                                                                <input class="form-control" id="gradoActual" type="text"
-                                                                    placeholder="Ej. Tercer semestre">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Campo no válido.</div>
-                                                        </div>
-
-                                                        <!-- Estudios Actuales -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label"
-                                                                for="estudiosActuales">Estudios</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-book"></i>
-                                                                <input class="form-control" id="estudiosActuales"
-                                                                    type="text" placeholder="Ej. Derecho">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Campo no válido.</div>
-                                                        </div>
-
-                                                        <!-- Cargo Actual -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="cargoActual">Cargo</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-user-tie"></i>
-                                                                <input class="form-control" id="cargoActual" type="text"
-                                                                    placeholder="Ej. Asistente administrativo">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Campo no válido.</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Centro de Estudios o Lugar de Trabajo -->
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="centroEstudiosTrabajo">Nombre del
-                                                                centro de estudios y/o lugar de trabajo <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-school"></i>
-                                                                <input class="form-control" id="centroEstudiosTrabajo"
-                                                                    type="text"
-                                                                    placeholder="Ej. Universidad Autónoma de Hidalgo"
-                                                                    required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca Nombre del
-                                                                centro de estudios y/o lugar de trabajo.</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Datos de contacto -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingDatosContacto">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseDatosContacto"
-                                                    aria-expanded="false" aria-controls="collapseDatosContacto">
-                                                    Datos de contacto
-                                                </button>
-                                            </h2>
-                                            <div id="collapseDatosContacto" class="accordion-collapse collapse"
-                                                aria-labelledby="headingDatosContacto" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <!-- Correo Electrónico -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="correo">Correo electrónico <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-envelope"></i>
-                                                                <input class="form-control" id="correo" type="email"
-                                                                    placeholder="Ej. ejemplo@correo.com" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca un correo
-                                                                válido.</div>
-                                                        </div>
-
-                                                        <!-- Número Fijo -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="numerofijo">Número fijo</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-phone"></i>
-                                                                <input class="form-control" id="numerofijo" type="text"
-                                                                    placeholder="Ej. XXXXXXXXXX" minlength="10"
-                                                                    maxlength="10">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca un número
-                                                                válido.</div>
-                                                        </div>
-
-                                                        <!-- Confirmar Número Fijo -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="confirmarnumerofijo">Confirmar
-                                                                número fijo</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-phone-volume"></i>
-                                                                <input class="form-control" id="confirmarnumerofijo"
-                                                                    type="text" placeholder="Confirme su número fijo"
-                                                                    minlength="10" maxlength="10">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Los números fijos no coinciden.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <!-- Número Móvil -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="numeromovil">Número móvil <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-mobile-alt"></i>
-                                                                <input class="form-control" id="numeromovil" type="text"
-                                                                    placeholder="Ej. XXXXXXXXXX" required minlength="10"
-                                                                    maxlength="10">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su número
-                                                                móvil.</div>
-                                                        </div>
-
-                                                        <!-- Confirmar Número Móvil -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="confirmarnumeromovil">Confirmar
-                                                                número móvil <span class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-check-circle"></i>
-                                                                <input class="form-control" id="confirmarnumeromovil"
-                                                                    type="text" placeholder="Confirme su número móvil"
-                                                                    required minlength="10" maxlength="10">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Los números móviles no coinciden.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Redes Sociales Section -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingRedesSociales">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseRedesSociales"
-                                                    aria-expanded="false" aria-controls="collapseRedesSociales">
-                                                    Redes sociales
-                                                </button>
-                                            </h2>
-                                            <div id="collapseRedesSociales" class="accordion-collapse collapse"
-                                                aria-labelledby="headingRedesSociales" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <!-- Facebook -->
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="facebook">Facebook</label>
-                                                            <div class="input-icon">
-                                                                <i class="fab fa-facebook-f"></i>
-                                                                <input class="form-control" id="facebook" type="text"
-                                                                    placeholder="Ej. facebook.com/tuusuario">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                        </div>
-
-                                                        <!-- TikTok -->
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="tiktok">TikTok</label>
-                                                            <div class="input-icon">
-                                                                <i class="fab fa-tiktok"></i>
-                                                                <input class="form-control" id="tiktok" type="text"
-                                                                    placeholder="Ej. tiktok.com/@tuusuario">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                        </div>
-
-                                                        <!-- Instagram -->
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="instagram">Instagram</label>
-                                                            <div class="input-icon">
-                                                                <i class="fab fa-instagram"></i>
-                                                                <input class="form-control" id="instagram" type="text"
-                                                                    placeholder="Ej. instagram.com/tuusuario">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                        </div>
-
-                                                        <!-- Otra red social -->
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="otra">Otra</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-globe"></i>
-                                                                <input class="form-control" id="otra" type="text"
-                                                                    placeholder="Otra red social o enlace">
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Ensayo Section -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingEnsayo">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseEnsayo"
-                                                    aria-expanded="false" aria-controls="collapseEnsayo">
-                                                    Ensayo
-                                                </button>
-                                            </h2>
-                                            <div id="collapseEnsayo" class="accordion-collapse collapse"
-                                                aria-labelledby="headingEnsayo" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <!-- Seudónimo -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="seudonimo">Seudónimo con el que
-                                                                se identificará durante el desarrollo de este concurso:
-                                                                <span class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-user-secret"></i>
-                                                                <input class="form-control" id="seudonimo" name="seudonimo"
-                                                                    type="text" placeholder="Ej. PlumaLibre" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su
-                                                                seudónimo.</div>
-                                                        </div>
-
-                                                        <!-- Título del Ensayo -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="titulo_ensayo">Título del Ensayo
-                                                                <span class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-pen-nib"></i>
-                                                                <input class="form-control" id="titulo_ensayo"
-                                                                    name="titulo_ensayo" type="text"
-                                                                    placeholder="Título de tu ensayo" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca el título
-                                                                del ensayo.</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <!-- Categoría -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="categoria">Categoría en la que
-                                                                concursas <span class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-list"></i>
-                                                                <select class="form-control" id="categoria" name="categoria"
-                                                                    required>
-                                                                    <option value="" disabled selected>Seleccione una
-                                                                        categoría</option>
-                                                                    <option value="Letras jóvenes">Letras jóvenes (15-19
-                                                                        años)</option>
-                                                                    <option value="Letras contemporáneas">Letras
-                                                                        contemporáneas (20-29 años)</option>
-                                                                    <option value="Letras trascendencia">Letras
-                                                                        trascendencia (30 años en adelante)</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, seleccione una
-                                                                categoría.</div>
-                                                        </div>
-
-                                                        <!-- Archivo del Ensayo -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="archivo_ensayo">Cargue su ensayo
-                                                                en formato PDF <span class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-file-pdf"></i>
-                                                                <input class="form-control" id="archivo_ensayo"
-                                                                    name="archivo_ensayo" type="file" accept=".pdf"
-                                                                    required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue un archivo PDF.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Carga de documentos: Participantes mayores de edad -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingDocumentosAdultos">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseDocumentosAdultos"
-                                                    aria-expanded="false" aria-controls="collapseDocumentosAdultos">
-                                                    Carga de documentos: Participantes mayores de edad
-                                                </button>
-                                            </h2>
-                                            <div id="collapseDocumentosAdultos" class="accordion-collapse collapse"
-                                                aria-labelledby="headingDocumentosAdultos"
-                                                data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <!-- Credencial para Votar -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="credencial_votar">
-                                                                Credencial para Votar, o en su caso, el Comprobante del
-                                                                Trámite para obtenerla junto con otra Identificación Oficial
-                                                                Vigente y Comprobante de domicilio: <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-id-card"></i>
-                                                                <input class="form-control" id="credencial_votar"
-                                                                    name="credencial_votar" type="file"
-                                                                    accept=".pdf,.jpg,.png" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue el archivo
-                                                                solicitado.</div>
-                                                        </div>
-
-                                                        <!-- Declaración de Originalidad -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="declaracion_originalidad">
-                                                                Declaración de Originalidad y Cesión de Derechos: <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-file-signature"></i>
-                                                                <input class="form-control" id="declaracion_originalidad"
-                                                                    name="declaracion_originalidad" type="file"
-                                                                    accept=".pdf" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue el archivo
-                                                                solicitado.</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <!-- Formato para Otorgar Consentimiento Expreso -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="consentimiento_expreso_adultos">
-                                                                Formato para Otorgar Consentimiento Expreso: <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-file-alt"></i>
-                                                                <input class="form-control"
-                                                                    id="consentimiento_expreso_adultos"
-                                                                    name="consentimiento_expreso_adultos" type="file"
-                                                                    accept=".pdf" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue el archivo
-                                                                solicitado.</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Carga de documentos: Participantes menores de edad -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingDocumentosMenores">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseDocumentosMenores"
-                                                    aria-expanded="false" aria-controls="collapseDocumentosMenores">
-                                                    Carga de documentos: Participantes menores de edad
-                                                </button>
-                                            </h2>
-                                            <div id="collapseDocumentosMenores" class="accordion-collapse collapse"
-                                                aria-labelledby="headingDocumentosMenores"
-                                                data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <!-- Identificación con fotografía -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="identificacion_fotografia">
-                                                                Identificación con fotografía (credencial de estudiante
-                                                                vigente u otra): <span class="required">*</span>
-                                                            </label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-id-badge"></i>
-                                                                <input class="form-control" id="identificacion_fotografia"
-                                                                    name="identificacion_fotografia" type="file"
-                                                                    accept=".pdf,.jpg,.png" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue el archivo
-                                                                solicitado.</div>
-                                                        </div>
-
-                                                        <!-- Carta de Autorización -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="carta_autorizacion">
-                                                                Carta de Autorización, debidamente requisitada y firmada:
-                                                                <span class="required">*</span>
-                                                            </label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-file-signature"></i>
-                                                                <input class="form-control" id="carta_autorizacion"
-                                                                    name="carta_autorizacion" type="file" accept=".pdf"
-                                                                    required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue el archivo
-                                                                solicitado.</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <!-- Declaración de Originalidad y Cesión de Derechos -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label"
-                                                                for="declaracion_originalidad_menores">
-                                                                Carta de Declaración de Originalidad y Cesión de Derechos,
-                                                                debidamente requisitada y firmada: <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-file-signature"></i>
-                                                                <input class="form-control"
-                                                                    id="declaracion_originalidad_menores"
-                                                                    name="declaracion_originalidad_menores" type="file"
-                                                                    accept=".pdf" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue el archivo
-                                                                solicitado.</div>
-                                                        </div>
-
-                                                        <!-- Comprobante de Domicilio del Tutor -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="comprobante_domicilio_tutor">
-                                                                Comprobante de Domicilio (Vigente) de la Madre, Padre,
-                                                                Persona Tutora o Cuidadora: <span class="required">*</span>
-                                                            </label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-home"></i>
-                                                                <input class="form-control" id="comprobante_domicilio_tutor"
-                                                                    name="comprobante_domicilio_tutor" type="file"
-                                                                    accept=".pdf,.jpg,.png" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue el archivo
-                                                                solicitado.</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <!-- Formato para Otorgar Consentimiento Expreso -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="consentimiento_expreso_menores">
-                                                                Formato para Otorgar Consentimiento Expreso, debidamente
-                                                                requisitado y firmado: <span class="required">*</span>
-                                                            </label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-file-alt"></i>
-                                                                <input class="form-control"
-                                                                    id="consentimiento_expreso_menores"
-                                                                    name="consentimiento_expreso_menores" type="file"
-                                                                    accept=".pdf" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue el archivo
-                                                                solicitado.</div>
-                                                        </div>
-
-                                                        <!-- INE del Tutor -->
-                                                        <div class="col-md-6">
-                                                            <label class="form-label" for="ine_tutor">
-                                                                INE de la persona que firma la Carta de Autorización, la
-                                                                Carta de Declaración de Originalidad y Cesión de Derechos y
-                                                                el Formato para Otorgar Consentimiento Expreso: <span
-                                                                    class="required">*</span>
-                                                            </label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-id-card"></i>
-                                                                <input class="form-control" id="ine_tutor" name="ine_tutor"
-                                                                    type="file" accept=".pdf,.jpg,.png" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, cargue el archivo
-                                                                solicitado.</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Acciones afirmativas -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingAccionesAfirmativas">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseAccionesAfirmativas"
-                                                    aria-expanded="false" aria-controls="collapseAccionesAfirmativas">
-                                                    Acciones afirmativas
-                                                </button>
-                                            </h2>
-                                            <div id="collapseAccionesAfirmativas" class="accordion-collapse collapse"
-                                                aria-labelledby="headingAccionesAfirmativas"
-                                                data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <!-- Persona con discapacidad -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label d-block">¿Es una persona con
-                                                                discapacidad? <span class="required">*</span></label>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="discapacidad" id="discapacidad_si" value="sí"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="discapacidad_si">Sí</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="discapacidad" id="discapacidad_no" value="no"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="discapacidad_no">No</label>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-
-                                                        <!-- ¿Cuál es la discapacidad? -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="discapacidad_cual">¿Cuál?</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-wheelchair"></i>
-                                                                <input type="text" class="form-control"
-                                                                    id="discapacidad_cual" name="discapacidad_cual"
-                                                                    required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-
-                                                        <!-- Tipo de discapacidad -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="tipo_discapacidad">¿De qué tipo
-                                                                es?</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-universal-access"></i>
-                                                                <select class="form-control" id="tipo_discapacidad"
-                                                                    name="tipo_discapacidad" required>
-                                                                    <option value="" disabled selected>Seleccione una opción
-                                                                    </option>
-                                                                    <option value="física o motora">Física o motora</option>
-                                                                    <option value="sensorial">Sensorial</option>
-                                                                    <option value="intelectual">Intelectual</option>
-                                                                    <option value="mental">Mental</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <!-- Habla lengua indígena -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label d-block">¿Habla alguna lengua indígena?
-                                                                <span class="required">*</span></label>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="lengua_indigena" id="lengua_si" value="sí"
-                                                                    required>
-                                                                <label class="form-check-label" for="lengua_si">Sí</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="lengua_indigena" id="lengua_no" value="no"
-                                                                    required>
-                                                                <label class="form-check-label" for="lengua_no">No</label>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-
-                                                        <!-- ¿Cuál es la lengua? -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="lengua_cual">¿Cuál?</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-language"></i>
-                                                                <input type="text" class="form-control" id="lengua_cual"
-                                                                    name="lengua_cual" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-4">
-                                                        <!-- Auto adscripción indígena -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label d-block">¿Se auto adscribe como
-                                                                indígena? <span class="required">*</span></label>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="auto_indigena" id="auto_indigena_si" value="sí"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="auto_indigena_si">Sí</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="auto_indigena" id="auto_indigena_no" value="no"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="auto_indigena_no">No</label>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-
-                                                        <!-- Comunidad indígena -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label d-block">¿Forma parte de una comunidad
-                                                                indígena? <span class="required">*</span></label>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="comunidad_indigena" id="comunidad_si" value="sí"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="comunidad_si">Sí</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="comunidad_indigena" id="comunidad_no" value="no"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="comunidad_no">No</label>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-
-                                                        <!-- ¿Cuál es la comunidad? -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="comunidad_cual">¿Cuál?</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-users"></i>
-                                                                <input type="text" class="form-control" id="comunidad_cual"
-                                                                    name="comunidad_cual" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <!-- Diversidad sexual y de género -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label d-block">¿Se autoadscribe como persona
-                                                                de la diversidad sexual y de género? <span
-                                                                    class="required">*</span></label>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="diversidad" id="diversidad_si" value="sí"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="diversidad_si">Sí</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="diversidad" id="diversidad_no" value="no"
-                                                                    required>
-                                                                <label class="form-check-label"
-                                                                    for="diversidad_no">No</label>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-
-                                                        <!-- ¿Cuál es la diversidad? -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="diversidad_cual">¿Cuál?</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-rainbow"></i>
-                                                                <input type="text" class="form-control" id="diversidad_cual"
-                                                                    name="diversidad_cual" required>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-3">
-                                                        <!-- Medio convocatoria -->
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="medio_convocatoria">¿Cómo se
-                                                                enteró de la convocatoria? <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-bullhorn"></i>
-                                                                <select class="form-control" id="medio_convocatoria"
-                                                                    name="medio_convocatoria" required>
-                                                                    <option value="" disabled selected>Seleccione una opción
-                                                                    </option>
-                                                                    <option value="pagina web">Página web</option>
-                                                                    <option value="rrss">RRSS</option>
-                                                                    <option value="cartel">Cartel</option>
-                                                                    <option value="platica informativa">Plática informativa
-                                                                    </option>
-                                                                    <option value="publicacion">Publicación</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Este campo es obligatorio.</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1115,7 +218,8 @@ if (empty($_SESSION["idusuario"])) {
                                                         <div class="col-md-12">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="terminos_privacidad" required>
+                                                                    id="terminos_privacidad" name="terminos_privacidad"
+                                                                    disabled>
                                                                 <label class="form-check-label" for="terminos_privacidad">
                                                                     He leído y comprendo los términos del
                                                                     <a href="ruta_al_archivo/aviso_de_privacidad_integral.pdf"
@@ -1135,7 +239,8 @@ if (empty($_SESSION["idusuario"])) {
                                                         <div class="col-md-12">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="terminos_consentimiento" required>
+                                                                    id="terminos_consentimiento"
+                                                                    name="terminos_consentimiento" disabled>
                                                                 <label class="form-check-label"
                                                                     for="terminos_consentimiento">
                                                                     He leído y comprendo los términos de
@@ -1155,9 +260,13 @@ if (empty($_SESSION["idusuario"])) {
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-end gap-2 mt-4">
-                                        <button type="button" class="btn btn-warning">Actualizar</button>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
-                                        <button type="button" class="btn btn-danger">Finalizar</button>
+                                        <button type="submit" id="btnGuardar" class="btn btn-primary"
+                                            style="display: none;">Guardar</button>
+                                        <button type="button" id="btnActualizar" class="btn btn-warning"
+                                            style="display: none;">Actualizar</button>
+                                        <button type="button" id="btnCancelar" class="btn btn-secondary"
+                                            style="display: none;">Cancelar</button>
+                                        <button type="button" id="btnFinalizar" class="btn btn-danger">Finalizar</button>
                                     </div>
                                 </form>
                             </div>
@@ -1183,9 +292,10 @@ if (empty($_SESSION["idusuario"])) {
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" type="text/javascript"></script>
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Main Theme JS File-->
         <script src="js/theme.js"></script>
-        <script src="js/forms-validation.js"></script>
+        <!-- <script src="js/forms-validation.js"></script> -->
         <!-- Prism for syntax highlighting-->
         <script src="vendor/prismjs/prism.js"></script>
         <script src="vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
@@ -1200,9 +310,401 @@ if (empty($_SESSION["idusuario"])) {
                 'right-trim': true,
             }); 
         </script>
+        <script></script>
+
+        <!-- validación para la curp-->
+        <script>
+            function mostrarAlerta(tipo, mensaje, temporal = true) {
+                const alertContainer = document.getElementById('alert-container');
+
+                alertContainer.innerHTML = '';
+
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${tipo} fade show`;
+                alert.style.animation = 'fadeIn 0.5s';
+                alert.innerHTML = `
+            <span>${mensaje}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+                alertContainer.appendChild(alert);
+
+                if (temporal) {
+                    setTimeout(() => {
+                        alert.style.animation = 'fadeOut 0.5s';
+                        setTimeout(() => alert.remove(), 500);
+                    }, 10000);
+                }
+            }
+
+            function bloquearFormulario() {
+                const formFields = document.querySelectorAll('#formRegistro input, #formRegistro select, #formRegistro button');
+                formFields.forEach((field) => {
+                    if (!field.classList.contains('accordion-button') && field.id !== 'curp') {
+                        field.disabled = true;
+                    }
+                });
+                document.getElementById('btnGuardar').style.display = 'none';
+                document.getElementById('btnActualizar').style.display = 'none';
+            }
+
+            function habilitarFormulario() {
+                const formFields = document.querySelectorAll('#formRegistro input, #formRegistro select, #formRegistro button');
+                formFields.forEach((field) => {
+                    if (!field.classList.contains('accordion-button')) {
+                        field.disabled = false;
+                    }
+                });
+                document.getElementById('btnGuardar').style.display = 'block';
+                document.getElementById('btnActualizar').style.display = 'none';
+            }
+
+            function validarCurp() {
+                const curpInput = document.getElementById('curp');
+                const feedback = document.getElementById('curp-feedback');
+
+                const curpRegex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z\d]{2}$/i;
+
+                if (!curpInput.value.trim()) {
+                    mostrarAlerta('warning', 'Por favor, introduzca su CURP.');
+                    curpInput.focus();
+                    bloquearFormulario();
+                    return;
+                }
+
+                if (curpInput.value.trim().length !== 18) {
+                    mostrarAlerta('warning', 'El CURP debe tener exactamente 18 caracteres.');
+                    curpInput.focus();
+                    bloquearFormulario();
+                    return;
+                }
+
+                if (!curpRegex.test(curpInput.value.trim())) {
+                    mostrarAlerta('warning', 'El CURP no tiene el formato correcto.');
+                    curpInput.focus();
+                    bloquearFormulario();
+                    return;
+                }
+
+                feedback.style.display = 'none';
+
+                mostrarAlerta('info', '<i class="fas fa-spinner fa-spin"></i> Validando CURP...', false);
+
+                setTimeout(() => {
+                    fetch('../controlador/validar_curp.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ curp: curpInput.value }),
+                    })
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error('Error en la respuesta del servidor');
+                            }
+                            return response.json();
+                        })
+                        .then((data) => {
+                            document.querySelector('#alert-container .alert').remove();
+
+                            if (data.exists) {
+                                feedback.style.display = 'block';
+                                feedback.textContent = 'El CURP ya está registrado. Por favor, use otro.';
+                                bloquearFormulario();
+                                mostrarAlerta('danger', 'El CURP ya está registrado. Por favor, intente con otro.');
+                            } else {
+                                feedback.style.display = 'none';
+                                habilitarFormulario();
+                                mostrarAlerta('success', 'El CURP es válido. Puede continuar con el registro.');
+                            }
+                        })
+                        .catch((error) => {
+                            document.querySelector('#alert-container .alert').remove();
+
+                            console.error('Error al validar el CURP:', error);
+                            mostrarAlerta('danger', 'Hubo un error al validar el CURP. Intente nuevamente.');
+                            bloquearFormulario();
+                        });
+                }, 2000);
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                bloquearFormulario();
+            });
+
+            document.getElementById('curp').addEventListener('input', (event) => {
+                const curpInput = event.target.value.trim();
+
+                if (curpInput === '' || curpInput.length !== 18) {
+                    bloquearFormulario();
+                }
+            });
+        </script>
+        <!-- Guardar registros-->
+        <script>
+            $(document).ready(function () {
+                function bloquearFormulario() {
+                    const formFields = $('#formRegistro input, #formRegistro select, #formRegistro button');
+                    formFields.each(function () {
+                        if (!$(this).hasClass('accordion-button')) {
+                            $(this).prop('disabled', true);
+                        }
+                    });
+                }
+
+                $("#formRegistro").submit(function (event) {
+                    event.preventDefault();
+
+                    const curpField = $("#curp");
+                    curpField.prop("disabled", false);
+
+                    const feedback = document.getElementById("curp-feedback");
+                    if (feedback.style.display === "block") {
+                        Swal.fire("Error", "Por favor, corrija la CURP antes de continuar.", "error");
+                        curpField.prop("disabled", true);
+                        return;
+                    }
+
+                    const formData = $(this).serialize();
+
+                    Swal.fire({
+                        title: "¿Estás seguro?",
+                        text: "¿Deseas guardar los cambios realizados?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sí, guardar",
+                        cancelButtonText: "Cancelar",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: "../controlador/controlador_form.php",
+                                type: "POST",
+                                data: formData,
+                                dataType: "json",
+                                beforeSend: function () {
+                                    Swal.fire({
+                                        title: "Guardando...",
+                                        text: "Por favor, espera un momento.",
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                            Swal.showLoading();
+                                        },
+                                    });
+                                },
+                                success: function (response) {
+                                    Swal.close();
+                                    if (response.status === "success") {
+                                        Swal.fire({
+                                            title: "¡Éxito!",
+                                            text: response.message,
+                                            icon: "success",
+                                            confirmButtonText: "OK",
+                                            allowOutsideClick: false,
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire("Error", response.message, "error");
+                                    }
+                                },
+                                error: function () {
+                                    Swal.close();
+                                    Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
+                                },
+                                complete: function () {
+                                    curpField.prop("disabled", true);
+                                },
+                            });
+                        }
+                    });
+                });
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    bloquearFormulario();
+                });
+            });
+        </script>
+        <!-- obtener información -->
+        <script>
+            $(document).ready(function () {
+                const formFields = $('#formRegistro input, #formRegistro select, #formRegistro button');
+                const curpField = $('#curp');
+                let originalFormData = {};
 
 
+                function bloquearFormulario() {
+                    formFields.each(function () {
+                        if (!$(this).hasClass('accordion-button') && this.id !== 'btnActualizar') {
+                            $(this).prop('disabled', true);
+                        }
+                    });
+                    $('#btnActualizar').show().prop('disabled', false);
+                    $('#btnGuardar, #btnCancelar').hide();
+                }
 
+                function habilitarFormulario() {
+                    formFields.each(function () {
+                        if (!$(this).hasClass('accordion-button')) {
+                            $(this).prop('disabled', false);
+                        }
+                    });
+                    curpField.prop('disabled', true);
+                    $('#btnGuardar, #btnCancelar').show();
+                    $('#btnActualizar').hide();
+                }
+
+                function guardarValoresOriginales() {
+                    originalFormData = {};
+                    $('#formRegistro')
+                        .serializeArray()
+                        .forEach((field) => {
+                            originalFormData[field.name] = field.value;
+                        });
+                }
+
+                function restaurarValoresOriginales() {
+                    for (const name in originalFormData) {
+                        $(`[name="${name}"]`).val(originalFormData[name]);
+                    }
+                }
+
+                function cargarDatos() {
+                    $.ajax({
+                        url: "../controlador/get_registration.php",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.status === "success") {
+                                const data = response.data;
+
+                                $('#curp').val(data.curp);
+                                $('#nombre').val(data.nombre);
+                                $('#apellidopaterno').val(data.apellidoP);
+                                $('#apellidomaterno').val(data.apellidoM);
+                                $('#fechanacimiento').val(data.fecha_nacimiento);
+                                $('#edad').val(data.edad);
+                                $('#terminos_privacidad').prop('checked', data.acepta_privacidad == 1);
+                                $('#terminos_consentimiento').prop('checked', data.acepta_consentimiento == 1);
+
+                                guardarValoresOriginales();
+                                bloquearFormulario();
+                            } else {
+                                console.error(response.message);
+                            }
+                        },
+                        error: function () {
+                            console.error("Error al obtener los datos del registro.");
+                        }
+                    });
+                }
+
+                $('#btnActualizar').click(function (event) {
+                    event.preventDefault();
+
+                    Swal.fire({
+                        title: "¿Estás seguro?",
+                        text: "¿Deseas habilitar los campos para actualizar la información?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sí, actualizar",
+                        cancelButtonText: "Cancelar",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            habilitarFormulario();
+                        }
+                    });
+                });
+
+                $('#btnCancelar').click(function (event) {
+                    event.preventDefault();
+
+                    Swal.fire({
+                        title: "¿Estás seguro?",
+                        text: "¿Deseas cancelar la edición? Todos los cambios no guardados se perderán.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sí, cancelar",
+                        cancelButtonText: "Continuar editando",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            bloquearFormulario();
+                            Swal.fire(
+                                "Edición cancelada",
+                                "Has cancelado la edición del formulario.",
+                                "info"
+                            );
+                            location.reload();
+                        }
+                    });
+                });
+
+                $('#formRegistro').submit(function (event) {
+                    event.preventDefault();
+
+                    const formData = $(this).serialize();
+
+                    Swal.fire({
+                        title: "¿Estás seguro?",
+                        text: "¿Deseas guardar los cambios realizados?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sí, guardar",
+                        cancelButtonText: "Cancelar",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#btnGuardar').prop('disabled', true);
+                            Swal.fire({
+                                title: "Guardando...",
+                                text: "Por favor, espera un momento.",
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                },
+                            });
+
+                            $.ajax({
+                                url: "../controlador/controlador_form.php",
+                                type: "POST",
+                                data: formData,
+                                dataType: "json",
+                                success: function (response) {
+                                    Swal.close();
+                                    if (response.status === "success") {
+                                        Swal.fire({
+                                            title: "¡Éxito!",
+                                            text: response.message,
+                                            icon: "success",
+                                            confirmButtonText: "OK",
+                                            allowOutsideClick: false,
+                                        }).then(() => {
+                                            guardarValoresOriginales();
+                                            bloquearFormulario();
+                                        });
+                                    } else {
+                                        Swal.fire("Error", response.message, "error");
+                                    }
+                                },
+                                error: function () {
+                                    Swal.close();
+                                    Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
+                                },
+                                complete: function () {
+                                    $('#btnGuardar').prop('disabled', false);
+                                },
+                            });
+                        }
+                    });
+                });
+
+                cargarDatos();
+            });
+        </script>
     </body>
 
     </html>
