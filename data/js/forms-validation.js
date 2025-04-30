@@ -7,11 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
     "input[required], select[required], textarea[required]"
   );
   const totalRequired = () => {
-    // Calcular el número de campos requeridos que no están deshabilitados
     return Array.from(requiredFields).filter((field) => !field.disabled).length;
   };
 
-  // Lista de campos que solo deben aceptar números
   const numericFields = [
     "edad",
     "numeroExterior",
@@ -23,10 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
     "confirmarnumeromovil",
   ];
 
-  // Lista para rastrear los grupos de radio seleccionados
   const radioGroups = new Set();
 
-  // Referencias a los campos específicos
   const birthdateField = document.getElementById("fechanacimiento");
   const ageField = document.getElementById("edad");
   const phoneField = document.getElementById("numerofijo");
@@ -65,62 +61,61 @@ document.addEventListener("DOMContentLoaded", function () {
     "label[for='diversidad_cual']"
   );
 
-  const menoresSection = document.querySelector("#collapseDocumentosMenores"); // Sección para menores de edad
-  const mayoresSection = document.querySelector("#collapseDocumentosAdultos"); // Sección para mayores de edad
+  const menoresSection = document.querySelector("#collapseDocumentosMenores");
+  const mayoresSection = document.querySelector("#collapseDocumentosAdultos");
 
   const menoresHeader = document.querySelector("#headingDocumentosMenores");
   const mayoresHeader = document.querySelector("#headingDocumentosAdultos");
 
-  // Ocultar las secciones inicialmente
   menoresSection.classList.remove("show");
   mayoresSection.classList.remove("show");
   menoresHeader.style.display = "none";
   mayoresHeader.style.display = "none";
 
-  // Función para mostrar/ocultar secciones según la edad
   function toggleSectionsByAge(edad) {
     if (!isNaN(edad)) {
       if (edad <= 17) {
-        // Mostrar sección para menores de edad
         menoresHeader.style.display = "block";
         menoresSection.classList.add("show");
         mayoresHeader.style.display = "none";
         mayoresSection.classList.remove("show");
+        limpiarYDeshabilitarCampos(mayoresSection); // Limpia y deshabilita la sección mayores
+        habilitarCampos(menoresSection); // Habilita la sección menores
       } else if (edad >= 18) {
-        // Mostrar sección para mayores de edad
         mayoresHeader.style.display = "block";
         mayoresSection.classList.add("show");
         menoresHeader.style.display = "none";
         menoresSection.classList.remove("show");
+        limpiarYDeshabilitarCampos(menoresSection); // Limpia y deshabilita la sección menores
+        habilitarCampos(mayoresSection); // Habilita la sección mayores
       }
     } else {
-      // Si la edad es inválida, ocultar ambas secciones
       menoresHeader.style.display = "none";
       mayoresHeader.style.display = "none";
       menoresSection.classList.remove("show");
       mayoresSection.classList.remove("show");
+      limpiarYDeshabilitarCampos(menoresSection); // Limpia y deshabilita ambas secciones
+      limpiarYDeshabilitarCampos(mayoresSection);
     }
+    actualizarProgreso(); // Actualiza la barra de progreso
   }
 
-  // Escuchar cambios en el campo "Edad"
   ageField.addEventListener("input", () => {
     const edad = parseInt(ageField.value, 10);
     toggleSectionsByAge(edad);
   });
 
-  // Escuchar cambios en el campo "Fecha de Nacimiento"
   birthdateField.addEventListener("change", () => {
     const birthdateValue = birthdateField.value;
     if (birthdateValue) {
       const edad = calcularEdad(birthdateValue);
       ageField.value = edad >= 0 ? edad : "";
-      validarCampo(ageField); // Validar el campo de edad
-      toggleSectionsByAge(edad); // Activar lógica para mostrar/ocultar secciones
+      validarCampo(ageField);
+      toggleSectionsByAge(edad);
       actualizarProgreso();
     }
   });
 
-  // Función para calcular la edad a partir de la fecha de nacimiento
   function calcularEdad(fechaNacimiento) {
     const hoy = new Date();
     const nacimiento = new Date(fechaNacimiento);
@@ -134,7 +129,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return edad;
   }
 
-  // Función para habilitar o deshabilitar los campos de discapacidad
   function toggleDiscapacidadFields() {
     if (discapacidadSiField.checked) {
       discapacidadCualField.disabled = false;
@@ -151,7 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
     actualizarProgreso();
   }
 
-  // Función para habilitar o deshabilitar los campos de lengua indígena
   function toggleLenguaFields() {
     if (lenguaSiField.checked) {
       lenguaCualField.disabled = false;
@@ -163,7 +156,6 @@ document.addEventListener("DOMContentLoaded", function () {
     actualizarProgreso();
   }
 
-  // Función para habilitar o deshabilitar el campo ¿Cuál? de comunidad indígena
   function toggleComunidadCualField() {
     if (comunidadSiField.checked) {
       comunidadCualField.disabled = false;
@@ -175,7 +167,6 @@ document.addEventListener("DOMContentLoaded", function () {
     actualizarProgreso();
   }
 
-  // Función para habilitar o deshabilitar el campo ¿Cuál? de diversidad sexual y de género
   function toggleDiversidadCualField() {
     if (diversidadSiField.checked) {
       diversidadCualField.disabled = false;
@@ -187,7 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
     actualizarProgreso();
   }
 
-  // Función para limpiar y deshabilitar un campo
   function limpiarYDeshabilitarCampo(campo, label) {
     campo.value = "";
     campo.disabled = true;
@@ -196,7 +186,6 @@ document.addEventListener("DOMContentLoaded", function () {
     campo.classList.remove("is-valid", "is-invalid");
   }
 
-  // Función para agregar el asterisco de requerido
   function agregarAsterisco(label) {
     if (!label.querySelector(".required")) {
       const asterisco = document.createElement("span");
@@ -206,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Función para quitar el asterisco de requerido
   function quitarAsterisco(label) {
     const asterisco = label.querySelector(".required");
     if (asterisco) {
@@ -214,7 +202,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Escuchar cambios en los radio buttons para activar/desactivar los campos
   discapacidadSiField.addEventListener("change", toggleDiscapacidadFields);
   discapacidadNoField.addEventListener("change", toggleDiscapacidadFields);
 
@@ -227,7 +214,6 @@ document.addEventListener("DOMContentLoaded", function () {
   diversidadSiField.addEventListener("change", toggleDiversidadCualField);
   diversidadNoField.addEventListener("change", toggleDiversidadCualField);
 
-  // Escuchar cambios en Fecha de nacimiento para calcular Edad automáticamente
   if (birthdateField && ageField) {
     birthdateField.addEventListener("change", () => {
       const birthdateValue = birthdateField.value;
@@ -256,11 +242,9 @@ document.addEventListener("DOMContentLoaded", function () {
     actualizarProgreso();
   }
 
-  // Validar que número fijo y móvil coincidan con sus respectivas confirmaciones
   function validarConfirmacionTelefonos() {
     let isValid = true;
 
-    // Validar número fijo
     if (phoneField.value !== confirmPhoneField.value) {
       confirmPhoneField.classList.add("is-invalid");
       confirmPhoneField.classList.remove("is-valid");
@@ -270,7 +254,6 @@ document.addEventListener("DOMContentLoaded", function () {
       confirmPhoneField.classList.add("is-valid");
     }
 
-    // Validar número móvil
     if (mobileField.value !== confirmMobileField.value) {
       confirmMobileField.classList.add("is-invalid");
       confirmMobileField.classList.remove("is-valid");
@@ -382,16 +365,19 @@ document.addEventListener("DOMContentLoaded", function () {
     let completados = 0;
 
     requiredFields.forEach((field) => {
-      if (field.type === "radio") {
-        const groupName = field.name;
-        if (radioGroups.has(groupName)) {
+      if (!field.disabled) {
+        // Solo considera campos habilitados
+        if (field.type === "radio") {
+          const groupName = field.name;
+          if (radioGroups.has(groupName)) {
+            completados++;
+          }
+        } else if (
+          field.classList.contains("is-valid") ||
+          (field.type === "checkbox" && field.checked)
+        ) {
           completados++;
         }
-      } else if (
-        field.classList.contains("is-valid") ||
-        (field.type === "checkbox" && field.checked)
-      ) {
-        completados++;
       }
     });
 
@@ -400,7 +386,6 @@ document.addEventListener("DOMContentLoaded", function () {
     progressBar.setAttribute("aria-valuenow", porcentaje);
     progressBar.textContent = `${porcentaje}%`;
   }
-
   function calcularEdad(fechaNacimiento) {
     const hoy = new Date();
     const nacimiento = new Date(fechaNacimiento);
@@ -412,5 +397,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     return edad;
+  }
+
+  function limpiarYDeshabilitarCampos(section) {
+    const inputs = section.querySelectorAll("input, select, textarea");
+    inputs.forEach((input) => {
+      input.value = ""; // Limpia los valores
+      input.checked = false; // Desmarca checkboxes o radios
+      input.disabled = true; // Deshabilita los campos
+      input.required = false; // Quita el atributo required
+      input.classList.remove("is-valid", "is-invalid"); // Limpia las clases de validación
+    });
+  }
+
+  function habilitarCampos(section) {
+    const inputs = section.querySelectorAll("input, select, textarea");
+    inputs.forEach((input) => {
+      input.disabled = false; // Habilita los campos
+      if (input.hasAttribute("data-required")) {
+        input.required = true; // Restaura el atributo required si es necesario
+      }
+    });
   }
 });
