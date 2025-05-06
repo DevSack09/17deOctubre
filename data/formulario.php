@@ -266,7 +266,8 @@ if (empty($_SESSION["idusuario"])) {
                                             style="display: none;">Actualizar</button>
                                         <button type="button" id="btnCancelar" class="btn btn-secondary"
                                             style="display: none;">Cancelar</button>
-                                        <button type="button" id="btnFinalizar" class="btn btn-danger">Finalizar</button>
+                                        <button type="button" id="btnFinalizar" class="btn btn-danger"
+                                            style="display: none;">Finalizar</button>
                                     </div>
                                 </form>
                             </div>
@@ -310,7 +311,6 @@ if (empty($_SESSION["idusuario"])) {
                 'right-trim': true,
             }); 
         </script>
-        <script></script>
 
         <!-- validación para la curp-->
         <script>
@@ -531,7 +531,25 @@ if (empty($_SESSION["idusuario"])) {
                 const curpField = $('#curp');
                 let originalFormData = {};
 
+                // Función para bloquear completamente el formulario
+                function bloquearFormularioCompleto() {
+                    // Deshabilitar todos los campos del formulario, excepto los botones del acordeón
+                    $('#formRegistro :input').not('.accordion-button').prop('disabled', true);
 
+                    // Ocultar todos los botones
+                    $('#btnGuardar, #btnActualizar, #btnCancelar, #btnFinalizar').hide();
+
+                    // Mostrar una alerta indicando que el formulario ya está finalizado
+                    Swal.fire({
+                        title: "Formulario Finalizado",
+                        text: "Este formulario ya ha sido finalizado y no se puede modificar.",
+                        icon: "info",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false,
+                    });
+                }
+
+                // Función para bloquear el formulario
                 function bloquearFormulario() {
                     formFields.each(function () {
                         if (!$(this).hasClass('accordion-button') && this.id !== 'btnActualizar') {
@@ -540,19 +558,27 @@ if (empty($_SESSION["idusuario"])) {
                     });
                     $('#btnActualizar').show().prop('disabled', false);
                     $('#btnGuardar, #btnCancelar').hide();
+
+                    // Asegurarse de que el botón "Finalizar" siempre esté visible y habilitado
+                    $('#btnFinalizar').show().prop('disabled', false);
                 }
 
+                // Función para habilitar el formulario
                 function habilitarFormulario() {
                     formFields.each(function () {
                         if (!$(this).hasClass('accordion-button')) {
                             $(this).prop('disabled', false);
                         }
                     });
-                    curpField.prop('disabled', true);
+                    curpField.prop('disabled', true); // CURP siempre deshabilitado
                     $('#btnGuardar, #btnCancelar').show();
                     $('#btnActualizar').hide();
+
+                    // Asegurarse de que el botón "Finalizar" siempre esté visible y habilitado
+                    $('#btnFinalizar').show().prop('disabled', false);
                 }
 
+                // Función para guardar los valores originales
                 function guardarValoresOriginales() {
                     originalFormData = {};
                     $('#formRegistro')
@@ -562,12 +588,14 @@ if (empty($_SESSION["idusuario"])) {
                         });
                 }
 
+                // Función para restaurar los valores originales
                 function restaurarValoresOriginales() {
                     for (const name in originalFormData) {
                         $(`[name="${name}"]`).val(originalFormData[name]);
                     }
                 }
 
+                // Cargar datos del formulario
                 function cargarDatos() {
                     $.ajax({
                         url: "../controlador/get_registration.php",
@@ -577,6 +605,7 @@ if (empty($_SESSION["idusuario"])) {
                             if (response.status === "success") {
                                 const data = response.data;
 
+                                // Cargar los datos en los campos del formulario
                                 $('#curp').val(data.curp);
                                 $('#nombre').val(data.nombre);
                                 $('#apellidopaterno').val(data.apellidoP);
@@ -586,8 +615,17 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#terminos_privacidad').prop('checked', data.acepta_privacidad == 1);
                                 $('#terminos_consentimiento').prop('checked', data.acepta_consentimiento == 1);
 
+                                // Guardar los valores originales
                                 guardarValoresOriginales();
-                                bloquearFormulario();
+
+                                // Verificar el estado del formulario
+                                if (data.status == 1) {
+                                    // Bloquear el formulario si ya está finalizado
+                                    bloquearFormularioCompleto();
+                                } else {
+                                    // Habilitar el formulario si no está finalizado
+                                    bloquearFormulario();
+                                }
                             } else {
                                 console.error(response.message);
                             }
@@ -598,6 +636,7 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 }
 
+                // Botón "Actualizar"
                 $('#btnActualizar').click(function (event) {
                     event.preventDefault();
 
@@ -617,6 +656,7 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
+                // Botón "Cancelar"
                 $('#btnCancelar').click(function (event) {
                     event.preventDefault();
 
@@ -642,6 +682,7 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
+                // Formulario: Guardar cambios
                 $('#formRegistro').submit(function (event) {
                     event.preventDefault();
 
@@ -702,6 +743,80 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
+                // Botón "Finalizar"
+                $('#btnFinalizar').click(function (event) {
+                    event.preventDefault();
+
+                    // Validar que todos los campos obligatorios estén completos
+                    if (!$('#formRegistro')[0].checkValidity()) {
+                        Swal.fire({
+                            title: "Campos incompletos",
+                            text: "Por favor, complete todos los campos obligatorios antes de finalizar.",
+                            icon: "warning",
+                            confirmButtonText: "OK",
+                        });
+                        $('#formRegistro')[0].reportValidity(); // Resalta los campos inválidos
+                        return;
+                    }
+
+                    // Confirmar con el usuario si desea finalizar el formulario
+                    Swal.fire({
+                        title: "¿Estás seguro?",
+                        text: "Una vez finalizado, no podrás modificar el formulario.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sí, finalizar",
+                        cancelButtonText: "Cancelar",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Obtener el CURP del formulario
+                            const curp = $('#curp').val();
+
+                            // Enviar solicitud AJAX para guardar los datos y actualizar el estado
+                            $.ajax({
+                                url: "../controlador/finalizar_formulario.php", // Archivo PHP para finalizar el formulario
+                                type: "POST",
+                                data: { curp: curp },
+                                dataType: "json",
+                                beforeSend: function () {
+                                    Swal.fire({
+                                        title: "Finalizando...",
+                                        text: "Por favor, espera un momento.",
+                                        allowOutsideClick: false,
+                                        didOpen: () => {
+                                            Swal.showLoading();
+                                        },
+                                    });
+                                },
+                                success: function (response) {
+                                    Swal.close();
+                                    if (response.status === "success") {
+                                        Swal.fire({
+                                            title: "¡Éxito!",
+                                            text: response.message,
+                                            icon: "success",
+                                            confirmButtonText: "OK",
+                                            allowOutsideClick: false,
+                                        }).then(() => {
+                                            // Bloquear el formulario completamente
+                                            bloquearFormularioCompleto();
+                                        });
+                                    } else {
+                                        Swal.fire("Error", response.message, "error");
+                                    }
+                                },
+                                error: function () {
+                                    Swal.close();
+                                    Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
+                                },
+                            });
+                        }
+                    });
+                });
+
+                // Cargar datos iniciales
                 cargarDatos();
             });
         </script>
