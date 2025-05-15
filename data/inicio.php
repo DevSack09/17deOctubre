@@ -59,7 +59,9 @@ if (empty($_SESSION["idusuario"])) {
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated" aria-labelledby="userInfo">
                             <div class="dropdown-header text-gray-700">
-                                <h6 class="text-uppercase font-weight-bold"><?php echo $nombreCompleto; ?></h6>
+                                <h6 class="text-uppercase font-weight-bold"><?php echo $nombreCompleto; ?></h6><small
+                                    align='right'><?php echo $nombreArea; ?></small><br><small
+                                    align='right'><b><?php echo $rolDescripcion; ?></b></small>
                             </div>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../controlador/controlador_cerrar.php">Cerrar Sesión</a>
