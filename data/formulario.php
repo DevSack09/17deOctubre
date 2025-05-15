@@ -387,9 +387,9 @@ if (empty($_SESSION["idusuario"])) {
         </script>
         <!-- validación para la curp-->
         <script>
+            // ==================== FUNCIONES GENERALES ====================
             function mostrarAlerta(tipo, mensaje, temporal = true) {
                 const alertContainer = document.getElementById('alert-container');
-
                 alertContainer.innerHTML = '';
 
                 const alert = document.createElement('div');
@@ -397,7 +397,8 @@ if (empty($_SESSION["idusuario"])) {
                 alert.style.animation = 'fadeIn 0.5s';
                 alert.innerHTML = `
             <span>${mensaje}</span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
                 alertContainer.appendChild(alert);
 
                 if (temporal) {
@@ -409,106 +410,104 @@ if (empty($_SESSION["idusuario"])) {
             }
 
             function bloquearFormulario() {
-                const formFields = document.querySelectorAll('#formRegistro input, #formRegistro select, #formRegistro button');
-                formFields.forEach((field) => {
-                    if (!field.classList.contains('accordion-button') && field.id !== 'curp') {
-                        field.disabled = true;
-                    }
-                });
+                document.querySelectorAll('#formRegistro input:not(#curp), #formRegistro select, #formRegistro button:not(.accordion-button)')
+                    .forEach(field => field.disabled = true);
                 document.getElementById('btnGuardar').style.display = 'none';
-                document.getElementById('btnActualizar').style.display = 'none';
             }
 
             function habilitarFormulario() {
-                const formFields = document.querySelectorAll('#formRegistro input, #formRegistro select, #formRegistro button');
-                formFields.forEach((field) => {
-                    if (!field.classList.contains('accordion-button')) {
-                        field.disabled = false;
-                    }
-                });
+                document.querySelectorAll('#formRegistro input, #formRegistro select, #formRegistro button:not(.accordion-button)')
+                    .forEach(field => field.disabled = false);
                 document.getElementById('btnGuardar').style.display = 'block';
-                document.getElementById('btnActualizar').style.display = 'none';
             }
 
+            // ==================== VALIDACIÓN DE CURP (MEJORADA) ====================
             function validarCurp() {
                 const curpInput = document.getElementById('curp');
+                const curp = curpInput.value.trim().toUpperCase();
                 const feedback = document.getElementById('curp-feedback');
+                const btnSubmit = document.getElementById('btnGuardar');
 
-                const curpRegex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z\d]{2}$/i;
+                // Resetear estado
+                feedback.style.display = 'none';
+                btnSubmit.disabled = true;
 
-                if (!curpInput.value.trim()) {
+                // Validación 1: Campo vacío
+                if (!curp) {
                     mostrarAlerta('warning', 'Por favor, introduzca su CURP.');
                     curpInput.focus();
                     bloquearFormulario();
                     return;
                 }
 
-                if (curpInput.value.trim().length !== 18) {
+                // Validación 2: Longitud incorrecta
+                if (curp.length !== 18) {
                     mostrarAlerta('warning', 'El CURP debe tener exactamente 18 caracteres.');
                     curpInput.focus();
                     bloquearFormulario();
                     return;
                 }
 
-                if (!curpRegex.test(curpInput.value.trim())) {
-                    mostrarAlerta('warning', 'El CURP no tiene el formato correcto.');
+                // Validación 3: Formato mejorado (fecha, género, entidad federativa)
+                const curpRegex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z\d]{2}$/i;;
+                if (!curpRegex.test(curp)) {
+                    mostrarAlerta('warning', 'El CURP no tiene el formato correcto');
                     curpInput.focus();
                     bloquearFormulario();
                     return;
                 }
 
-                feedback.style.display = 'none';
-
+                // Mostrar carga
                 mostrarAlerta('info', '<i class="fas fa-spinner fa-spin"></i> Validando CURP...', false);
 
-                setTimeout(() => {
-                    fetch('../controlador/validar_curp.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ curp: curpInput.value }),
+                // Consultar al backend
+                fetch('../controlador/validar_curp.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ curp }),
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Error en la respuesta del servidor');
+                        return response.json();
                     })
-                        .then((response) => {
-                            if (!response.ok) {
-                                throw new Error('Error en la respuesta del servidor');
-                            }
-                            return response.json();
-                        })
-                        .then((data) => {
-                            document.querySelector('#alert-container .alert').remove();
+                    .then(data => {
+                        document.querySelector('#alert-container .alert').remove();
 
-                            if (data.exists) {
-                                feedback.style.display = 'block';
-                                feedback.textContent = 'El CURP ya está registrado. Por favor, use otro.';
-                                bloquearFormulario();
-                                mostrarAlerta('danger', 'El CURP ya está registrado. Por favor, intente con otro.');
-                            } else {
-                                feedback.style.display = 'none';
-                                habilitarFormulario();
-                                mostrarAlerta('success', 'El CURP es válido. Puede continuar con el registro.');
-                            }
-                        })
-                        .catch((error) => {
-                            document.querySelector('#alert-container .alert').remove();
-
-                            console.error('Error al validar el CURP:', error);
-                            mostrarAlerta('danger', 'Hubo un error al validar el CURP. Intente nuevamente.');
+                        if (data.error) {
+                            mostrarAlerta('danger', `${data.error}`);
                             bloquearFormulario();
-                        });
-                }, 2000);
+                        } else if (data.exists) {
+                            feedback.style.display = 'block';
+                            feedback.textContent = 'El CURP ya está registrado.';
+                            mostrarAlerta('danger', 'El CURP ya está registrado. Por favor, use otro');
+                            bloquearFormulario();
+                        } else {
+                            mostrarAlerta('success', 'El CURP es válido. Puede continuar con el registro');
+                            habilitarFormulario();
+                            document.getElementById('apellidopaterno').focus();
+                        }
+                    })
+                    .catch(error => {
+                        document.querySelector('#alert-container .alert').remove();
+                        mostrarAlerta('danger', 'Error al validar. Intente nuevamente.');
+                        console.error('Error:', error);
+                    })
+                    .finally(() => {
+                        btnSubmit.disabled = false;
+                    });
             }
 
+            // ==================== EVENT LISTENERS ====================
             document.addEventListener('DOMContentLoaded', () => {
-                bloquearFormulario();
-            });
+                bloquearFormulario(); // Bloquear al inicio
 
-            document.getElementById('curp').addEventListener('input', (event) => {
-                const curpInput = event.target.value.trim();
-
-                if (curpInput === '' || curpInput.length !== 18) {
-                    bloquearFormulario();
-                }
+                // Validación en tiempo real (mayúsculas y longitud)
+                document.getElementById('curp').addEventListener('input', (e) => {
+                    e.target.value = e.target.value.toUpperCase();
+                    if (e.target.value.trim().length !== 18) {
+                        bloquearFormulario();
+                    }
+                });
             });
         </script>
         <!-- obtener información -->
