@@ -86,8 +86,8 @@ if (empty($_SESSION["idusuario"])) {
                             </div>
                             <div class="card-body">
                                 <form class="g-3 needs-validation" id="formRegistro"
-                                    action="../controlador/controlador_form.php" method="post"
-                                    enctype="multipart/form-data">
+                                    action="../controlador/controlador_form.php" method="post" enctype="multipart/form-data"
+                                    novalidate>
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label" for="curp">CURP <span class="required">*</span></label>
                                         <div class="input-icon">
@@ -130,7 +130,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <i class="fas fa-user-tag"></i>
                                                                 <input class="form-control" id="apellidopaterno" type="text"
                                                                     placeholder="Ej. Ramirez" name="apellidopaterno"
-                                                                    disabled>
+                                                                    disabled required>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su apellido
@@ -156,7 +156,7 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="input-icon">
                                                                 <i class="fas fa-user"></i>
                                                                 <input class="form-control" id="nombre" type="text"
-                                                                    placeholder="Ej. Juan" name="nombre" disabled>
+                                                                    placeholder="Ej. Juan" name="nombre" disabled required>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su
@@ -172,7 +172,7 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="input-icon">
                                                                 <i class="fas fa-calendar-alt"></i>
                                                                 <input class="form-control" id="fechanacimiento" type="date"
-                                                                    name="fechanacimiento" disabled>
+                                                                    name="fechanacimiento" disabled required>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su fecha de
@@ -186,7 +186,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <i class="fas fa-sort-numeric-up"></i>
                                                                 <input class="form-control" id="edad" type="text"
                                                                     placeholder="Ej. 25" minlength="2" maxlength="2"
-                                                                    name="edad" disabled>
+                                                                    name="edad" disabled required>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su edad.
@@ -219,7 +219,7 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="terminos_privacidad" name="terminos_privacidad"
-                                                                    disabled>
+                                                                    disabled required>
                                                                 <label class="form-check-label" for="terminos_privacidad">
                                                                     He leído y comprendo los términos del
                                                                     <a href="ruta_al_archivo/aviso_de_privacidad_integral.pdf"
@@ -240,7 +240,7 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                     id="terminos_consentimiento"
-                                                                    name="terminos_consentimiento" disabled>
+                                                                    name="terminos_consentimiento" disabled required>
                                                                 <label class="form-check-label"
                                                                     for="terminos_consentimiento">
                                                                     He leído y comprendo los términos de
@@ -311,7 +311,80 @@ if (empty($_SESSION["idusuario"])) {
                 'right-trim': true,
             }); 
         </script>
+        <!-- Progress bar -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("#formRegistro");
+                const progressBar = document.querySelector(".progress-bar");
+                const requiredFields = form.querySelectorAll(
+                    "input[required], select[required], textarea[required]"
+                );
 
+                const totalRequired = () => {
+                    return requiredFields.length;
+                };
+
+                function actualizarProgreso() {
+                    let completados = 0;
+
+                    requiredFields.forEach((field) => {
+                        if (field.type === "checkbox") {
+                            if (field.checked) {
+                                completados++;
+                            }
+                        } else if (field.value.trim() !== "") {
+                            completados++;
+                        }
+                    });
+
+                    const porcentaje = Math.round((completados / totalRequired()) * 100);
+
+                    progressBar.style.width = `${porcentaje}%`;
+                    progressBar.setAttribute("aria-valuenow", porcentaje);
+                    progressBar.textContent = `${porcentaje}%`;
+                }
+
+                requiredFields.forEach((field) => {
+                    const eventType = field.tagName === "SELECT" ? "change" : "input";
+                    field.addEventListener(eventType, () => {
+                        actualizarProgreso();
+                    });
+                });
+
+                actualizarProgreso();
+
+                function cargarDatos() {
+                    $.ajax({
+                        url: "../controlador/get_registration.php",
+                        type: "GET",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.status === "success") {
+                                const data = response.data;
+
+                                $('#curp').val(data.curp);
+                                $('#nombre').val(data.nombre);
+                                $('#apellidopaterno').val(data.apellidoP);
+                                $('#apellidomaterno').val(data.apellidoM);
+                                $('#fechanacimiento').val(data.fecha_nacimiento);
+                                $('#edad').val(data.edad);
+                                $('#terminos_privacidad').prop('checked', data.acepta_privacidad == 1);
+                                $('#terminos_consentimiento').prop('checked', data.acepta_consentimiento == 1);
+
+                                actualizarProgreso();
+                            } else {
+                                console.error(response.message);
+                            }
+                        },
+                        error: function () {
+                            console.error("Error al obtener los datos del registro.");
+                        }
+                    });
+                }
+
+                cargarDatos();
+            });
+        </script>
         <!-- validación para la curp-->
         <script>
             function mostrarAlerta(tipo, mensaje, temporal = true) {
@@ -438,92 +511,6 @@ if (empty($_SESSION["idusuario"])) {
                 }
             });
         </script>
-        <!-- Guardar registros-->
-        <script>
-            $(document).ready(function () {
-                function bloquearFormulario() {
-                    const formFields = $('#formRegistro input, #formRegistro select, #formRegistro button');
-                    formFields.each(function () {
-                        if (!$(this).hasClass('accordion-button')) {
-                            $(this).prop('disabled', true);
-                        }
-                    });
-                }
-
-                $("#formRegistro").submit(function (event) {
-                    event.preventDefault();
-
-                    const curpField = $("#curp");
-                    curpField.prop("disabled", false);
-
-                    const feedback = document.getElementById("curp-feedback");
-                    if (feedback.style.display === "block") {
-                        Swal.fire("Error", "Por favor, corrija la CURP antes de continuar.", "error");
-                        curpField.prop("disabled", true);
-                        return;
-                    }
-
-                    const formData = $(this).serialize();
-
-                    Swal.fire({
-                        title: "¿Estás seguro?",
-                        text: "¿Deseas guardar los cambios realizados?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Sí, guardar",
-                        cancelButtonText: "Cancelar",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                url: "../controlador/controlador_form.php",
-                                type: "POST",
-                                data: formData,
-                                dataType: "json",
-                                beforeSend: function () {
-                                    Swal.fire({
-                                        title: "Guardando...",
-                                        text: "Por favor, espera un momento.",
-                                        allowOutsideClick: false,
-                                        didOpen: () => {
-                                            Swal.showLoading();
-                                        },
-                                    });
-                                },
-                                success: function (response) {
-                                    Swal.close();
-                                    if (response.status === "success") {
-                                        Swal.fire({
-                                            title: "¡Éxito!",
-                                            text: response.message,
-                                            icon: "success",
-                                            confirmButtonText: "OK",
-                                            allowOutsideClick: false,
-                                        }).then(() => {
-                                            location.reload();
-                                        });
-                                    } else {
-                                        Swal.fire("Error", response.message, "error");
-                                    }
-                                },
-                                error: function () {
-                                    Swal.close();
-                                    Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
-                                },
-                                complete: function () {
-                                    curpField.prop("disabled", true);
-                                },
-                            });
-                        }
-                    });
-                });
-
-                document.addEventListener("DOMContentLoaded", () => {
-                    bloquearFormulario();
-                });
-            });
-        </script>
         <!-- obtener información -->
         <script>
             $(document).ready(function () {
@@ -533,13 +520,9 @@ if (empty($_SESSION["idusuario"])) {
 
                 // Función para bloquear completamente el formulario
                 function bloquearFormularioCompleto() {
-                    // Deshabilitar todos los campos del formulario, excepto los botones del acordeón
                     $('#formRegistro :input').not('.accordion-button').prop('disabled', true);
-
                     // Ocultar todos los botones
                     $('#btnGuardar, #btnActualizar, #btnCancelar, #btnFinalizar').hide();
-
-                    // Mostrar una alerta indicando que el formulario ya está finalizado
                     Swal.fire({
                         title: "Formulario Finalizado",
                         text: "Este formulario ya ha sido finalizado y no se puede modificar.",
@@ -558,8 +541,6 @@ if (empty($_SESSION["idusuario"])) {
                     });
                     $('#btnActualizar').show().prop('disabled', false);
                     $('#btnGuardar, #btnCancelar').hide();
-
-                    // Asegurarse de que el botón "Finalizar" siempre esté visible y habilitado
                     $('#btnFinalizar').show().prop('disabled', false);
                 }
 
@@ -570,11 +551,9 @@ if (empty($_SESSION["idusuario"])) {
                             $(this).prop('disabled', false);
                         }
                     });
-                    curpField.prop('disabled', true); // CURP siempre deshabilitado
+                    curpField.prop('disabled', true);
                     $('#btnGuardar, #btnCancelar').show();
                     $('#btnActualizar').hide();
-
-                    // Asegurarse de que el botón "Finalizar" siempre esté visible y habilitado
                     $('#btnFinalizar').show().prop('disabled', false);
                 }
 
@@ -604,8 +583,6 @@ if (empty($_SESSION["idusuario"])) {
                         success: function (response) {
                             if (response.status === "success") {
                                 const data = response.data;
-
-                                // Cargar los datos en los campos del formulario
                                 $('#curp').val(data.curp);
                                 $('#nombre').val(data.nombre);
                                 $('#apellidopaterno').val(data.apellidoP);
@@ -614,16 +591,10 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#edad').val(data.edad);
                                 $('#terminos_privacidad').prop('checked', data.acepta_privacidad == 1);
                                 $('#terminos_consentimiento').prop('checked', data.acepta_consentimiento == 1);
-
-                                // Guardar los valores originales
                                 guardarValoresOriginales();
-
-                                // Verificar el estado del formulario
                                 if (data.status == 1) {
-                                    // Bloquear el formulario si ya está finalizado
                                     bloquearFormularioCompleto();
                                 } else {
-                                    // Habilitar el formulario si no está finalizado
                                     bloquearFormulario();
                                 }
                             } else {
@@ -639,7 +610,6 @@ if (empty($_SESSION["idusuario"])) {
                 // Botón "Actualizar"
                 $('#btnActualizar').click(function (event) {
                     event.preventDefault();
-
                     Swal.fire({
                         title: "¿Estás seguro?",
                         text: "¿Deseas habilitar los campos para actualizar la información?",
@@ -656,10 +626,103 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
+                // Formulario: Guardar cambios
+                $(document).ready(function () {
+                    const formFields = $('#formRegistro input, #formRegistro select, #formRegistro button');
+                    const curpField = $('#curp');
+
+                    // Función para habilitar temporalmente campos deshabilitados
+                    function habilitarTemporalmenteCampos(form) {
+                        const disabledFields = form.find(":input:disabled");
+                        disabledFields.prop("disabled", false);
+                        return disabledFields;
+                    }
+
+                    // Función para restaurar el estado de los campos
+                    function restaurarEstadoCampos(disabledFields) {
+                        disabledFields.prop("disabled", true);
+                    }
+
+                    // Formulario: Guardar cambios
+                    $("#formRegistro").submit(function (event) {
+                        event.preventDefault();
+
+                        // Validar que la CURP esté completada
+                        const feedback = document.getElementById("curp-feedback");
+                        if (feedback.style.display === "block") {
+                            Swal.fire("Error", "Por favor, corrija la CURP antes de continuar.", "error");
+                            return;
+                        }
+
+                        const disabledFields = habilitarTemporalmenteCampos($(this));
+
+                        const requiredFields = $(this).find("[required]");
+                        requiredFields.each(function () {
+                            $(this).removeAttr("required");
+                        });
+
+                        const formData = $(this).serialize();
+
+                        restaurarEstadoCampos(disabledFields);
+                        requiredFields.each(function () {
+                            $(this).attr("required", "required");
+                        });
+
+                        Swal.fire({
+                            title: "¿Estás seguro?",
+                            text: "¿Deseas guardar los cambios realizados?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Sí, guardar",
+                            cancelButtonText: "Cancelar",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    url: "../controlador/controlador_form.php",
+                                    type: "POST",
+                                    data: formData,
+                                    dataType: "json",
+                                    beforeSend: function () {
+                                        Swal.fire({
+                                            title: "Guardando...",
+                                            text: "Por favor, espera un momento.",
+                                            allowOutsideClick: false,
+                                            didOpen: () => {
+                                                Swal.showLoading();
+                                            },
+                                        });
+                                    },
+                                    success: function (response) {
+                                        Swal.close();
+                                        if (response.status === "success") {
+                                            Swal.fire({
+                                                title: "¡Éxito!",
+                                                text: response.message,
+                                                icon: "success",
+                                                confirmButtonText: "OK",
+                                                allowOutsideClick: false,
+                                            }).then(() => {
+                                                location.reload();
+                                            });
+                                        } else {
+                                            Swal.fire("Error", response.message, "error");
+                                        }
+                                    },
+                                    error: function () {
+                                        Swal.close();
+                                        Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
+                                    },
+                                });
+                            }
+                        });
+                    });
+                });
+
                 // Botón "Cancelar"
                 $('#btnCancelar').click(function (event) {
                     event.preventDefault();
-
                     Swal.fire({
                         title: "¿Estás seguro?",
                         text: "¿Deseas cancelar la edición? Todos los cambios no guardados se perderán.",
@@ -682,72 +745,19 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
-                // Formulario: Guardar cambios
-                $('#formRegistro').submit(function (event) {
-                    event.preventDefault();
-
-                    const formData = $(this).serialize();
-
-                    Swal.fire({
-                        title: "¿Estás seguro?",
-                        text: "¿Deseas guardar los cambios realizados?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Sí, guardar",
-                        cancelButtonText: "Cancelar",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $('#btnGuardar').prop('disabled', true);
-                            Swal.fire({
-                                title: "Guardando...",
-                                text: "Por favor, espera un momento.",
-                                allowOutsideClick: false,
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                },
-                            });
-
-                            $.ajax({
-                                url: "../controlador/controlador_form.php",
-                                type: "POST",
-                                data: formData,
-                                dataType: "json",
-                                success: function (response) {
-                                    Swal.close();
-                                    if (response.status === "success") {
-                                        Swal.fire({
-                                            title: "¡Éxito!",
-                                            text: response.message,
-                                            icon: "success",
-                                            confirmButtonText: "OK",
-                                            allowOutsideClick: false,
-                                        }).then(() => {
-                                            guardarValoresOriginales();
-                                            bloquearFormulario();
-                                        });
-                                    } else {
-                                        Swal.fire("Error", response.message, "error");
-                                    }
-                                },
-                                error: function () {
-                                    Swal.close();
-                                    Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
-                                },
-                                complete: function () {
-                                    $('#btnGuardar').prop('disabled', false);
-                                },
-                            });
-                        }
-                    });
-                });
-
                 // Botón "Finalizar"
                 $('#btnFinalizar').click(function (event) {
                     event.preventDefault();
 
-                    // Validar que todos los campos obligatorios estén completos
+                    const feedback = document.getElementById("curp-feedback");
+                    if (feedback.style.display === "block") {
+                        Swal.fire("Error", "Por favor, corrija la CURP antes de continuar.", "error");
+                        return;
+                    }
+
+                    const disabledFields = $('#formRegistro :input:disabled');
+                    disabledFields.prop("disabled", false);
+
                     if (!$('#formRegistro')[0].checkValidity()) {
                         Swal.fire({
                             title: "Campos incompletos",
@@ -755,11 +765,14 @@ if (empty($_SESSION["idusuario"])) {
                             icon: "warning",
                             confirmButtonText: "OK",
                         });
-                        $('#formRegistro')[0].reportValidity(); // Resalta los campos inválidos
+                        $('#formRegistro')[0].reportValidity();
+
+                        disabledFields.prop("disabled", true);
                         return;
                     }
 
-                    // Confirmar con el usuario si desea finalizar el formulario
+                    disabledFields.prop("disabled", true);
+
                     Swal.fire({
                         title: "¿Estás seguro?",
                         text: "Una vez finalizado, no podrás modificar el formulario.",
@@ -771,18 +784,18 @@ if (empty($_SESSION["idusuario"])) {
                         cancelButtonText: "Cancelar",
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Obtener el CURP del formulario
-                            const curp = $('#curp').val();
+                            disabledFields.prop("disabled", false);
 
-                            // Enviar solicitud AJAX para guardar los datos y actualizar el estado
+                            const formData = $('#formRegistro').serialize();
+
                             $.ajax({
-                                url: "../controlador/finalizar_formulario.php", // Archivo PHP para finalizar el formulario
+                                url: "../controlador/controlador_form.php",
                                 type: "POST",
-                                data: { curp: curp },
+                                data: formData,
                                 dataType: "json",
                                 beforeSend: function () {
                                     Swal.fire({
-                                        title: "Finalizando...",
+                                        title: "Guardando cambios...",
                                         text: "Por favor, espera un momento.",
                                         allowOutsideClick: false,
                                         didOpen: () => {
@@ -793,15 +806,45 @@ if (empty($_SESSION["idusuario"])) {
                                 success: function (response) {
                                     Swal.close();
                                     if (response.status === "success") {
-                                        Swal.fire({
-                                            title: "¡Éxito!",
-                                            text: response.message,
-                                            icon: "success",
-                                            confirmButtonText: "OK",
-                                            allowOutsideClick: false,
-                                        }).then(() => {
-                                            // Bloquear el formulario completamente
-                                            bloquearFormularioCompleto();
+                                        const curp = $('#curp').val();
+                                        $.ajax({
+                                            url: "../controlador/finalizar_formulario.php",
+                                            type: "POST",
+                                            data: { curp: curp },
+                                            dataType: "json",
+                                            beforeSend: function () {
+                                                Swal.fire({
+                                                    title: "Finalizando...",
+                                                    text: "Por favor, espera un momento.",
+                                                    allowOutsideClick: false,
+                                                    didOpen: () => {
+                                                        Swal.showLoading();
+                                                    },
+                                                });
+                                            },
+                                            success: function (response) {
+                                                Swal.close();
+                                                if (response.status === "success") {
+                                                    Swal.fire({
+                                                        title: "¡Éxito!",
+                                                        text: response.message,
+                                                        icon: "success",
+                                                        confirmButtonText: "OK",
+                                                        allowOutsideClick: false,
+                                                    }).then(() => {
+                                                        bloquearFormularioCompleto();
+                                                    });
+                                                } else {
+                                                    Swal.fire("Error", response.message, "error");
+                                                }
+                                            },
+                                            error: function () {
+                                                Swal.close();
+                                                Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
+                                            },
+                                            complete: function () {
+                                                disabledFields.prop("disabled", true);
+                                            },
                                         });
                                     } else {
                                         Swal.fire("Error", response.message, "error");
@@ -816,7 +859,6 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
-                // Cargar datos iniciales
                 cargarDatos();
             });
         </script>
