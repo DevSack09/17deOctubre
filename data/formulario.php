@@ -513,354 +513,388 @@ if (empty($_SESSION["idusuario"])) {
         <!-- obtener información -->
         <script>
             $(document).ready(function () {
-                const formFields = $('#formRegistro input, #formRegistro select, #formRegistro button');
-                const curpField = $('#curp');
+                // ==================== CONSTANTES Y VARIABLES ====================
+                const $form = $('#formRegistro');
+                const $curpField = $('#curp');
+                const $btnGuardar = $('#btnGuardar');
+                const $btnActualizar = $('#btnActualizar');
+                const $btnCancelar = $('#btnCancelar');
+                const $btnFinalizar = $('#btnFinalizar');
                 let originalFormData = {};
+                let loadingAlert;
+                let formHasBeenSaved = false; // Nueva variable para controlar el estado de guardado
 
-                // Función para bloquear completamente el formulario
-                function bloquearFormularioCompleto() {
-                    $('#formRegistro :input').not('.accordion-button').prop('disabled', true);
-                    // Ocultar todos los botones
-                    $('#btnGuardar, #btnActualizar, #btnCancelar, #btnFinalizar').hide();
-                    Swal.fire({
-                        title: "Formulario Finalizado",
-                        text: "Este formulario ya ha sido finalizado y no se puede modificar.",
-                        icon: "info",
-                        confirmButtonText: "OK",
-                        allowOutsideClick: false,
-                    });
-                }
+                // ==================== FUNCIONES DE ESTADO ====================
+                function setInitialState() {
+                    if (formHasBeenSaved) {
+                        // Estado después de guardar (CURP bloqueado)
+                        $form.find(':input').not('.accordion-button').prop('disabled', true);
+                        $curpField.prop('disabled', true); // CURP no editable después de guardar
 
-                // Función para bloquear el formulario
-                function bloquearFormulario() {
-                    formFields.each(function () {
-                        if (!$(this).hasClass('accordion-button') && this.id !== 'btnActualizar') {
-                            $(this).prop('disabled', true);
-                        }
-                    });
-                    $('#btnActualizar').show().prop('disabled', false);
-                    $('#btnGuardar, #btnCancelar').hide();
-                    $('#btnFinalizar').show().prop('disabled', false);
-                }
+                        // Mostrar solo Actualizar y Finalizar
+                        $btnGuardar.hide();
+                        $btnActualizar.show().prop('disabled', false);
+                        $btnCancelar.hide();
+                        $btnFinalizar.show().prop('disabled', false);
+                    } else {
+                        // Estado inicial (solo Guardar visible)
+                        $form.find(':input').not('#curp, .accordion-button').prop('disabled', true);
+                        $curpField.prop('disabled', false);
 
-                // Función para habilitar el formulario
-                function habilitarFormulario() {
-                    formFields.each(function () {
-                        if (!$(this).hasClass('accordion-button')) {
-                            $(this).prop('disabled', false);
-                        }
-                    });
-                    curpField.prop('disabled', true);
-                    $('#btnGuardar, #btnCancelar').show();
-                    $('#btnActualizar').hide();
-                    $('#btnFinalizar').show().prop('disabled', false);
-                }
-
-                // Función para guardar los valores originales
-                function guardarValoresOriginales() {
-                    originalFormData = {};
-                    $('#formRegistro')
-                        .serializeArray()
-                        .forEach((field) => {
-                            originalFormData[field.name] = field.value;
-                        });
-                }
-
-                // Función para restaurar los valores originales
-                function restaurarValoresOriginales() {
-                    for (const name in originalFormData) {
-                        $(`[name="${name}"]`).val(originalFormData[name]);
+                        // Mostrar solo Guardar
+                        $btnGuardar.show();
+                        $btnActualizar.hide();
+                        $btnCancelar.hide();
+                        $btnFinalizar.hide();
                     }
                 }
 
-                // Cargar datos del formulario
-                function cargarDatos() {
-                    $.ajax({
-                        url: "../controlador/get_registration.php",
-                        type: "GET",
-                        dataType: "json",
-                        success: function (response) {
-                            if (response.status === "success") {
-                                const data = response.data;
-                                $('#curp').val(data.curp);
-                                $('#nombre').val(data.nombre);
-                                $('#apellidopaterno').val(data.apellidoP);
-                                $('#apellidomaterno').val(data.apellidoM);
-                                $('#fechanacimiento').val(data.fecha_nacimiento);
-                                $('#edad').val(data.edad);
-                                $('#terminos_privacidad').prop('checked', data.acepta_privacidad == 1);
-                                $('#terminos_consentimiento').prop('checked', data.acepta_consentimiento == 1);
-                                guardarValoresOriginales();
-                                if (data.status == 1) {
-                                    bloquearFormularioCompleto();
-                                } else {
-                                    bloquearFormulario();
-                                }
-                            } else {
-                                console.error(response.message);
-                            }
-                        },
-                        error: function () {
-                            console.error("Error al obtener los datos del registro.");
+                function enableEditMode() {
+                    // Habilitar todos los campos excepto CURP (si ya fue guardado) y botones del acordeón
+                    $form.find(':input').not('#curp, .accordion-button').prop('disabled', false);
+
+                    // Configurar botones para modo edición
+                    $btnGuardar.show();
+                    $btnActualizar.hide();
+                    $btnCancelar.show();
+                    $btnFinalizar.hide();
+                }
+
+                function disableForm() {
+                    // Volver al estado después de guardar
+                    $form.find(':input').not('.accordion-button').prop('disabled', true);
+                    $curpField.prop('disabled', true);
+
+                    $btnGuardar.hide();
+                    $btnActualizar.show().prop('disabled', false);
+                    $btnCancelar.hide();
+                    $btnFinalizar.show().prop('disabled', false);
+                }
+
+                function lockFormPermanently() {
+                    // Bloquear completamente el formulario
+                    $form.find(':input').not('.accordion-button').prop('disabled', true);
+                    $btnGuardar.add($btnActualizar).add($btnCancelar).add($btnFinalizar).hide();
+
+                    Swal.fire({
+                        title: "Formulario Finalizado",
+                        text: "Este formulario ya no puede modificarse.",
+                        icon: "info",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false
+                    });
+                }
+
+                // ==================== FUNCIONES AUXILIARES ====================
+                function showLoading(message = 'Procesando...') {
+                    loadingAlert = Swal.fire({
+                        title: message,
+                        html: 'Por favor espere',
+                        allowOutsideClick: false,
+                        didOpen: () => Swal.showLoading()
+                    });
+                    return loadingAlert;
+                }
+
+                function sendRequest(url, data = {}, method = 'POST') {
+                    showLoading();
+
+                    return $.ajax({
+                        url: url,
+                        type: method,
+                        data: data,
+                        dataType: 'json'
+                    }).always(() => {
+                        if (loadingAlert) Swal.close();
+                    });
+                }
+
+                function handleError(error) {
+                    console.error('Error:', error);
+                    let message = 'Error en el servidor';
+
+                    if (error.responseJSON && error.responseJSON.message) {
+                        message = error.responseJSON.message;
+                    } else if (error.statusText) {
+                        message = error.statusText;
+                    }
+
+                    Swal.fire('Error', message, 'error');
+                }
+
+                function saveFormState() {
+                    originalFormData = {};
+                    $form.serializeArray().forEach(field => {
+                        originalFormData[field.name] = field.value;
+                    });
+                }
+
+                function restoreFormState() {
+                    Object.entries(originalFormData).forEach(([name, value]) => {
+                        const $field = $(`[name="${name}"]`);
+                        if ($field.is('input[type="checkbox"]')) {
+                            $field.prop('checked', Boolean(value));
+                        } else {
+                            $field.val(value);
                         }
                     });
+                }
+
+                function prepareFormForSubmit() {
+                    // Habilitar temporalmente campos deshabilitados (incluyendo CURP)
+                    const disabledFields = $form.find(':input:disabled');
+                    disabledFields.prop('disabled', false);
+                    return disabledFields;
+                }
+
+                function restoreAfterSubmit(disabledFields) {
+                    // Restaurar estado original
+                    disabledFields.prop('disabled', true);
+                }
+
+                function validateRequiredFields() {
+                    let isValid = true;
+
+                    // Limpiar todas las validaciones anteriores
+                    $form.find('.is-invalid').removeClass('is-invalid');
+                    $form.find('.is-valid').removeClass('is-valid');
+                    $form.find('.invalid-feedback').removeClass('d-block').addClass('d-none');
+                    $form.find('.valid-feedback').removeClass('d-block').addClass('d-none');
+
+                    // Validar cada campo requerido
+                    $form.find('[required]').each(function () {
+                        const $field = $(this);
+                        const $feedbackContainer = $field.closest('.col-md-2, .col-md-3, .col-md-4, .col-md-12, .form-check');
+                        const $invalidFeedback = $feedbackContainer.find('.invalid-feedback');
+                        const $validFeedback = $feedbackContainer.find('.valid-feedback');
+                        let fieldValid = true;
+
+                        // Validación específica para checkboxes
+                        if ($field.is(':checkbox')) {
+                            fieldValid = $field.is(':checked');
+                        }
+                        // Validación para otros campos
+                        else {
+                            fieldValid = $field.val() && $field.val().trim() !== '';
+                        }
+
+                        if (fieldValid) {
+                            // Campo válido
+                            $field.addClass('is-valid').removeClass('is-invalid');
+                            $invalidFeedback.removeClass('d-block').addClass('d-none');
+                            $validFeedback.removeClass('d-none').addClass('d-block');
+                        } else {
+                            // Campo inválido
+                            $field.addClass('is-invalid').removeClass('is-valid');
+                            $invalidFeedback.removeClass('d-none').addClass('d-block');
+                            $validFeedback.removeClass('d-block').addClass('d-none');
+                            isValid = false;
+                        }
+                    });
+
+                    return isValid;
+                }
+
+
+                // ==================== MANEJO DE EVENTOS ====================
+                function loadInitialData() {
+                    showLoading('Cargando datos...');
+
+                    sendRequest('../controlador/get_registration.php', {}, 'GET')
+                        .then(response => {
+                            if (response.status === "success") {
+                                // Marcar como guardado si hay datos
+                                formHasBeenSaved = true;
+
+                                // Rellenar datos
+                                $('#curp').val(response.data.curp);
+                                $('#nombre').val(response.data.nombre);
+                                $('#apellidopaterno').val(response.data.apellidoP);
+                                $('#apellidomaterno').val(response.data.apellidoM);
+                                $('#fechanacimiento').val(response.data.fecha_nacimiento);
+                                $('#edad').val(response.data.edad);
+                                $('#terminos_privacidad').prop('checked', response.data.acepta_privacidad == 1);
+                                $('#terminos_consentimiento').prop('checked', response.data.acepta_consentimiento == 1);
+
+                                saveFormState();
+                                response.data.status == 1 ? lockFormPermanently() : setInitialState();
+                            } else if (response.message === "No se encontraron registros para este usuario.") {
+                                // Caso normal sin registros
+                                formHasBeenSaved = false;
+                                Swal.close();
+                                setInitialState();
+                            } else {
+                                throw new Error(response.message || 'Error al cargar datos');
+                            }
+                        })
+                        .catch(error => {
+                            if (!error.responseJSON || error.responseJSON.message !== "No se encontraron registros para este usuario.") {
+                                handleError(error);
+                            } else {
+                                formHasBeenSaved = false;
+                                Swal.close();
+                                setInitialState();
+                            }
+                        });
                 }
 
                 // Botón "Actualizar"
-                $('#btnActualizar').click(function (event) {
-                    event.preventDefault();
+                $btnActualizar.click(e => {
+                    e.preventDefault();
                     Swal.fire({
-                        title: "¿Estás seguro?",
-                        text: "¿Deseas habilitar los campos para actualizar la información?",
-                        icon: "warning",
+                        title: "¿Habilitar edición?",
+                        text: "Podrá modificar la información del formulario.",
+                        icon: "question",
                         showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Sí, actualizar",
-                        cancelButtonText: "Cancelar",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            habilitarFormulario();
-                        }
-                    });
-                });
-
-                // Formulario: Guardar cambios
-                $(document).ready(function () {
-                    const formFields = $('#formRegistro input, #formRegistro select, #formRegistro button');
-                    const curpField = $('#curp');
-
-                    // Función para habilitar temporalmente campos deshabilitados
-                    function habilitarTemporalmenteCampos(form) {
-                        const disabledFields = form.find(":input:disabled");
-                        disabledFields.prop("disabled", false);
-                        return disabledFields;
-                    }
-
-                    // Función para restaurar el estado de los campos
-                    function restaurarEstadoCampos(disabledFields) {
-                        disabledFields.prop("disabled", true);
-                    }
-
-                    // Formulario: Guardar cambios
-                    $("#formRegistro").submit(function (event) {
-                        event.preventDefault();
-
-                        // Validar que la CURP esté completada
-                        const feedback = document.getElementById("curp-feedback");
-                        if (feedback.style.display === "block") {
-                            Swal.fire("Error", "Por favor, corrija la CURP antes de continuar.", "error");
-                            return;
-                        }
-
-                        const disabledFields = habilitarTemporalmenteCampos($(this));
-
-                        const requiredFields = $(this).find("[required]");
-                        requiredFields.each(function () {
-                            $(this).removeAttr("required");
-                        });
-
-                        const formData = $(this).serialize();
-
-                        restaurarEstadoCampos(disabledFields);
-                        requiredFields.each(function () {
-                            $(this).attr("required", "required");
-                        });
-
-                        Swal.fire({
-                            title: "¿Estás seguro?",
-                            text: "¿Deseas guardar los cambios realizados?",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#3085d6",
-                            cancelButtonColor: "#d33",
-                            confirmButtonText: "Sí, guardar",
-                            cancelButtonText: "Cancelar",
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    url: "../controlador/controlador_form.php",
-                                    type: "POST",
-                                    data: formData,
-                                    dataType: "json",
-                                    beforeSend: function () {
-                                        Swal.fire({
-                                            title: "Guardando...",
-                                            text: "Por favor, espera un momento.",
-                                            allowOutsideClick: false,
-                                            didOpen: () => {
-                                                Swal.showLoading();
-                                            },
-                                        });
-                                    },
-                                    success: function (response) {
-                                        Swal.close();
-                                        if (response.status === "success") {
-                                            Swal.fire({
-                                                title: "¡Éxito!",
-                                                text: response.message,
-                                                icon: "success",
-                                                confirmButtonText: "OK",
-                                                allowOutsideClick: false,
-                                            }).then(() => {
-                                                location.reload();
-                                            });
-                                        } else {
-                                            Swal.fire("Error", response.message, "error");
-                                        }
-                                    },
-                                    error: function () {
-                                        Swal.close();
-                                        Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
-                                    },
-                                });
-                            }
-                        });
+                        confirmButtonText: "Sí, editar",
+                        cancelButtonText: "Cancelar"
+                    }).then(result => {
+                        if (result.isConfirmed) enableEditMode();
                     });
                 });
 
                 // Botón "Cancelar"
-                $('#btnCancelar').click(function (event) {
-                    event.preventDefault();
+                $btnCancelar.click(e => {
+                    e.preventDefault();
                     Swal.fire({
-                        title: "¿Estás seguro?",
-                        text: "¿Deseas cancelar la edición? Todos los cambios no guardados se perderán.",
+                        title: "¿Descartar cambios?",
+                        text: "Se perderán todas las modificaciones no guardadas.",
                         icon: "warning",
                         showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Sí, cancelar",
-                        cancelButtonText: "Continuar editando",
-                    }).then((result) => {
+                        confirmButtonText: "Sí, descartar",
+                        cancelButtonText: "Continuar editando"
+                    }).then(result => {
                         if (result.isConfirmed) {
-                            bloquearFormulario();
-                            Swal.fire(
-                                "Edición cancelada",
-                                "Has cancelado la edición del formulario.",
-                                "info"
-                            );
-                            location.reload();
+                            restoreFormState();
+                            disableForm();
                         }
                     });
                 });
 
-                // Botón "Finalizar"
-                $('#btnFinalizar').click(function (event) {
-                    event.preventDefault();
+                // Botón "Finalizar" (con validación estricta)
+                $btnFinalizar.click(e => {
+                    e.preventDefault();
 
-                    const feedback = document.getElementById("curp-feedback");
-                    if (feedback.style.display === "block") {
-                        Swal.fire("Error", "Por favor, corrija la CURP antes de continuar.", "error");
-                        return;
-                    }
-
-                    const disabledFields = $('#formRegistro :input:disabled');
-                    disabledFields.prop("disabled", false);
-
-                    if (!$('#formRegistro')[0].checkValidity()) {
+                    // 1. Validar todos los campos requeridos
+                    if (!validateRequiredFields()) {
                         Swal.fire({
                             title: "Campos incompletos",
-                            text: "Por favor, complete todos los campos obligatorios antes de finalizar.",
+                            html: "Complete todos los campos obligatorios marcados en rojo.",
                             icon: "warning",
-                            confirmButtonText: "OK",
+                            didOpen: () => {
+                                // Scroll al primer error
+                                const firstError = $('.is-invalid').first();
+                                if (firstError.length) {
+                                    $('html, body').animate({
+                                        scrollTop: firstError.offset().top - 100
+                                    }, 500);
+                                }
+                            }
                         });
-                        $('#formRegistro')[0].reportValidity();
-
-                        disabledFields.prop("disabled", true);
                         return;
                     }
 
-                    disabledFields.prop("disabled", true);
-
                     Swal.fire({
-                        title: "¿Estás seguro?",
-                        text: "Una vez finalizado, no podrás modificar el formulario.",
+                        title: "¿Finalizar formulario?",
+                        text: "No podrá realizar más cambios después.",
                         icon: "warning",
                         showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
                         confirmButtonText: "Sí, finalizar",
-                        cancelButtonText: "Cancelar",
-                    }).then((result) => {
+                        cancelButtonText: "Cancelar"
+                    }).then(result => {
                         if (result.isConfirmed) {
-                            disabledFields.prop("disabled", false);
+                            showLoading('Finalizando...');
 
-                            const formData = $('#formRegistro').serialize();
+                            const disabledFields = prepareFormForSubmit();
+                            const formData = $form.serialize();
+                            restoreAfterSubmit(disabledFields);
 
-                            $.ajax({
-                                url: "../controlador/controlador_form.php",
-                                type: "POST",
-                                data: formData,
-                                dataType: "json",
-                                beforeSend: function () {
-                                    Swal.fire({
-                                        title: "Guardando cambios...",
-                                        text: "Por favor, espera un momento.",
-                                        allowOutsideClick: false,
-                                        didOpen: () => {
-                                            Swal.showLoading();
-                                        },
-                                    });
-                                },
-                                success: function (response) {
-                                    Swal.close();
+                            sendRequest('../controlador/controlador_form.php', formData)
+                                .then(response => {
                                     if (response.status === "success") {
-                                        const curp = $('#curp').val();
-                                        $.ajax({
-                                            url: "../controlador/finalizar_formulario.php",
-                                            type: "POST",
-                                            data: { curp: curp },
-                                            dataType: "json",
-                                            beforeSend: function () {
-                                                Swal.fire({
-                                                    title: "Finalizando...",
-                                                    text: "Por favor, espera un momento.",
-                                                    allowOutsideClick: false,
-                                                    didOpen: () => {
-                                                        Swal.showLoading();
-                                                    },
-                                                });
-                                            },
-                                            success: function (response) {
-                                                Swal.close();
-                                                if (response.status === "success") {
-                                                    Swal.fire({
-                                                        title: "¡Éxito!",
-                                                        text: response.message,
-                                                        icon: "success",
-                                                        confirmButtonText: "OK",
-                                                        allowOutsideClick: false,
-                                                    }).then(() => {
-                                                        bloquearFormularioCompleto();
-                                                    });
-                                                } else {
-                                                    Swal.fire("Error", response.message, "error");
-                                                }
-                                            },
-                                            error: function () {
-                                                Swal.close();
-                                                Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
-                                            },
-                                            complete: function () {
-                                                disabledFields.prop("disabled", true);
-                                            },
+                                        return sendRequest('../controlador/finalizar_formulario.php', {
+                                            curp: $curpField.val()
                                         });
-                                    } else {
-                                        Swal.fire("Error", response.message, "error");
                                     }
-                                },
-                                error: function () {
-                                    Swal.close();
-                                    Swal.fire("Error", "No se pudo procesar la solicitud.", "error");
-                                },
-                            });
+                                    throw new Error(response.message);
+                                })
+                                .then(response => {
+                                    if (response.status === "success") {
+                                        lockFormPermanently();
+                                    } else {
+                                        throw new Error(response.message);
+                                    }
+                                })
+                                .catch(handleError);
                         }
                     });
                 });
 
-                cargarDatos();
+                // Envío del formulario - Guardar
+                $form.submit(e => {
+                    e.preventDefault();
+
+                    showLoading('Guardando progreso...');
+
+                    const disabledFields = prepareFormForSubmit();
+                    const formData = $form.serialize();
+                    restoreAfterSubmit(disabledFields);
+
+                    sendRequest('../controlador/controlador_form.php', formData)
+                        .then(response => {
+                            if (response.status === "success") {
+                                formHasBeenSaved = true; // Marcar como guardado
+                                Swal.fire({
+                                    title: "¡Progreso guardado!",
+                                    text: "Puede continuar más tarde.",
+                                    icon: "success"
+                                }).then(() => {
+                                    disableForm(); // Cambiar a estado post-guardado
+                                });
+                            } else {
+                                throw new Error(response.message);
+                            }
+                        })
+                        .catch(handleError);
+                });
+
+                // Evento para limpiar validaciones al interactuar con los campos
+                $form.on('input change', '[required]', function () {
+                    const $field = $(this);
+                    const $feedbackContainer = $field.closest('.col-md-4, .col-md-12, .form-check');
+
+                    $field.removeClass('is-invalid is-valid');
+                    $feedbackContainer.find('.invalid-feedback').removeClass('d-block').addClass('d-none');
+                    $feedbackContainer.find('.valid-feedback').removeClass('d-block').addClass('d-none');
+
+                    // Validación en tiempo real para campos de texto
+                    if (!$field.is(':checkbox') && $field.val().trim() !== '') {
+                        $field.addClass('is-valid');
+                        $feedbackContainer.find('.valid-feedback').removeClass('d-none').addClass('d-block');
+                    }
+
+                    // Validación en tiempo real para checkboxes
+                    if ($field.is(':checkbox') && $field.is(':checked')) {
+                        $field.addClass('is-valid');
+                        $feedbackContainer.find('.valid-feedback').removeClass('d-none').addClass('d-block');
+                    }
+                });
+
+                // ==================== INICIALIZACIÓN ====================
+                setInitialState();
+                loadInitialData();
             });
         </script>
+
+        <style>
+            .is-invalid {
+                border-color: #dc3545 !important;
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+                background-repeat: no-repeat;
+                background-position: right calc(0.375em + 0.1875rem) center;
+                background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+            }
+        </style>
     </body>
 
     </html>
