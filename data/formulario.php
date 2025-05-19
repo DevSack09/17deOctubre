@@ -578,7 +578,7 @@ if (empty($_SESSION["idusuario"])) {
 
                     Swal.fire({
                         title: "Formulario Finalizado",
-                        text: "Este formulario ya no puede modificarse.",
+                        text: "Este formulario ya ha sido finalizado y no se puede modificar.",
                         icon: "info",
                         confirmButtonText: "OK",
                         allowOutsideClick: false
@@ -742,12 +742,13 @@ if (empty($_SESSION["idusuario"])) {
                 $btnActualizar.click(e => {
                     e.preventDefault();
                     Swal.fire({
-                        title: "¿Habilitar edición?",
-                        text: "Podrá modificar la información del formulario.",
-                        icon: "question",
+                        title: "¿Estás seguro?",
+                        text: "¿Deseas habilitar los campos para actualizar la información?",
+                        icon: "warning",
                         showCancelButton: true,
-                        confirmButtonText: "Sí, editar",
-                        cancelButtonText: "Cancelar"
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sí, actualizar",
+                        cancelButtonText: "Cancelar",
                     }).then(result => {
                         if (result.isConfirmed) enableEditMode();
                     });
@@ -779,7 +780,7 @@ if (empty($_SESSION["idusuario"])) {
                     if (!validateRequiredFields()) {
                         Swal.fire({
                             title: "Campos incompletos",
-                            html: "Complete todos los campos obligatorios marcados en rojo.",
+                            html: "Por favor, complete todos los campos obligatorios antes de finalizar.",
                             icon: "warning",
                             didOpen: () => {
                                 // Scroll al primer error
@@ -796,7 +797,7 @@ if (empty($_SESSION["idusuario"])) {
 
                     Swal.fire({
                         title: "¿Finalizar formulario?",
-                        text: "No podrá realizar más cambios después.",
+                        text: "Una vez finalizado, no podrás modificar el formulario.",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonText: "Sí, finalizar",
@@ -830,32 +831,45 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
-                // Envío del formulario - Guardar
+                // Envío del formulario - Guardar con confirmación
                 $form.submit(e => {
                     e.preventDefault();
 
-                    showLoading('Guardando progreso...');
+                    // Mostrar alerta de confirmación antes de guardar
+                    Swal.fire({
+                        title: "¿Estás seguro?",
+                        text: "¿Deseas guardar los cambios realizados?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sí, guardar",
+                        cancelButtonText: "Cancelar",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            showLoading('Guardando progreso...');
 
-                    const disabledFields = prepareFormForSubmit();
-                    const formData = $form.serialize();
-                    restoreAfterSubmit(disabledFields);
+                            const disabledFields = prepareFormForSubmit();
+                            const formData = $form.serialize();
+                            restoreAfterSubmit(disabledFields);
 
-                    sendRequest('../controlador/controlador_form.php', formData)
-                        .then(response => {
-                            if (response.status === "success") {
-                                formHasBeenSaved = true; // Marcar como guardado
-                                Swal.fire({
-                                    title: "¡Progreso guardado!",
-                                    text: "Puede continuar más tarde.",
-                                    icon: "success"
-                                }).then(() => {
-                                    disableForm(); // Cambiar a estado post-guardado
-                                });
-                            } else {
-                                throw new Error(response.message);
-                            }
-                        })
-                        .catch(handleError);
+                            sendRequest('../controlador/controlador_form.php', formData)
+                                .then(response => {
+                                    if (response.status === "success") {
+                                        formHasBeenSaved = true; // Marcar como guardado
+                                        Swal.fire({
+                                            title: "¡Progreso guardado!",
+                                            text: "Puede continuar más tarde.",
+                                            icon: "success"
+                                        }).then(() => {
+                                            disableForm(); // Cambiar a estado post-guardado
+                                        });
+                                    } else {
+                                        throw new Error(response.message);
+                                    }
+                                })
+                                .catch(handleError);
+                        }
+                    });
                 });
 
                 // Evento para limpiar validaciones al interactuar con los campos
@@ -886,15 +900,6 @@ if (empty($_SESSION["idusuario"])) {
             });
         </script>
 
-        <style>
-            .is-invalid {
-                border-color: #dc3545 !important;
-                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
-                background-repeat: no-repeat;
-                background-position: right calc(0.375em + 0.1875rem) center;
-                background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
-            }
-        </style>
     </body>
 
     </html>
