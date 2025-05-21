@@ -201,159 +201,6 @@ if (empty($_SESSION["idusuario"])) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Carga de documentos: Participantes mayores de edad -->
-                                        <!-- Carga de documentos: Participantes mayores de edad -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingDocumentosAdultos">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseDocumentosAdultos"
-                                                    aria-expanded="false" aria-controls="collapseDocumentosAdultos">
-                                                    Carga de documentos: Participantes mayores de edad
-                                                </button>
-                                            </h2>
-                                            <div id="collapseDocumentosAdultos" class="accordion-collapse collapse"
-                                                aria-labelledby="headingDocumentosAdultos"
-                                                data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <!-- Credencial para Votar -->
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="credencial_votar">
-                                                                Credencial para votar (INE/IFE) <span
-                                                                    class="required">*</span>
-                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
-                                                            </label>
-                                                            <div class="input-group file-input-group mb-2">
-                                                                <input class="form-control" type="file"
-                                                                    id="credencial_votar" name="credencial_votar"
-                                                                    accept=".pdf" disabled required>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-danger btn-remove-file"
-                                                                    data-input="credencial_votar" title="Eliminar archivo"
-                                                                    style="display:none;">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Declaración de Originalidad -->
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="declaracion_originalidad">
-                                                                Declaración de originalidad <span class="required">*</span>
-                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
-                                                            </label>
-                                                            <div class="input-group file-input-group mb-2">
-                                                                <input class="form-control" type="file"
-                                                                    id="declaracion_originalidad"
-                                                                    name="declaracion_originalidad" accept=".pdf" disabled
-                                                                    required>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-danger btn-remove-file"
-                                                                    data-input="declaracion_originalidad"
-                                                                    title="Eliminar archivo" style="display:none;">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Consentimiento Expreso (Adultos) -->
-                                                        <div class="col-md-6 mb-3">
-                                                            <label class="form-label" for="consentimiento_expreso_adultos">
-                                                                Consentimiento expreso <span class="required">*</span>
-                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
-                                                            </label>
-                                                            <div class="input-group file-input-group mb-2">
-                                                                <input class="form-control" type="file"
-                                                                    id="consentimiento_expreso_adultos"
-                                                                    name="consentimiento_expreso_adultos" accept=".pdf"
-                                                                    disabled required>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-danger btn-remove-file"
-                                                                    data-input="consentimiento_expreso_adultos"
-                                                                    title="Eliminar archivo" style="display:none;">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Mensaje importante -->
-                                                    <div class="alert alert-info mt-3">
-                                                        <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
-                                                        Todos los documentos deben ser legibles y no exceder el tamaño
-                                                        máximo.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <script>
-                                            // Requiere SweetAlert2 y FontAwesome
-                                            document.addEventListener('DOMContentLoaded', function () {
-                                                const fileFields = [
-                                                    'credencial_votar',
-                                                    'declaracion_originalidad',
-                                                    'consentimiento_expreso_adultos'
-                                                ];
-
-                                                fileFields.forEach(fieldId => {
-                                                    const inputFile = document.getElementById(fieldId);
-                                                    const btnRemove = document.querySelector(`.btn-remove-file[data-input="${fieldId}"]`);
-
-                                                    // Validación al seleccionar archivo
-                                                    inputFile.addEventListener('change', function () {
-                                                        const file = this.files[0];
-                                                        let valid = true;
-
-                                                        if (file) {
-                                                            // Validar tipo PDF
-                                                            if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith('.pdf')) {
-                                                                Swal.fire({
-                                                                    icon: 'error',
-                                                                    title: 'Archivo no válido',
-                                                                    text: 'Sólo se permite subir archivos en formato PDF.',
-                                                                });
-                                                                this.value = "";
-                                                                valid = false;
-                                                            }
-                                                            // Validar tamaño
-                                                            else if (file.size > 3 * 1024 * 1024) {
-                                                                Swal.fire({
-                                                                    icon: 'error',
-                                                                    title: 'Archivo demasiado grande',
-                                                                    text: 'El archivo debe pesar máximo 3 MB.',
-                                                                });
-                                                                this.value = "";
-                                                                valid = false;
-                                                            }
-                                                        }
-
-                                                        // Mostrar/ocultar botón eliminar
-                                                        if (valid && file) {
-                                                            btnRemove.style.display = "inline-block";
-                                                        } else {
-                                                            btnRemove.style.display = "none";
-                                                        }
-                                                    });
-
-                                                    // Eliminar archivo con confirmación
-                                                    btnRemove.addEventListener('click', function () {
-                                                        Swal.fire({
-                                                            title: '¿Eliminar archivo?',
-                                                            text: '¿Seguro que quieres eliminar este archivo?',
-                                                            icon: 'warning',
-                                                            showCancelButton: true,
-                                                            confirmButtonText: 'Sí, eliminar',
-                                                            cancelButtonText: 'Cancelar'
-                                                        }).then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                inputFile.value = "";
-                                                                btnRemove.style.display = "none";
-                                                            }
-                                                        });
-                                                    });
-                                                });
-                                            });
-                                        </script>
                                         <!-- Términos -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingTerminos">
@@ -925,16 +772,18 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
-                // Al finalizar (botón finalizar)
+                // Botón "Finalizar" (con validación estricta)
                 $btnFinalizar.click(e => {
                     e.preventDefault();
 
+                    // 1. Validar todos los campos requeridos
                     if (!validateRequiredFields()) {
                         Swal.fire({
                             title: "Campos incompletos",
                             html: "Por favor, complete todos los campos obligatorios antes de finalizar.",
                             icon: "warning",
                             didOpen: () => {
+                                // Scroll al primer error
                                 const firstError = $('.is-invalid').first();
                                 if (firstError.length) {
                                     $('html, body').animate({
@@ -958,40 +807,26 @@ if (empty($_SESSION["idusuario"])) {
                             showLoading('Finalizando...');
 
                             const disabledFields = prepareFormForSubmit();
-                            const formData = new FormData($form[0]); // Aquí también se usa FormData
+                            const formData = $form.serialize();
                             restoreAfterSubmit(disabledFields);
 
-                            $.ajax({
-                                url: '../controlador/controlador_form.php',
-                                type: 'POST',
-                                data: formData,
-                                processData: false,
-                                contentType: false,
-                                dataType: 'json',
-                                success: function (response) {
+                            sendRequest('../controlador/controlador_form.php', formData)
+                                .then(response => {
                                     if (response.status === "success") {
-                                        $.ajax({
-                                            url: '../controlador/finalizar_formulario.php',
-                                            type: 'POST',
-                                            data: { curp: $curpField.val() },
-                                            dataType: 'json',
-                                            success: function (response2) {
-                                                if (response2.status === "success") {
-                                                    lockFormPermanently();
-                                                } else {
-                                                    handleError({ responseJSON: response2 });
-                                                }
-                                            },
-                                            error: handleError,
-                                            complete: function () { if (loadingAlert) Swal.close(); }
+                                        return sendRequest('../controlador/finalizar_formulario.php', {
+                                            curp: $curpField.val()
                                         });
-                                    } else {
-                                        handleError({ responseJSON: response });
                                     }
-                                },
-                                error: handleError,
-                                complete: function () { if (loadingAlert) Swal.close(); }
-                            });
+                                    throw new Error(response.message);
+                                })
+                                .then(response => {
+                                    if (response.status === "success") {
+                                        lockFormPermanently();
+                                    } else {
+                                        throw new Error(response.message);
+                                    }
+                                })
+                                .catch(handleError);
                         }
                     });
                 });
@@ -1000,6 +835,7 @@ if (empty($_SESSION["idusuario"])) {
                 $form.submit(e => {
                     e.preventDefault();
 
+                    // Mostrar alerta de confirmación antes de guardar
                     Swal.fire({
                         title: "¿Estás seguro?",
                         text: "¿Deseas guardar los cambios realizados?",
@@ -1013,37 +849,28 @@ if (empty($_SESSION["idusuario"])) {
                             showLoading('Guardando progreso...');
 
                             const disabledFields = prepareFormForSubmit();
-                            const formData = new FormData($form[0]); // Aquí el cambio principal
+                            const formData = $form.serialize();
                             restoreAfterSubmit(disabledFields);
 
-                            $.ajax({
-                                url: '../controlador/controlador_form.php',
-                                type: 'POST',
-                                data: formData,
-                                processData: false, // Importante para archivos
-                                contentType: false, // Importante para archivos
-                                dataType: 'json',
-                                success: function (response) {
+                            sendRequest('../controlador/controlador_form.php', formData)
+                                .then(response => {
                                     if (response.status === "success") {
-                                        formHasBeenSaved = true;
+                                        formHasBeenSaved = true; // Marcar como guardado
                                         Swal.fire({
                                             title: "¡Progreso guardado!",
                                             text: "Puede continuar más tarde.",
                                             icon: "success"
                                         }).then(() => {
-                                            disableForm();
+                                            disableForm(); // Cambiar a estado post-guardado
                                         });
                                     } else {
-                                        handleError({ responseJSON: response });
+                                        throw new Error(response.message);
                                     }
-                                },
-                                error: handleError,
-                                complete: function () { if (loadingAlert) Swal.close(); }
-                            });
+                                })
+                                .catch(handleError);
                         }
                     });
                 });
-
 
                 // Evento para limpiar validaciones al interactuar con los campos
                 $form.on('input change', '[required]', function () {
