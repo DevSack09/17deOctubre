@@ -14,8 +14,10 @@ if ($db_connection->connect_error) {
     exit;
 }
 
-// Modificar la consulta SQL para incluir el campo "status"
-$sql = "SELECT curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento, status FROM registration WHERE usuario_id = ?";
+// Incluir los campos de archivos
+$sql = "SELECT curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento, status,
+               credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos
+        FROM registration WHERE usuario_id = ?";
 $stmt = $db_connection->prepare($sql);
 
 if ($stmt) {

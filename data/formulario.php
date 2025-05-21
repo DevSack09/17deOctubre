@@ -202,7 +202,6 @@ if (empty($_SESSION["idusuario"])) {
                                             </div>
                                         </div>
                                         <!-- Carga de documentos: Participantes mayores de edad -->
-                                        <!-- Carga de documentos: Participantes mayores de edad -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingDocumentosAdultos">
                                                 <button class="accordion-button fw-bold fs-5 collapsed" type="button"
@@ -217,68 +216,113 @@ if (empty($_SESSION["idusuario"])) {
                                                 <div class="accordion-body">
                                                     <div class="row mb-3">
                                                         <!-- Credencial para Votar -->
-                                                        <div class="col-md-6 mb-3">
+                                                        <div class="col-md-6 mb-3" id="grupo_credencial_votar">
                                                             <label class="form-label" for="credencial_votar">
                                                                 Credencial para votar (INE/IFE) <span
                                                                     class="required">*</span>
                                                                 <small class="text-muted">(Formato PDF, máximo 3MB)</small>
                                                             </label>
-                                                            <div class="input-group file-input-group mb-2">
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
                                                                 <input class="form-control" type="file"
                                                                     id="credencial_votar" name="credencial_votar"
-                                                                    accept=".pdf" disabled required>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-danger btn-remove-file"
-                                                                    data-input="credencial_votar" title="Eliminar archivo"
-                                                                    style="display:none;">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
+                                                                    accept=".pdf" required>
+                                                                <div class="invalid-feedback d-none">Debes subir el PDF de
+                                                                    tu credencial para votar.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-primary mt-3 text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong>
+                                                                    Ya cargaste un archivo para este campo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver archivo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar archivo
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
-
                                                         <!-- Declaración de Originalidad -->
-                                                        <div class="col-md-6 mb-3">
+                                                        <div class="col-md-6 mb-3" id="grupo_declaracion_originalidad">
                                                             <label class="form-label" for="declaracion_originalidad">
                                                                 Declaración de originalidad <span class="required">*</span>
                                                                 <small class="text-muted">(Formato PDF, máximo 3MB)</small>
                                                             </label>
-                                                            <div class="input-group file-input-group mb-2">
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
                                                                 <input class="form-control" type="file"
                                                                     id="declaracion_originalidad"
-                                                                    name="declaracion_originalidad" accept=".pdf" disabled
-                                                                    required>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-danger btn-remove-file"
-                                                                    data-input="declaracion_originalidad"
-                                                                    title="Eliminar archivo" style="display:none;">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
+                                                                    name="declaracion_originalidad" accept=".pdf" required>
+                                                                <div class="invalid-feedback d-none">Debes subir el PDF de
+                                                                    tu declaración de originalidad.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-primary text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong>
+                                                                    Ya cargaste un archivo para este campo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver archivo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar archivo
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
-
                                                         <!-- Consentimiento Expreso (Adultos) -->
-                                                        <div class="col-md-6 mb-3">
+                                                        <div class="col-md-6 mb-3"
+                                                            id="grupo_consentimiento_expreso_adultos">
                                                             <label class="form-label" for="consentimiento_expreso_adultos">
                                                                 Consentimiento expreso <span class="required">*</span>
                                                                 <small class="text-muted">(Formato PDF, máximo 3MB)</small>
                                                             </label>
-                                                            <div class="input-group file-input-group mb-2">
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
                                                                 <input class="form-control" type="file"
                                                                     id="consentimiento_expreso_adultos"
                                                                     name="consentimiento_expreso_adultos" accept=".pdf"
-                                                                    disabled required>
-                                                                <button type="button"
-                                                                    class="btn btn-outline-danger btn-remove-file"
-                                                                    data-input="consentimiento_expreso_adultos"
-                                                                    title="Eliminar archivo" style="display:none;">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
+                                                                    required>
+                                                                <div class="invalid-feedback d-none">Debes subir el PDF de
+                                                                    consentimiento expreso.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-primary text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong>
+                                                                    Ya cargaste un archivo para este campo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver archivo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar archivo
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                     <!-- Mensaje importante -->
-                                                    <div class="alert alert-info mt-3">
+                                                    <div class="alert alert-info">
                                                         <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
                                                         Todos los documentos deben ser legibles y no exceder el tamaño
                                                         máximo.
@@ -297,7 +341,12 @@ if (empty($_SESSION["idusuario"])) {
 
                                                 fileFields.forEach(fieldId => {
                                                     const inputFile = document.getElementById(fieldId);
-                                                    const btnRemove = document.querySelector(`.btn-remove-file[data-input="${fieldId}"]`);
+
+                                                    // Busca los feedbacks dentro del grupo correspondiente
+                                                    const grupo = document.getElementById('grupo_' + fieldId);
+                                                    const feedbackContainer = grupo ? grupo.querySelector('.input-file-section') : null;
+                                                    const invalidFeedback = feedbackContainer ? feedbackContainer.querySelector('.invalid-feedback') : null;
+                                                    const validFeedback = feedbackContainer ? feedbackContainer.querySelector('.valid-feedback') : null;
 
                                                     // Validación al seleccionar archivo
                                                     inputFile.addEventListener('change', function () {
@@ -327,29 +376,24 @@ if (empty($_SESSION["idusuario"])) {
                                                             }
                                                         }
 
-                                                        // Mostrar/ocultar botón eliminar
-                                                        if (valid && file) {
-                                                            btnRemove.style.display = "inline-block";
-                                                        } else {
-                                                            btnRemove.style.display = "none";
-                                                        }
-                                                    });
-
-                                                    // Eliminar archivo con confirmación
-                                                    btnRemove.addEventListener('click', function () {
-                                                        Swal.fire({
-                                                            title: '¿Eliminar archivo?',
-                                                            text: '¿Seguro que quieres eliminar este archivo?',
-                                                            icon: 'warning',
-                                                            showCancelButton: true,
-                                                            confirmButtonText: 'Sí, eliminar',
-                                                            cancelButtonText: 'Cancelar'
-                                                        }).then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                inputFile.value = "";
-                                                                btnRemove.style.display = "none";
+                                                        // Feedback visual Bootstrap
+                                                        if (feedbackContainer && invalidFeedback && validFeedback) {
+                                                            if (valid && file) {
+                                                                inputFile.classList.add('is-valid');
+                                                                inputFile.classList.remove('is-invalid');
+                                                                invalidFeedback.classList.remove('d-block');
+                                                                invalidFeedback.classList.add('d-none');
+                                                                validFeedback.classList.remove('d-none');
+                                                                validFeedback.classList.add('d-block');
+                                                            } else {
+                                                                inputFile.classList.add('is-invalid');
+                                                                inputFile.classList.remove('is-valid');
+                                                                invalidFeedback.classList.remove('d-none');
+                                                                invalidFeedback.classList.add('d-block');
+                                                                validFeedback.classList.remove('d-block');
+                                                                validFeedback.classList.add('d-none');
                                                             }
-                                                        });
+                                                        }
                                                     });
                                                 });
                                             });
@@ -676,6 +720,12 @@ if (empty($_SESSION["idusuario"])) {
                 let originalFormData = {};
                 let loadingAlert;
                 let formHasBeenSaved = false; // Nueva variable para controlar el estado de guardado
+                let archivosCargados = {
+                    credencial_votar: '',
+                    declaracion_originalidad: '',
+                    consentimiento_expreso_adultos: ''
+                };
+
 
                 // ==================== FUNCIONES DE ESTADO ====================
                 function setInitialState() {
@@ -735,6 +785,61 @@ if (empty($_SESSION["idusuario"])) {
                         icon: "info",
                         confirmButtonText: "OK",
                         allowOutsideClick: false
+                    });
+                }
+
+                // ==================== FUNCIONES INPUT FILE ====================
+
+                function getArchivoUrl(archivoRuta) {
+                    // Quita "/data" si lo tiene
+                    archivoRuta = archivoRuta.replace(/^data\//, '');
+                    // Añade el prefijo del proyecto si hace falta
+                    if (!archivoRuta.startsWith('/')) archivoRuta = '/' + archivoRuta;
+                    return '/17deoctubre' + archivoRuta;
+                }
+
+                function inicializarCamposArchivos(archivos) {
+                    const campos = [
+                        'credencial_votar',
+                        'declaracion_originalidad',
+                        'consentimiento_expreso_adultos'
+                    ];
+                    campos.forEach(fieldId => {
+                        const $grupo = $('#grupo_' + fieldId);
+                        const $inputFile = $grupo.find('input[type="file"]');
+                        const $fileSection = $grupo.find('.input-file-section');
+                        const $archivoCargadoSection = $grupo.find('.archivo-cargado-section');
+                        const $btnView = $grupo.find('.btn-view-file');
+                        const $btnReload = $grupo.find('.btn-reload-file');
+                        const archivoRuta = archivos[fieldId];
+
+                        if (archivoRuta && archivoRuta.trim() !== '') {
+                            $fileSection.hide();
+                            $archivoCargadoSection.show();
+                            $btnView.attr('href', getArchivoUrl(archivoRuta));
+                        } else {
+                            $fileSection.show();
+                            $archivoCargadoSection.hide();
+                            $inputFile.val('');
+                        }
+
+                        // Con confirmación SweetAlert2
+                        $btnReload.off('click').on('click', function () {
+                            Swal.fire({
+                                title: '¿Volver a cargar archivo?',
+                                text: 'Esto eliminará el archivo actual y te permitirá seleccionar uno nuevo. ¿Estás seguro?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Sí, volver a cargar',
+                                cancelButtonText: 'Cancelar'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $archivoCargadoSection.hide();
+                                    $fileSection.show();
+                                    $inputFile.val('');
+                                }
+                            });
+                        });
                     });
                 }
 
@@ -826,6 +931,12 @@ if (empty($_SESSION["idusuario"])) {
                         if ($field.is(':checkbox')) {
                             fieldValid = $field.is(':checked');
                         }
+                        // Validación especial para input file
+                        else if ($field.attr('type') === 'file') {
+                            const fieldId = $field.attr('id');
+                            fieldValid = ($field.val() && $field.val().trim() !== '') ||
+                                (archivosCargados[fieldId] && archivosCargados[fieldId].trim() !== '');
+                        }
                         // Validación para otros campos
                         else {
                             fieldValid = $field.val() && $field.val().trim() !== '';
@@ -869,11 +980,27 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#terminos_privacidad').prop('checked', response.data.acepta_privacidad == 1);
                                 $('#terminos_consentimiento').prop('checked', response.data.acepta_consentimiento == 1);
 
+                                // NUEVO: Inicializar bloques de archivos adjuntos según las rutas del backend
+                                archivosCargados = {
+                                    credencial_votar: response.data.credencial_votar,
+                                    declaracion_originalidad: response.data.declaracion_originalidad,
+                                    consentimiento_expreso_adultos: response.data.consentimiento_expreso_adultos
+                                };
+                                inicializarCamposArchivos(archivosCargados);
+
                                 saveFormState();
                                 response.data.status == 1 ? lockFormPermanently() : setInitialState();
                             } else if (response.message === "No se encontraron registros para este usuario.") {
                                 // Caso normal sin registros
                                 formHasBeenSaved = false;
+
+                                // NUEVO: Asegurarse de que los campos de archivo estén en modo "subir archivo"
+                                inicializarCamposArchivos({
+                                    credencial_votar: '',
+                                    declaracion_originalidad: '',
+                                    consentimiento_expreso_adultos: ''
+                                });
+
                                 Swal.close();
                                 setInitialState();
                             } else {
@@ -885,6 +1012,14 @@ if (empty($_SESSION["idusuario"])) {
                                 handleError(error);
                             } else {
                                 formHasBeenSaved = false;
+
+                                archivosCargados = {
+                                    credencial_votar: '',
+                                    declaracion_originalidad: '',
+                                    consentimiento_expreso_adultos: ''
+                                };
+                                inicializarCamposArchivos(archivosCargados);
+
                                 Swal.close();
                                 setInitialState();
                             }
@@ -1032,6 +1167,8 @@ if (empty($_SESSION["idusuario"])) {
                                             icon: "success"
                                         }).then(() => {
                                             disableForm();
+                                            loadInitialData();
+
                                         });
                                     } else {
                                         handleError({ responseJSON: response });
