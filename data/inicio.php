@@ -117,10 +117,13 @@ if (empty($_SESSION["idusuario"])) {
                                             información detenidamente
                                             antes de finalizar.</li>
                                     </ol>
-                                    <p class="mensajeInformativo">Todos los campos marcados con un asterisco (<span
-                                            style="color: red;">*</span>) son obligatorios. La omisión de esta información
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
+                                        Todos los campos marcados con un asterisco (<span style="color: red;">*</span>) son
+                                        obligatorios. La omisión de esta información
                                         puede resultar en la
-                                        imposibilidad de procesar tu registro adecuadamente.</p>
+                                        imposibilidad de procesar tu registro adecuadamente.
+                                    </div>
                                 </div><br><br>
                                 <div style="text-align: center; margin-top: 20px;">
                                     <a href="formulario.php" class="btn btn-primary">Ir al formulario</a>

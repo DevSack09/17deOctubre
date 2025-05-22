@@ -230,7 +230,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary mt-3 text-center"
+                                                                <div class="alert alert-primary text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong>
@@ -328,74 +328,6 @@ if (empty($_SESSION["idusuario"])) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <script>
-                                            // Requiere SweetAlert2 y FontAwesome
-                                            document.addEventListener('DOMContentLoaded', function () {
-                                                const fileFields = [
-                                                    'credencial_votar',
-                                                    'declaracion_originalidad',
-                                                    'consentimiento_expreso_adultos'
-                                                ];
-
-                                                fileFields.forEach(fieldId => {
-                                                    const inputFile = document.getElementById(fieldId);
-
-                                                    // Busca los feedbacks dentro del grupo correspondiente
-                                                    const grupo = document.getElementById('grupo_' + fieldId);
-                                                    const feedbackContainer = grupo ? grupo.querySelector('.input-file-section') : null;
-                                                    const invalidFeedback = feedbackContainer ? feedbackContainer.querySelector('.invalid-feedback') : null;
-                                                    const validFeedback = feedbackContainer ? feedbackContainer.querySelector('.valid-feedback') : null;
-
-                                                    // Validación al seleccionar archivo
-                                                    inputFile.addEventListener('change', function () {
-                                                        const file = this.files[0];
-                                                        let valid = true;
-
-                                                        if (file) {
-                                                            // Validar tipo PDF
-                                                            if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith('.pdf')) {
-                                                                Swal.fire({
-                                                                    icon: 'error',
-                                                                    title: 'Archivo no válido',
-                                                                    text: 'Sólo se permite subir archivos en formato PDF.',
-                                                                });
-                                                                this.value = "";
-                                                                valid = false;
-                                                            }
-                                                            // Validar tamaño
-                                                            else if (file.size > 3 * 1024 * 1024) {
-                                                                Swal.fire({
-                                                                    icon: 'error',
-                                                                    title: 'Archivo demasiado grande',
-                                                                    text: 'El archivo debe pesar máximo 3 MB.',
-                                                                });
-                                                                this.value = "";
-                                                                valid = false;
-                                                            }
-                                                        }
-
-                                                        // Feedback visual Bootstrap
-                                                        if (feedbackContainer && invalidFeedback && validFeedback) {
-                                                            if (valid && file) {
-                                                                inputFile.classList.add('is-valid');
-                                                                inputFile.classList.remove('is-invalid');
-                                                                invalidFeedback.classList.remove('d-block');
-                                                                invalidFeedback.classList.add('d-none');
-                                                                validFeedback.classList.remove('d-none');
-                                                                validFeedback.classList.add('d-block');
-                                                            } else {
-                                                                inputFile.classList.add('is-invalid');
-                                                                inputFile.classList.remove('is-valid');
-                                                                invalidFeedback.classList.remove('d-none');
-                                                                invalidFeedback.classList.add('d-block');
-                                                                validFeedback.classList.remove('d-block');
-                                                                validFeedback.classList.add('d-none');
-                                                            }
-                                                        }
-                                                    });
-                                                });
-                                            });
-                                        </script>
                                         <!-- Términos -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingTerminos">
@@ -515,6 +447,25 @@ if (empty($_SESSION["idusuario"])) {
                     "input[required], select[required], textarea[required]"
                 );
 
+                // --- NUEVO: IDs de los campos file requeridos ---
+                const fileFieldIds = [
+                    'credencial_votar',
+                    'declaracion_originalidad',
+                    'consentimiento_expreso_adultos'
+                ];
+
+                // --- NUEVO: Variable global para archivos cargados (debes actualizarla cuando cargues datos del backend) ---
+                let archivosCargados = window.archivosCargados || {
+                    credencial_votar: '',
+                    declaracion_originalidad: '',
+                    consentimiento_expreso_adultos: ''
+                };
+
+                // --- NUEVO: Función para saber si un archivo requerido ya está cargado ---
+                function archivoYaCargado(fieldId) {
+                    return archivosCargados[fieldId] && archivosCargados[fieldId].trim() !== '';
+                }
+
                 const totalRequired = () => {
                     return requiredFields.length;
                 };
@@ -525,6 +476,11 @@ if (empty($_SESSION["idusuario"])) {
                     requiredFields.forEach((field) => {
                         if (field.type === "checkbox") {
                             if (field.checked) {
+                                completados++;
+                            }
+                        } else if (field.type === "file") {
+                            // --- NUEVO: Si ya hay archivo cargado, cuenta como completado ---
+                            if (field.value.trim() !== "" || archivoYaCargado(field.id)) {
                                 completados++;
                             }
                         } else if (field.value.trim() !== "") {
@@ -546,8 +502,7 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
-                actualizarProgreso();
-
+                // --- NUEVO: Cuando cargues datos del backend, actualiza archivosCargados y la barra ---
                 function cargarDatos() {
                     $.ajax({
                         url: "../controlador/get_registration.php",
@@ -565,6 +520,13 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#edad').val(data.edad);
                                 $('#terminos_privacidad').prop('checked', data.acepta_privacidad == 1);
                                 $('#terminos_consentimiento').prop('checked', data.acepta_consentimiento == 1);
+
+                                // --- NUEVO: Actualiza archivosCargados ---
+                                archivosCargados = {
+                                    credencial_votar: data.credencial_votar,
+                                    declaracion_originalidad: data.declaracion_originalidad,
+                                    consentimiento_expreso_adultos: data.consentimiento_expreso_adultos
+                                };
 
                                 actualizarProgreso();
                             } else {
@@ -702,6 +664,75 @@ if (empty($_SESSION["idusuario"])) {
                     if (e.target.value.trim().length !== 18) {
                         bloquearFormulario();
                     }
+                });
+            });
+        </script>
+        <!-- validaciones input file -->
+        <script>
+            // Requiere SweetAlert2 y FontAwesome
+            document.addEventListener('DOMContentLoaded', function () {
+                const fileFields = [
+                    'credencial_votar',
+                    'declaracion_originalidad',
+                    'consentimiento_expreso_adultos'
+                ];
+
+                fileFields.forEach(fieldId => {
+                    const inputFile = document.getElementById(fieldId);
+
+                    // Busca los feedbacks dentro del grupo correspondiente
+                    const grupo = document.getElementById('grupo_' + fieldId);
+                    const feedbackContainer = grupo ? grupo.querySelector('.input-file-section') : null;
+                    const invalidFeedback = feedbackContainer ? feedbackContainer.querySelector('.invalid-feedback') : null;
+                    const validFeedback = feedbackContainer ? feedbackContainer.querySelector('.valid-feedback') : null;
+
+                    // Validación al seleccionar archivo
+                    inputFile.addEventListener('change', function () {
+                        const file = this.files[0];
+                        let valid = true;
+
+                        if (file) {
+                            // Validar tipo PDF
+                            if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith('.pdf')) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Archivo no válido',
+                                    text: 'Sólo se permite subir archivos en formato PDF.',
+                                });
+                                this.value = "";
+                                valid = false;
+                            }
+                            // Validar tamaño
+                            else if (file.size > 3 * 1024 * 1024) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Archivo demasiado grande',
+                                    text: 'El archivo debe pesar máximo 3 MB.',
+                                });
+                                this.value = "";
+                                valid = false;
+                            }
+                        }
+
+                        // Feedback visual Bootstrap
+                        if (feedbackContainer && invalidFeedback && validFeedback) {
+                            if (valid && file) {
+                                inputFile.classList.add('is-valid');
+                                inputFile.classList.remove('is-invalid');
+                                invalidFeedback.classList.remove('d-block');
+                                invalidFeedback.classList.add('d-none');
+                                validFeedback.classList.remove('d-none');
+                                validFeedback.classList.add('d-block');
+                            } else {
+                                inputFile.classList.add('is-invalid');
+                                inputFile.classList.remove('is-valid');
+                                invalidFeedback.classList.remove('d-none');
+                                invalidFeedback.classList.add('d-block');
+                                validFeedback.classList.remove('d-block');
+                                validFeedback.classList.add('d-none');
+                            }
+                        }
+                    });
                 });
             });
         </script>
@@ -920,7 +951,7 @@ if (empty($_SESSION["idusuario"])) {
                     // Validar cada campo requerido
                     $form.find('[required]').each(function () {
                         const $field = $(this);
-                        const $feedbackContainer = $field.closest('.col-md-2, .col-md-3, .col-md-4, .col-md-12, .form-check');
+                        const $feedbackContainer = $field.closest('.col-md-2, .col-md-3, .col-md-4, .col-md-6, .col-md-12, .form-check');
                         const $invalidFeedback = $feedbackContainer.find('.invalid-feedback');
                         const $validFeedback = $feedbackContainer.find('.valid-feedback');
                         let fieldValid = true;
