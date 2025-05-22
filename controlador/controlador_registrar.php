@@ -26,6 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    // Validar que el correo sea de Gmail
+    if (!preg_match('/@gmail\.com$/i', $email)) {
+        echo json_encode(["status" => "error", "message" => "Solo se permiten correos de Gmail."]);
+        exit;
+    }
+
     // Verificar si el correo ya está registrado
     $stmt = $db_connection->prepare("SELECT COUNT(*) FROM usuario WHERE email = ?");
     if (!$stmt) {
@@ -88,6 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt_permisos->execute()) {
             // Preparar y enviar correo
             $template = file_get_contents('../template/index.html');
+            $template = str_replace('{email}', $email, $template);
             $template = str_replace('{nombre}', $nombre, $template);
             $template = str_replace('{password}', $password, $template);
 
@@ -101,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Port = 587;
             $mail->CharSet = "UTF-8";
 
-            $mail->setFrom('reclutanotifi23@gmail.com', 'Sistema Control de Almacén | IEEH');
+            $mail->setFrom('reclutanotifi23@gmail.com', 'Premio 17 de octubre | IEEH');
             $mail->addAddress($email);
             $mail->Subject = 'Registro Exitoso';
             $mail->isHTML(true);

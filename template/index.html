@@ -1,235 +1,313 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="eng">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¡Registro exitoso!</title>
-<style type="text/css">
-	body {
-		margin: 0;
-		background-color: #cccccc;
-	}
-	table {
-		border-spacing: 0;
-	}
-	td {
-		padding: 0;
-	}
-	img {
-		border: 0;
-	}
-    /* Adding the center and table tags with their classes is the first step, the second, is to add the resets here. */
-    /* from here on we will be referencing the added classes 
-    they are like resets just to reinforce the styling to be consistent across email clients */
-    .wrapper{
-        /* setting it to a 100% will leave no spacing when resizing the email */
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>✨ Tu acceso al Sistema IEEH</title>
+    <style type="text/css">
+      /* RESET PARA CLIENTES DE CORREO */
+      body,
+      html {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #333333;
+        background-color: #f9f6ff;
+      }
+
+      /* ESTRUCTURA PRINCIPAL */
+      .email-container {
         width: 100%;
-        /* this property will ensure the wrapper isn't wider than  */
-        table-layout: fixed;
-        background-color: #cccccc;
-    }
-    .main{
-        background-color: #fff;
+        max-width: 640px;
         margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(154, 110, 226, 0.1);
+      }
+
+      /* HEADER CON DEGRADADO */
+      .header {
+        background: linear-gradient(135deg, #9a6ee2 0%, #7d4ac7 100%);
+        padding: 40px 0;
+        text-align: center;
+        position: relative;
+      }
+
+      .header:after {
+        content: "";
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="white" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+        position: absolute;
+        bottom: 0;
+        left: 0;
         width: 100%;
-        /* THIS IS THE RECOMMENDED WIDTH ACROSS EMAIL CLIENTS */
-        max-width: 600px;
-        /* it leaves no spaces to the sides of the table */
-        border-spacing: 0;
-        /* setting a font will get rid of the standard times new roman */
-        font-family: sans-serif;
-        color: #171a1b;
-    }
-    /* 4 step. Style the navigation columns so they become inline for web and then stack when they are 600px or less*/
-    .two-columns{
+        height: 60px;
+        background-size: cover;
+      }
+
+      .logo {
+        width: 150px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* TARJETA DE CREDENCIALES */
+      .credential-card {
+        background: white;
+        border-radius: 10px;
+        margin: -30px 30px 0;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(154, 110, 226, 0.15);
+        position: relative;
+        z-index: 3;
         text-align: center;
-        /* this reduces the icons a little bit */
-        font-size: 0;
-    }
-    .two-columns .column{
-        width: 100%;
-        max-width: 300px;
-        display: inline-block;
-        vertical-align: top;
-        text-align: center;
-    }
-    .three-columns{
-        text-align: center;
-        font-size: 0;
-        padding: 15px 0 25px;
-    }
-    .three-columns .column{
-        width: 100%;
-        max-width: 200px;
-        display: inline-block;
-        vertical-align: top;
-        text-align: center;
-    }
-    .three-columns-text{
-        text-align: left;
-        padding-left: 10px;
-    }
-    /* extra padding so that columns align nicely */
-    .three-columns .padding{
+      }
+
+      .welcome-icon {
+        width: 80px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        color: #7d4ac7;
+        font-size: 28px;
+        margin: 0 0 10px;
+      }
+
+      .password-display {
+        font-size: 26px;
+        letter-spacing: 2px;
+        background: #f9f6ff;
+        border: 2px dashed #9a6ee2;
         padding: 15px;
-    }
-    .three-columns .content{
-        font-size: 15px;
-        line-height: 20px;
-        padding: 0;
-    }
-    .two-columns.last{
-        padding: 15px 0;
-    }
-    .two-columns .padding{
-        padding: 20px;
-    }
-    .two-columns .content{
-        letter-spacing: 0.3px;
-        font-size: 15px;
-        line-height: 20px;
-        text-align: left;
-    }
-    .button{
-        background-color: #fafafa;
-        color:#171a1b;
+        margin: 20px 0;
+        border-radius: 8px;
+        color: #5e3aa8;
+        font-weight: bold;
+      }
+
+      /* SECCIÓN DE ACCIÓN */
+      .action-section {
+        padding: 40px;
+        text-align: center;
+      }
+
+      .btn-primary {
+        display: inline-block;
+        background: linear-gradient(135deg, #9a6ee2 0%, #7d4ac7 100%);
+        color: white !important;
         text-decoration: none;
-        padding: 12px 20px;
-        border-radius: 2px;
-        font-weight: normal;
-    }
-    .button-dark{
-        background-color: #171a1b;
-        color: #fafafa;
-    }
-  
-</style>
-</head>
-<!-- body reset. capital M for outlook rendering -->
-<body style="Margin:0; padding:0; min-width:100%;">
-    <!-- preheader text. best practice 85-100 characters-->
-    <div style="font-size:0px;line-height:1px;mso-line-height-rule:exactly;display:none;max-width:0px;max-height:0px;opacity:0;overflow:hidden;mso-hide:all;">
-        
-    </div>
-    <!-- there is a tag called center, which is deprecated in regualr html 5 but it is used for email development -->
+        padding: 16px 40px;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 16px;
+        box-shadow: 0 5px 15px rgba(154, 110, 226, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(154, 110, 226, 0.4);
+      }
+
+      /* FOOTER */
+      .footer {
+        background: #2a2a2a;
+        color: #b0b0b0;
+        padding: 30px;
+        text-align: center;
+        font-size: 13px;
+      }
+
+      .social-icons {
+        margin: 20px 0;
+      }
+
+      .social-icon {
+        margin: 0 10px;
+      }
+
+      /* ANIMACIONES COMPATIBLES */
+      @media screen and (max-width: 480px) {
+        .credential-card {
+          margin: -20px 15px 0;
+          padding: 20px;
+        }
+
+        .action-section {
+          padding: 30px 20px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body style="margin: 0; padding: 30px 0; background-color: #f9f6ff">
     <center class="wrapper">
-        <!-- we continue with the table tag, which will be the holding the entire content of the email -->
-        <!-- we add a width which will make the content 100% of the center tag -->
-        <table class="main" width="100%">
-        <!-- the third step is to start adding the content for our email which will be contained in table rows and table data tags -->
-<!-- TOP BORDER -->
-            <tr>
-                <td></td>
-            </tr>
-<!-- LOGO SECTION  -->
-            <tr>
-                <!-- this gives padding to the logo top and bottom, we are doing this to make sure it looks good on mobile-->
-                <td style="padding: 14px 0 4px;">
-                    <!-- we need to keep adding spacing, therefore the need for the nesting -->
-                    <!-- this inner table is like a nav -->
-                    <table width="100%">
-                       <!-- we are styling this so the logo looks centered on mobile -->
-                       <td style="text-align: center;">
-                        <!-- this is a clickable image -->
-                        <a href="#"><img width="100" title="Modern Logo" src="http://200.57.172.51/ieeh.png" alt="modern logo"></a>
-                    </td>
-                    </table>
-                </td>
-            </tr>
-<!-- BANNER IMAGE -->
-            <tr style="text-align: center;">
-                <td>
-                    <a href="#"><img width="250" src="https://i.postimg.cc/zX69bLL9/password.gif" alt="cleanbanner"></a>
-                    
-                </td>
-            </tr>
-<!-- THREE COLUMN SECTION -->
- 
-<!-- TWO COLUMN SECTION -->
-            <tr>
-                <td style="background-color: #26292b; color: #fafafa;">
-                    <table width="100%">
-                        <tr>
-                            <td class="two-columns last">
-                               <!--  <table class="column">
-                                    <tr>
-                                        <td class="padding">
-                                            <table class="content">
-                                                <tr>
-                                                    <td>
-                                                        <a href="#"><img width="260px" height="200" style="max-height: 200px; max-width: 260px; object-fit: cover;"src="https://images.unsplash.com/photo-1588495756505-5437763146dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTZ8fGtleWJvYXJkfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="keyboard on white background"></a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table> -->
-                                <table class="">
-                                    <tr>
-                                        <td style="padding:1px 0 0px;">
-                                            <table width="100%" class="content">
-                                                <tr>
-                                                    <td style="text-align: center; padding: 15px 25px 15px;">
-                                                        <p style="font-size: 20px; font-weight: bold;">¡Registro exitoso!</p>
-                                                        <p style="font-size: 15px; text-align: justify; line-height: 22px; padding: 5px 0 15px;">¡Hola <b>{nombre}</b>! Ahora tienes una cuenta dentro del Sitema Control de Almacén | IEEH, tu nueva contraseña es:</p>
-                                                        <p href="#" class="button" style="font-size: 25px">{password}</p>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-<!-- TITLE, TEXT & BUTTON -->
-            <tr>
-                <td style="padding:1px 0 40px;">
-                    <table width="100%">
-                        <tr>
-                            <td style="text-align: center; padding: 15px 25px 15px;">
-                                <p style="font-size: 20px; font-weight: bold;">¿Qué pasa si no creaste una cuenta?</p>
-                                <p style="font-size: 15px; text-align: justify; line-height: 22px; padding: 5px 0 15px;">Si no solicitaste una cuenta o sospechas que alguien pudo haber accedido a tu Información sin tu autorización, por favor, contáctanos de inmediato para tomar las medidas necesarias.</p>
-                                <p style="font-size: 15px; text-align: justify; line-height: 22px; padding: 5px 0 15px;">Si tienes alguna duda o necesitas asistencia, no dudes en comunicarte con nuestro equipo de trabajo.</p>
-                                <!-- cambiar liga -->
-                                <a href="http://localhost/sistemaMVC/" target="_blank" class="button button-dark">Inicio</a>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-<!-- FOOTER SECTION -->
-            <tr>
-                <td style="background-color: #26292b;">
-                    <table width="100%">
-                        <tr>
-                            <!--CENTERING THE LOGO -->
-                            <td style="text-align: center; color: #fff;">
-                                <p>Sitema Control de Almacén | IEEH</p>
-                                <p>Unidad de tecnologías de la Información y Comunicaciones</p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+      <div class="email-container">
+        <div
+          class="header"
+          style="
+            background: #9a6ee2;
+            padding: 70px 0 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+          "
+        >
+          <!-- Ondas SVG dinámicas -->
+          <svg
+            style="position: absolute; bottom: -1px; left: 0; width: 100%"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+              fill="#ffffff"
+              opacity="0.1"
+            ></path>
+            <path
+              d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+              fill="#ffffff"
+              opacity="0.1"
+            ></path>
+          </svg>
+          <img
+            src="http://200.57.172.51/ieeh.png"
+            alt="IEEH Logo"
+            style="
+              width: 130px;
+              background: white;
+              padding: 10px;
+              border-radius: 50%;
+              box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1),
+                0 0 0 8px rgba(255, 255, 255, 0.3), 0 0 0 12px #9a6ee2;
+              position: relative;
+              z-index: 2;
+              filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.2));
+            "
+          />
+        </div>
+
+        <!-- TARJETA DE CREDENCIALES -->
+        <div class="credential-card">
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="100"
+              height="100"
+              viewBox="0 0 24 24"
+              fill="#9a6ee2"
+            >
+              <circle cx="12" cy="12" r="10" fill="#9a6ee2" />
+              <path
+                d="M16.7 8.3a1 1 0 0 0-1.4 0L10 13.6l-1.3-1.3a1 1 0 1 0-1.4 1.4l2 2a1 1 0 0 0 1.4 0l6-6a1 1 0 0 0 0-1.4z"
+                fill="#fff"
+              />
+            </svg>
+          </div>
+
+          <h1>¡Bienvenido/a, {nombre}!</h1>
+          <p style="color: #666; font-size: 16px">
+            Tu cuenta para el <strong>Registro Premio 17 de octubre</strong> ha
+            sido creada exitosamente.
+          </p>
+
+          <p style="font-weight: 500; color: #555">Tu contraseña es:</p>
+          <div class="password-display">{password}</div>
+
+          <p style="color: #777; font-size: 14px">Usuario: {email}</p>
+        </div>
+
+        <!-- SECCIÓN DE ACCIÓN -->
+        <div class="action-section">
+          <p style="margin-bottom: 25px; color: #555">
+            Haz clic para acceder al sistema de registro:
+          </p>
+          <a href="http://localhost/17deoctubre/" class="btn-primary"
+            >Ingresar</a
+          >
+
+          <div
+            style="
+              margin-top: 40px;
+              padding: 20px;
+              background: #fff9f9;
+              border-radius: 8px;
+            "
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1055/1055683.png"
+              width="40"
+              style="margin-bottom: 10px"
+              alt="Security"
+            />
+            <h3 style="color: #d33; margin: 0 0 10px">
+              ¿No reconoces esta actividad?
+            </h3>
+            <p style="color: #666; font-size: 14px; margin: 0">
+              Por seguridad, contacta inmediatamente al área de UTIC:<br /><strong
+                >utic@ieeh.mx</strong
+              >
+            </p>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/IEEHidalgo"
+              class="social-icon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/1384/1384005.png"
+                width="24"
+                alt="Facebook"
+              />
+            </a>
+            <a
+              href="tel:7717170207"
+              class="social-icon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
+                width="24"
+                alt="Teléfono"
+              />
+            </a>
+            <a
+              href="https://x.com/IEEHidalgo"
+              class="social-icon"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/733/733635.png"
+                width="24"
+                alt="Twitter"
+              />
+            </a>
+          </div>
+
+          <p style="margin: 5px 0">
+            Sistema de Registro Premio 17 de octubre | IEEH
+          </p>
+          <p style="margin: 5px 0; font-size: 12px">
+            Unidad de Tecnologías de la Información y Comunicaciones
+          </p>
+          <p style="margin: 15px 0 0; font-size: 11px; color: #777">
+            © 2025 Instituto Estatal Electoral de Hidalgo.
+          </p>
+        </div>
+      </div>
     </center>
-</body>
+  </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

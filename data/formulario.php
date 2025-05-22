@@ -193,9 +193,7 @@ if (empty($_SESSION["idusuario"])) {
                                                             </div>
                                                             <div class="invalid-feedback min-max-length">La edad debe tener
                                                                 2
-                                                                caracteres
-                                                                y
-                                                                ser mayor a 18 años.</div>
+                                                                caracteres</div>
                                                         </div>
                                                     </div>
                                                 </div>
