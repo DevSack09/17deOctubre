@@ -49,7 +49,9 @@ try {
         ) {
             $file = $_FILES[$file_field];
             $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            $target_filename = $curp . "_" . $file_field . "_" . time() . ".pdf";
+            $dt_mexico = new DateTime('now', new DateTimeZone('America/Mexico_City'));
+            $timestamp = $dt_mexico->format('dmYHis');
+            $target_filename = $curp . "_" . $file_field . "_" . $timestamp . ".pdf";
             $target_path = $upload_base_dir . $target_filename;
             $db_file_path = $db_upload_base_dir . $target_filename;
 
