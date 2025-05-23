@@ -101,7 +101,7 @@ if (empty($_SESSION["idusuario"])) {
                                         <div id="curp-feedback" class="text-danger mt-2" style="display: none;">
                                             <!-- Mensaje de error se mostrará aquí -->
                                         </div>
-                                        <div class="valid-feedback">Muy bien!</div>
+                                        <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Por favor, introduzca su CURP.</div>
                                     </div>
 

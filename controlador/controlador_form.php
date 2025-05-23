@@ -32,8 +32,9 @@ try {
         'consentimiento_expreso_adultos'
     ];
 
-    $upload_base_dir = "../uploads/documentos/";
-    $db_upload_base_dir = "uploads/documentos/"; // Para guardar la ruta relativa que usarás para mostrar o descargar
+    // Cambia la base de subida a una temporal
+    $upload_base_dir = "../uploads/tmp/";
+    $db_upload_base_dir = "uploads/tmp/";
 
     if (!file_exists($upload_base_dir)) {
         mkdir($upload_base_dir, 0777, true);
@@ -48,14 +49,15 @@ try {
         ) {
             $file = $_FILES[$file_field];
             $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-
-            // Guardar la ruta completa relativa para la base de datos (sin validaciones adicionales)
             $target_filename = $curp . "_" . $file_field . "_" . time() . ".pdf";
             $target_path = $upload_base_dir . $target_filename;
             $db_file_path = $db_upload_base_dir . $target_filename;
 
             if (move_uploaded_file($file['tmp_name'], $target_path)) {
-                $uploaded_files[$file_field] = $db_file_path;
+                $uploaded_files[$file_field] = [
+                    'tmp_path' => $target_path,
+                    'filename' => $target_filename
+                ];
             } else {
                 echo json_encode(['status' => 'error', 'message' => "Error al subir el archivo '$file_field'."]);
                 exit;
@@ -100,6 +102,48 @@ try {
 
         if ($stmt_check->num_rows > 0) {
             // UPDATE
+            // Recupera el id y folio del registro
+            $sql_folio = "SELECT id, folio FROM registration WHERE curp = ?";
+            $stmt_folio = $db_connection->prepare($sql_folio);
+            $stmt_folio->bind_param("s", $curp);
+            $stmt_folio->execute();
+            $stmt_folio->bind_result($registro_id, $folio);
+            $stmt_folio->fetch();
+            $stmt_folio->close();
+
+            if (!$folio) {
+                $folio = "REGEQIEE-" . $registro_id;
+                $sql_update_folio = "UPDATE registration SET folio = ? WHERE id = ?";
+                $stmt_update_folio = $db_connection->prepare($sql_update_folio);
+                $stmt_update_folio->bind_param("si", $folio, $registro_id);
+                $stmt_update_folio->execute();
+                $stmt_update_folio->close();
+            }
+
+            $user_folder = "../uploads/$folio/";
+            $db_user_folder = "uploads/$folio/";
+
+            if (!file_exists($user_folder)) {
+                mkdir($user_folder, 0777, true);
+            }
+
+            // Mueve archivos nuevos a la carpeta personalizada
+            foreach ($file_fields as $file_field) {
+                if (isset($uploaded_files[$file_field])) {
+                    $new_path = $user_folder . $uploaded_files[$file_field]['filename'];
+                    $db_new_path = $db_user_folder . $uploaded_files[$file_field]['filename'];
+                    rename($uploaded_files[$file_field]['tmp_path'], $new_path);
+                    $uploaded_files[$file_field] = $db_new_path;
+                    // Elimina archivo anterior si existía
+                    if (!empty($current_files[$file_field])) {
+                        $prev_file = "../" . $current_files[$file_field];
+                        if (file_exists($prev_file)) {
+                            @unlink($prev_file);
+                        }
+                    }
+                }
+            }
+
             $sql_update = "UPDATE registration 
                 SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?";
 
@@ -119,13 +163,6 @@ try {
                     $sql_update .= ", $file_field = ?";
                     $update_params[] = $uploaded_files[$file_field];
                     $types .= "s";
-                    // Eliminar archivo anterior si existía (opcional)
-                    if (!empty($current_files[$file_field])) {
-                        $prev_file = "../" . $current_files[$file_field]; // Añade ../ si guardaste ruta relativa
-                        if (file_exists($prev_file)) {
-                            @unlink($prev_file);
-                        }
-                    }
                 }
             }
             $sql_update .= " WHERE curp = ?";
@@ -164,14 +201,17 @@ try {
             foreach ($file_fields as $file_field) {
                 if (isset($uploaded_files[$file_field])) {
                     $sql_insert .= ", $file_field";
-                    $insert_params[] = $uploaded_files[$file_field];
+                    $insert_params[] = ""; // Se actualizará después
                     $types .= "s";
                 }
             }
-            $sql_insert .= ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?";
+            $sql_insert .= ", folio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?";
             foreach ($uploaded_files as $k => $v)
                 $sql_insert .= ", ?";
-            $sql_insert .= ")";
+            $sql_insert .= ", ?)";
+
+            $insert_params[] = ""; // Folio temporal
+            $types .= "s";
 
             $stmt_insert = $db_connection->prepare($sql_insert);
 
@@ -179,7 +219,51 @@ try {
                 $stmt_insert->bind_param($types, ...$insert_params);
 
                 if ($stmt_insert->execute()) {
-                    echo json_encode(['status' => 'success', 'message' => 'Registro guardado correctamente']);
+                    $registro_id = $stmt_insert->insert_id;
+                    $folio = "REGEQIEE-" . $registro_id;
+                    $user_folder = "../uploads/$folio/";
+                    $db_user_folder = "uploads/$folio/";
+
+                    if (!file_exists($user_folder)) {
+                        mkdir($user_folder, 0777, true);
+                    }
+
+                    // Mueve archivos a la carpeta personalizada y actualiza rutas
+                    $update_file_paths = [];
+                    foreach ($file_fields as $file_field) {
+                        if (isset($uploaded_files[$file_field])) {
+                            $new_path = $user_folder . $uploaded_files[$file_field]['filename'];
+                            $db_new_path = $db_user_folder . $uploaded_files[$file_field]['filename'];
+                            rename($uploaded_files[$file_field]['tmp_path'], $new_path);
+                            $update_file_paths[$file_field] = $db_new_path;
+                        }
+                    }
+
+                    // Actualiza las rutas y el folio en la base de datos
+                    if (!empty($update_file_paths) || true) {
+                        $set_files = [];
+                        $params = [];
+                        $types_update = "";
+                        foreach ($update_file_paths as $field => $path) {
+                            $set_files[] = "$field = ?";
+                            $params[] = $path;
+                            $types_update .= "s";
+                        }
+                        $set_files[] = "folio = ?";
+                        $params[] = $folio;
+                        $types_update .= "s";
+                        $params[] = $registro_id;
+                        $types_update .= "i";
+                        $sql_update_files = "UPDATE registration SET " . implode(", ", $set_files) . " WHERE id = ?";
+                        $stmt_update_files = $db_connection->prepare($sql_update_files);
+                        if ($stmt_update_files) {
+                            $stmt_update_files->bind_param($types_update, ...$params);
+                            $stmt_update_files->execute();
+                            $stmt_update_files->close();
+                        }
+                    }
+
+                    echo json_encode(['status' => 'success', 'message' => 'Registro guardado correctamente', 'folio' => $folio]);
                 } else {
                     echo json_encode(['status' => 'error', 'message' => 'Error al guardar el registro', 'error' => $stmt_insert->error]);
                 }
