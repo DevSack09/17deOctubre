@@ -1112,7 +1112,7 @@ if (empty($_SESSION["idusuario"])) {
 
                     Swal.fire({
                         title: "¿Finalizar formulario?",
-                        text: "Una vez finalizado, no podrás modificar el formulario.",
+                        text: "Una vez finalizado, no será posible realizar cambios o modificaciones en la información proporcionada. Por favor, asegúrate de revisar cuidadosamente todos los datos antes de enviarlo.",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonText: "Sí, finalizar",
@@ -1122,7 +1122,7 @@ if (empty($_SESSION["idusuario"])) {
                             showLoading('Finalizando...');
 
                             const disabledFields = prepareFormForSubmit();
-                            const formData = new FormData($form[0]); // Aquí también se usa FormData
+                            const formData = new FormData($form[0]);
                             restoreAfterSubmit(disabledFields);
 
                             $.ajax({
@@ -1140,11 +1140,11 @@ if (empty($_SESSION["idusuario"])) {
                                             data: { curp: $curpField.val() },
                                             dataType: 'json',
                                             success: function (response2) {
+                                                if (loadingAlert) Swal.close(); // Cierra el loading justo antes de mostrar la alerta final
                                                 if (response2.status === "success") {
-                                                    if (loadingAlert) Swal.close();
                                                     Swal.fire({
                                                         title: "¡Formulario finalizado!",
-                                                        text: "El formulario se ha finalizado correctamente.",
+                                                        text: "Formulario finalizado correctamente. Se ha enviado un correo de confirmación a la dirección registrada.",
                                                         icon: "success",
                                                         confirmButtonText: "OK",
                                                         allowOutsideClick: false
@@ -1155,15 +1155,22 @@ if (empty($_SESSION["idusuario"])) {
                                                     handleError({ responseJSON: response2 });
                                                 }
                                             },
-                                            error: handleError,
+                                            error: function (error) {
+                                                if (loadingAlert) Swal.close();
+                                                handleError(error);
+                                            },
                                             complete: function () { /* No cerrar SweetAlert aquí */ }
                                         });
                                     } else {
+                                        if (loadingAlert) Swal.close();
                                         handleError({ responseJSON: response });
                                     }
                                 },
-                                error: handleError,
-                                complete: function () { if (loadingAlert) Swal.close(); }
+                                error: function (error) {
+                                    if (loadingAlert) Swal.close();
+                                    handleError(error);
+                                },
+                                complete: function () { /* No cerrar SweetAlert aquí */ }
                             });
                         }
                     });
