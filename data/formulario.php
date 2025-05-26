@@ -1141,13 +1141,22 @@ if (empty($_SESSION["idusuario"])) {
                                             dataType: 'json',
                                             success: function (response2) {
                                                 if (response2.status === "success") {
-                                                    lockFormPermanently();
+                                                    if (loadingAlert) Swal.close();
+                                                    Swal.fire({
+                                                        title: "¡Formulario finalizado!",
+                                                        text: "El formulario se ha finalizado correctamente.",
+                                                        icon: "success",
+                                                        confirmButtonText: "OK",
+                                                        allowOutsideClick: false
+                                                    }).then(() => {
+                                                        lockFormPermanently();
+                                                    });
                                                 } else {
                                                     handleError({ responseJSON: response2 });
                                                 }
                                             },
                                             error: handleError,
-                                            complete: function () { if (loadingAlert) Swal.close(); }
+                                            complete: function () { /* No cerrar SweetAlert aquí */ }
                                         });
                                     } else {
                                         handleError({ responseJSON: response });
