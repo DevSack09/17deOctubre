@@ -191,9 +191,6 @@ if (empty($_SESSION["idusuario"])) {
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Por favor, introduzca su edad.
                                                             </div>
-                                                            <div class="invalid-feedback min-max-length">La edad debe tener
-                                                                2
-                                                                caracteres</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -951,7 +948,7 @@ if (empty($_SESSION["idusuario"])) {
                     // Validar cada campo requerido
                     $form.find('[required]').each(function () {
                         const $field = $(this);
-                        const $feedbackContainer = $field.closest('.col-md-2, .col-md-3, .col-md-4, .col-md-6, .col-md-12, .form-check');
+                        const $feedbackContainer = $field.closest('.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-6, .col-md-7, .col-md-12, .form-check');
                         const $invalidFeedback = $feedbackContainer.find('.invalid-feedback');
                         const $validFeedback = $feedbackContainer.find('.valid-feedback');
                         let fieldValid = true;
