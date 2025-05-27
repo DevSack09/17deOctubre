@@ -29,7 +29,14 @@ try {
     $file_fields = [
         'credencial_votar',
         'declaracion_originalidad',
-        'consentimiento_expreso_adultos'
+        'consentimiento_expreso_adultos',
+        // CAMPOS PARA MENORES DE EDAD
+        'identificacion_fotografia',
+        'carta_autorizacion',
+        'declaracion_originalidad_menores',
+        'comprobante_domicilio_tutor',
+        'consentimiento_expreso_menores',
+        'ine_tutor'
     ];
 
     // Cambia la base de subida a una temporal
@@ -78,7 +85,7 @@ try {
     }
 
     // Verificar si existe el registro
-    $sql_check = "SELECT id, credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos FROM registration WHERE curp = ?";
+    $sql_check = "SELECT id, folio, credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos, identificacion_fotografia, carta_autorizacion, declaracion_originalidad_menores, comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor FROM registration WHERE curp = ?";
     $stmt_check = $db_connection->prepare($sql_check);
 
     if ($stmt_check) {
@@ -90,15 +97,42 @@ try {
         $current_files = [
             'credencial_votar' => null,
             'declaracion_originalidad' => null,
-            'consentimiento_expreso_adultos' => null
+            'consentimiento_expreso_adultos' => null,
+            'identificacion_fotografia' => null,
+            'carta_autorizacion' => null,
+            'declaracion_originalidad_menores' => null,
+            'comprobante_domicilio_tutor' => null,
+            'consentimiento_expreso_menores' => null,
+            'ine_tutor' => null
         ];
+        $folio = null;
+        $registro_id = null;
         if ($stmt_check->num_rows > 0) {
-            $stmt_check->bind_result($id, $credencial_votar, $declaracion_originalidad, $consentimiento_expreso_adultos);
+            $stmt_check->bind_result(
+                $id,
+                $folio,
+                $credencial_votar,
+                $declaracion_originalidad,
+                $consentimiento_expreso_adultos,
+                $identificacion_fotografia,
+                $carta_autorizacion,
+                $declaracion_originalidad_menores,
+                $comprobante_domicilio_tutor,
+                $consentimiento_expreso_menores,
+                $ine_tutor
+            );
             $stmt_check->fetch();
+            $registro_id = $id;
             $current_files = [
                 'credencial_votar' => $credencial_votar,
                 'declaracion_originalidad' => $declaracion_originalidad,
-                'consentimiento_expreso_adultos' => $consentimiento_expreso_adultos
+                'consentimiento_expreso_adultos' => $consentimiento_expreso_adultos,
+                'identificacion_fotografia' => $identificacion_fotografia,
+                'carta_autorizacion' => $carta_autorizacion,
+                'declaracion_originalidad_menores' => $declaracion_originalidad_menores,
+                'comprobante_domicilio_tutor' => $comprobante_domicilio_tutor,
+                'consentimiento_expreso_menores' => $consentimiento_expreso_menores,
+                'ine_tutor' => $ine_tutor
             ];
         }
 

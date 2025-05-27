@@ -14,9 +14,11 @@ if ($db_connection->connect_error) {
     exit;
 }
 
-// Incluir los campos de archivos
+// Incluir los campos de archivos, incluyendo los de menores de edad
 $sql = "SELECT curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento, status,
-               credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos
+               credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos,
+               identificacion_fotografia, carta_autorizacion, declaracion_originalidad_menores,
+               comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor
         FROM registration WHERE usuario_id = ?";
 $stmt = $db_connection->prepare($sql);
 

@@ -319,8 +319,256 @@ if (empty($_SESSION["idusuario"])) {
                                                     <!-- Mensaje importante -->
                                                     <div class="alert alert-info">
                                                         <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
-                                                        Todos los documentos deben ser legibles y no exceder el tamaño
-                                                        máximo.
+                                                        Todos los documentos deben estar en <strong>formato PDF</strong>,
+                                                        ser legibles y no exceder 3MB.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Carga de documentos: Participantes menores de edad -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingDocumentosMenores">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseDocumentosMenores"
+                                                    aria-expanded="false" aria-controls="collapseDocumentosMenores">
+                                                    Carga de documentos: Participantes menores de edad
+                                                </button>
+                                            </h2>
+                                            <div id="collapseDocumentosMenores" class="accordion-collapse collapse"
+                                                aria-labelledby="headingDocumentosMenores"
+                                                data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Identificación con fotografía (ahora solo PDF) -->
+                                                        <div class="col-md-6 mb-3" id="grupo_identificacion_fotografia">
+                                                            <label class="form-label" for="identificacion_fotografia">
+                                                                Identificación con fotografía (credencial de estudiante
+                                                                vigente u otra): <span class="required">*</span>
+                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
+                                                            </label>
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
+                                                                <input class="form-control" type="file"
+                                                                    id="identificacion_fotografia"
+                                                                    name="identificacion_fotografia" accept=".pdf" required>
+                                                                <div class="invalid-feedback d-none">Debes subir un archivo
+                                                                    PDF válido.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-primary text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    campo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver archivo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar archivo
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Carta de Autorización (solo PDF) -->
+                                                        <div class="col-md-6 mb-3" id="grupo_carta_autorizacion">
+                                                            <label class="form-label" for="carta_autorizacion">
+                                                                Carta de Autorización, debidamente requisitada y firmada:
+                                                                <span class="required">*</span>
+                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
+                                                            </label>
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
+                                                                <input class="form-control" type="file"
+                                                                    id="carta_autorizacion" name="carta_autorizacion"
+                                                                    accept=".pdf" required>
+                                                                <div class="invalid-feedback d-none">Debes subir la carta de
+                                                                    autorización en PDF.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-primary text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    campo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver archivo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar archivo
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Declaración de Originalidad y Cesión de Derechos (solo PDF) -->
+                                                        <div class="col-md-6 mb-3"
+                                                            id="grupo_declaracion_originalidad_menores">
+                                                            <label class="form-label"
+                                                                for="declaracion_originalidad_menores">
+                                                                Carta de Declaración de Originalidad y Cesión de Derechos:
+                                                                <span class="required">*</span>
+                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
+                                                            </label>
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
+                                                                <input class="form-control" type="file"
+                                                                    id="declaracion_originalidad_menores"
+                                                                    name="declaracion_originalidad_menores" accept=".pdf"
+                                                                    required>
+                                                                <div class="invalid-feedback d-none">Debes subir este
+                                                                    documento en PDF.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-primary text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    campo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver archivo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar archivo
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Comprobante de Domicilio del Tutor (solo PDF) -->
+                                                        <div class="col-md-6 mb-3" id="grupo_comprobante_domicilio_tutor">
+                                                            <label class="form-label" for="comprobante_domicilio_tutor">
+                                                                Comprobante de Domicilio (Vigente) del Tutor: <span
+                                                                    class="required">*</span>
+                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
+                                                            </label>
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
+                                                                <input class="form-control" type="file"
+                                                                    id="comprobante_domicilio_tutor"
+                                                                    name="comprobante_domicilio_tutor" accept=".pdf"
+                                                                    required>
+                                                                <div class="invalid-feedback d-none">Debes subir un
+                                                                    comprobante en PDF.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-primary text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    campo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver archivo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar archivo
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Consentimiento Expreso (Menores, solo PDF) -->
+                                                        <div class="col-md-6 mb-3"
+                                                            id="grupo_consentimiento_expreso_menores">
+                                                            <label class="form-label" for="consentimiento_expreso_menores">
+                                                                Formato para Otorgar Consentimiento Expreso: <span
+                                                                    class="required">*</span>
+                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
+                                                            </label>
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
+                                                                <input class="form-control" type="file"
+                                                                    id="consentimiento_expreso_menores"
+                                                                    name="consentimiento_expreso_menores" accept=".pdf"
+                                                                    required>
+                                                                <div class="invalid-feedback d-none">Debes subir este
+                                                                    documento en PDF.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-primary text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    campo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver archivo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar archivo
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- INE del Tutor (solo PDF) -->
+                                                        <div class="col-md-6 mb-3" id="grupo_ine_tutor">
+                                                            <label class="form-label" for="ine_tutor">
+                                                                INE del Tutor: <span class="required">*</span>
+                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
+                                                            </label>
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
+                                                                <input class="form-control" type="file" id="ine_tutor"
+                                                                    name="ine_tutor" accept=".pdf" required>
+                                                                <div class="invalid-feedback d-none">Debes subir una
+                                                                    identificación en PDF.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-primary text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    campo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver archivo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar archivo
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Mensaje importante -->
+                                                    <div class="alert alert-info">
+                                                        <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
+                                                        Todos los documentos deben estar en <strong>formato PDF</strong>,
+                                                        ser legibles y no exceder 3MB.
                                                     </div>
                                                 </div>
                                             </div>
@@ -435,6 +683,67 @@ if (empty($_SESSION["idusuario"])) {
                 'right-trim': true,
             }); 
         </script>
+        <script>
+            // ==================== FUNCIONES INPUT FILE ====================
+
+            function getArchivoUrl(archivoRuta) {
+                // Quita "/data" si lo tiene
+                archivoRuta = archivoRuta.replace(/^data\//, '');
+                // Añade el prefijo del proyecto si hace falta
+                if (!archivoRuta.startsWith('/')) archivoRuta = '/' + archivoRuta;
+                return '/17deoctubre' + archivoRuta;
+            }
+
+            function inicializarCamposArchivos(archivos) {
+                const campos = [
+                    'credencial_votar',
+                    'declaracion_originalidad',
+                    'consentimiento_expreso_adultos',
+                    'identificacion_fotografia',
+                    'carta_autorizacion',
+                    'declaracion_originalidad_menores',
+                    'comprobante_domicilio_tutor',
+                    'consentimiento_expreso_menores',
+                    'ine_tutor'
+                ];
+                campos.forEach(fieldId => {
+                    const $grupo = $('#grupo_' + fieldId);
+                    const $inputFile = $grupo.find('input[type="file"]');
+                    const $fileSection = $grupo.find('.input-file-section');
+                    const $archivoCargadoSection = $grupo.find('.archivo-cargado-section');
+                    const $btnView = $grupo.find('.btn-view-file');
+                    const $btnReload = $grupo.find('.btn-reload-file');
+                    const archivoRuta = archivos[fieldId];
+
+                    if (archivoRuta && archivoRuta.trim() !== '') {
+                        $fileSection.hide();
+                        $archivoCargadoSection.show();
+                        $btnView.attr('href', getArchivoUrl(archivoRuta));
+                    } else {
+                        $fileSection.show();
+                        $archivoCargadoSection.hide();
+                        $inputFile.val('');
+                    }
+
+                    $btnReload.off('click').on('click', function () {
+                        Swal.fire({
+                            title: '¿Volver a cargar archivo?',
+                            text: 'Esto eliminará el archivo actual y te permitirá seleccionar uno nuevo. ¿Estás seguro?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Sí, volver a cargar',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $archivoCargadoSection.hide();
+                                $fileSection.show();
+                                $inputFile.val('');
+                            }
+                        });
+                    });
+                });
+            }
+        </script>
         <!-- Progress bar -->
         <script>
             document.addEventListener("DOMContentLoaded", function () {
@@ -522,8 +831,15 @@ if (empty($_SESSION["idusuario"])) {
                                 archivosCargados = {
                                     credencial_votar: data.credencial_votar,
                                     declaracion_originalidad: data.declaracion_originalidad,
-                                    consentimiento_expreso_adultos: data.consentimiento_expreso_adultos
+                                    consentimiento_expreso_adultos: data.consentimiento_expreso_adultos,
+                                    identificacion_fotografia: data.identificacion_fotografia,
+                                    carta_autorizacion: data.carta_autorizacion,
+                                    declaracion_originalidad_menores: data.declaracion_originalidad_menores,
+                                    comprobante_domicilio_tutor: data.comprobante_domicilio_tutor,
+                                    consentimiento_expreso_menores: data.consentimiento_expreso_menores,
+                                    ine_tutor: data.ine_tutor
                                 };
+                                inicializarCamposArchivos(archivosCargados);
 
                                 actualizarProgreso();
                             } else {
@@ -632,7 +948,7 @@ if (empty($_SESSION["idusuario"])) {
                             bloquearFormulario();
                         } else if (data.exists) {
                             feedback.style.display = 'block';
-                            feedback.textContent = 'El CURP ya está registrado.';
+                            // feedback.textContent = 'El CURP ya está registrado.';
                             mostrarAlerta('danger', 'El CURP ya está registrado. Por favor, use otro');
                             bloquearFormulario();
                         } else {
@@ -671,25 +987,29 @@ if (empty($_SESSION["idusuario"])) {
                 const fileFields = [
                     'credencial_votar',
                     'declaracion_originalidad',
-                    'consentimiento_expreso_adultos'
+                    'consentimiento_expreso_adultos',
+                    'identificacion_fotografia',
+                    'carta_autorizacion',
+                    'declaracion_originalidad_menores',
+                    'comprobante_domicilio_tutor',
+                    'consentimiento_expreso_menores',
+                    'ine_tutor'
                 ];
 
                 fileFields.forEach(fieldId => {
                     const inputFile = document.getElementById(fieldId);
+                    if (!inputFile) return;
 
-                    // Busca los feedbacks dentro del grupo correspondiente
                     const grupo = document.getElementById('grupo_' + fieldId);
                     const feedbackContainer = grupo ? grupo.querySelector('.input-file-section') : null;
                     const invalidFeedback = feedbackContainer ? feedbackContainer.querySelector('.invalid-feedback') : null;
                     const validFeedback = feedbackContainer ? feedbackContainer.querySelector('.valid-feedback') : null;
 
-                    // Validación al seleccionar archivo
                     inputFile.addEventListener('change', function () {
                         const file = this.files[0];
                         let valid = true;
 
                         if (file) {
-                            // Validar tipo PDF
                             if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith('.pdf')) {
                                 Swal.fire({
                                     icon: 'error',
@@ -698,9 +1018,7 @@ if (empty($_SESSION["idusuario"])) {
                                 });
                                 this.value = "";
                                 valid = false;
-                            }
-                            // Validar tamaño
-                            else if (file.size > 3 * 1024 * 1024) {
+                            } else if (file.size > 3 * 1024 * 1024) {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Archivo demasiado grande',
@@ -711,7 +1029,6 @@ if (empty($_SESSION["idusuario"])) {
                             }
                         }
 
-                        // Feedback visual Bootstrap
                         if (feedbackContainer && invalidFeedback && validFeedback) {
                             if (valid && file) {
                                 inputFile.classList.add('is-valid');
@@ -811,61 +1128,6 @@ if (empty($_SESSION["idusuario"])) {
                         icon: "info",
                         confirmButtonText: "OK",
                         allowOutsideClick: false
-                    });
-                }
-
-                // ==================== FUNCIONES INPUT FILE ====================
-
-                function getArchivoUrl(archivoRuta) {
-                    // Quita "/data" si lo tiene
-                    archivoRuta = archivoRuta.replace(/^data\//, '');
-                    // Añade el prefijo del proyecto si hace falta
-                    if (!archivoRuta.startsWith('/')) archivoRuta = '/' + archivoRuta;
-                    return '/17deoctubre' + archivoRuta;
-                }
-
-                function inicializarCamposArchivos(archivos) {
-                    const campos = [
-                        'credencial_votar',
-                        'declaracion_originalidad',
-                        'consentimiento_expreso_adultos'
-                    ];
-                    campos.forEach(fieldId => {
-                        const $grupo = $('#grupo_' + fieldId);
-                        const $inputFile = $grupo.find('input[type="file"]');
-                        const $fileSection = $grupo.find('.input-file-section');
-                        const $archivoCargadoSection = $grupo.find('.archivo-cargado-section');
-                        const $btnView = $grupo.find('.btn-view-file');
-                        const $btnReload = $grupo.find('.btn-reload-file');
-                        const archivoRuta = archivos[fieldId];
-
-                        if (archivoRuta && archivoRuta.trim() !== '') {
-                            $fileSection.hide();
-                            $archivoCargadoSection.show();
-                            $btnView.attr('href', getArchivoUrl(archivoRuta));
-                        } else {
-                            $fileSection.show();
-                            $archivoCargadoSection.hide();
-                            $inputFile.val('');
-                        }
-
-                        // Con confirmación SweetAlert2
-                        $btnReload.off('click').on('click', function () {
-                            Swal.fire({
-                                title: '¿Volver a cargar archivo?',
-                                text: 'Esto eliminará el archivo actual y te permitirá seleccionar uno nuevo. ¿Estás seguro?',
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonText: 'Sí, volver a cargar',
-                                cancelButtonText: 'Cancelar'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    $archivoCargadoSection.hide();
-                                    $fileSection.show();
-                                    $inputFile.val('');
-                                }
-                            });
-                        });
                     });
                 }
 
@@ -1010,7 +1272,13 @@ if (empty($_SESSION["idusuario"])) {
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
                                     declaracion_originalidad: response.data.declaracion_originalidad,
-                                    consentimiento_expreso_adultos: response.data.consentimiento_expreso_adultos
+                                    consentimiento_expreso_adultos: response.data.consentimiento_expreso_adultos,
+                                    identificacion_fotografia: response.data.identificacion_fotografia,
+                                    carta_autorizacion: response.data.carta_autorizacion,
+                                    declaracion_originalidad_menores: response.data.declaracion_originalidad_menores,
+                                    comprobante_domicilio_tutor: response.data.comprobante_domicilio_tutor,
+                                    consentimiento_expreso_menores: response.data.consentimiento_expreso_menores,
+                                    ine_tutor: response.data.ine_tutor
                                 };
                                 inicializarCamposArchivos(archivosCargados);
 
