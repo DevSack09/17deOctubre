@@ -1519,6 +1519,395 @@ if (empty($_SESSION["idusuario"])) {
                 loadInitialData();
             });
         </script>
+        <script>
+            $(document).ready(function () {
+                // ==================== CONSTANTES Y VARIABLES ====================
+                const $form = $('#formRegistro');
+                const $curpField = $('#curp');
+                const $btnGuardar = $('#btnGuardar');
+                const $btnActualizar = $('#btnActualizar');
+                const $btnCancelar = $('#btnCancelar');
+                const $btnFinalizar = $('#btnFinalizar');
+                let originalFormData = {};
+                let loadingAlert;
+                let formHasBeenSaved = false;
+                let archivosCargados = {
+                    credencial_votar: '',
+                    declaracion_originalidad: '',
+                    consentimiento_expreso_adultos: '',
+                    identificacion_fotografia: '',
+                    carta_autorizacion: '',
+                    declaracion_originalidad_menores: '',
+                    comprobante_domicilio_tutor: '',
+                    consentimiento_expreso_menores: '',
+                    ine_tutor: ''
+                };
+
+                // ==================== SECCIONES Y CAMPOS DE DOCUMENTOS ====================
+                const seccionAdultos = $('#collapseDocumentosAdultos').closest('.accordion-item');
+                const seccionMenores = $('#collapseDocumentosMenores').closest('.accordion-item');
+                const camposAdultos = [
+                    'credencial_votar',
+                    'declaracion_originalidad',
+                    'consentimiento_expreso_adultos'
+                ];
+                const camposMenores = [
+                    'identificacion_fotografia',
+                    'carta_autorizacion',
+                    'declaracion_originalidad_menores',
+                    'comprobante_domicilio_tutor',
+                    'consentimiento_expreso_menores',
+                    'ine_tutor'
+                ];
+                let ultimaEdad = null;
+
+                function ocultarSeccionesDocumentos() {
+                    seccionAdultos.hide();
+                    seccionMenores.hide();
+                    camposAdultos.forEach(id => {
+                        $('#' + id).prop('required', false).prop('disabled', true);
+                    });
+                    camposMenores.forEach(id => {
+                        $('#' + id).prop('required', false).prop('disabled', true);
+                    });
+                }
+
+                function mostrarSeccionPorEdad(edad) {
+                    ocultarSeccionesDocumentos();
+                    if (edad >= 18) {
+                        seccionAdultos.show();
+                        camposAdultos.forEach(id => {
+                            $('#' + id).prop('required', true).prop('disabled', false);
+                        });
+                    } else if (edad > 0 && edad <= 17) {
+                        seccionMenores.show();
+                        camposMenores.forEach(id => {
+                            $('#' + id).prop('required', true).prop('disabled', false);
+                        });
+                    }
+                }
+
+                function limpiarCampos(ids) {
+                    ids.forEach(id => {
+                        $('#' + id).val('').prop('required', false).prop('disabled', true);
+                        $('#' + id).removeClass('is-valid is-invalid');
+                        $('#grupo_' + id + ' .valid-feedback').removeClass('d-block').addClass('d-none');
+                        $('#grupo_' + id + ' .invalid-feedback').removeClass('d-block').addClass('d-none');
+                        $('#grupo_' + id + ' .archivo-cargado-section').hide();
+                        $('#grupo_' + id + ' .input-file-section').show();
+                        if (archivosCargados[id]) archivosCargados[id] = '';
+                    });
+                }
+
+                // ==================== FUNCIONES DE ESTADO ====================
+                function setInitialState() {
+                    if (formHasBeenSaved) {
+                        $form.find(':input').not('.accordion-button').prop('disabled', true);
+                        $curpField.prop('disabled', true);
+                        $btnGuardar.hide();
+                        $btnActualizar.show().prop('disabled', false);
+                        $btnCancelar.hide();
+                        $btnFinalizar.show().prop('disabled', false);
+                    } else {
+                        $form.find(':input').not('#curp, .accordion-button').prop('disabled', true);
+                        $curpField.prop('disabled', false);
+                        $btnGuardar.show();
+                        $btnActualizar.hide();
+                        $btnCancelar.hide();
+                        $btnFinalizar.hide();
+                    }
+                }
+
+                function enableEditMode() {
+                    $form.find(':input').not('#curp, .accordion-button').prop('disabled', false);
+                    $btnGuardar.show();
+                    $btnActualizar.hide();
+                    $btnCancelar.show();
+                    $btnFinalizar.hide();
+                }
+
+                function disableForm() {
+                    $form.find(':input').not('.accordion-button').prop('disabled', true);
+                    $curpField.prop('disabled', true);
+                    $btnGuardar.hide();
+                    $btnActualizar.show().prop('disabled', false);
+                    $btnCancelar.hide();
+                    $btnFinalizar.show().prop('disabled', false);
+                }
+
+                function lockFormPermanently() {
+                    $form.find(':input').not('.accordion-button').prop('disabled', true);
+                    $btnGuardar.add($btnActualizar).add($btnCancelar).add($btnFinalizar).hide();
+                    Swal.fire({
+                        title: "Formulario Finalizado",
+                        text: "Este formulario ya ha sido finalizado y no se puede modificar.",
+                        icon: "info",
+                        confirmButtonText: "OK",
+                        allowOutsideClick: false
+                    });
+                }
+
+                // ==================== FUNCIONES AUXILIARES ====================
+                function showLoading(message = 'Procesando...') {
+                    loadingAlert = Swal.fire({
+                        title: message,
+                        html: 'Por favor espere',
+                        allowOutsideClick: false,
+                        didOpen: () => Swal.showLoading()
+                    });
+                    return loadingAlert;
+                }
+
+                function sendRequest(url, data = {}, method = 'POST') {
+                    showLoading();
+                    return $.ajax({
+                        url: url,
+                        type: method,
+                        data: data,
+                        dataType: 'json'
+                    }).always(() => {
+                        if (loadingAlert) Swal.close();
+                    });
+                }
+
+                function handleError(error) {
+                    console.error('Error:', error);
+                    let message = 'Error en el servidor';
+                    if (error.responseJSON && error.responseJSON.message) {
+                        message = error.responseJSON.message;
+                    } else if (error.statusText) {
+                        message = error.statusText;
+                    }
+                    Swal.fire('Error', message, 'error');
+                }
+
+                function saveFormState() {
+                    originalFormData = {};
+                    $form.serializeArray().forEach(field => {
+                        originalFormData[field.name] = field.value;
+                    });
+                }
+
+                function restoreFormState() {
+                    Object.entries(originalFormData).forEach(([name, value]) => {
+                        const $field = $(`[name="${name}"]`);
+                        if ($field.is('input[type="checkbox"]')) {
+                            $field.prop('checked', Boolean(value));
+                        } else {
+                            $field.val(value);
+                        }
+                    });
+                }
+
+                function prepareFormForSubmit() {
+                    const disabledFields = $form.find(':input:disabled');
+                    disabledFields.prop('disabled', false);
+                    return disabledFields;
+                }
+
+                function restoreAfterSubmit(disabledFields) {
+                    disabledFields.prop('disabled', true);
+                }
+
+                function validateRequiredFields() {
+                    let isValid = true;
+                    $form.find('.is-invalid').removeClass('is-invalid');
+                    $form.find('.is-valid').removeClass('is-valid');
+                    $form.find('.invalid-feedback').removeClass('d-block').addClass('d-none');
+                    $form.find('.valid-feedback').removeClass('d-block').addClass('d-none');
+                    $form.find('[required]').each(function () {
+                        const $field = $(this);
+                        const $feedbackContainer = $field.closest('.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-6, .col-md-7, .col-md-12, .form-check');
+                        const $invalidFeedback = $feedbackContainer.find('.invalid-feedback');
+                        const $validFeedback = $feedbackContainer.find('.valid-feedback');
+                        let fieldValid = true;
+                        if ($field.is(':checkbox')) {
+                            fieldValid = $field.is(':checked');
+                        } else if ($field.attr('type') === 'file') {
+                            const fieldId = $field.attr('id');
+                            fieldValid = ($field.val() && $field.val().trim() !== '') ||
+                                (archivosCargados[fieldId] && archivosCargados[fieldId].trim() !== '');
+                        } else {
+                            fieldValid = $field.val() && $field.val().trim() !== '';
+                        }
+                        if (fieldValid) {
+                            $field.addClass('is-valid').removeClass('is-invalid');
+                            $invalidFeedback.removeClass('d-block').addClass('d-none');
+                            $validFeedback.removeClass('d-none').addClass('d-block');
+                        } else {
+                            $field.addClass('is-invalid').removeClass('is-valid');
+                            $invalidFeedback.removeClass('d-none').addClass('d-block');
+                            $validFeedback.removeClass('d-block').addClass('d-none');
+                            isValid = false;
+                        }
+                    });
+                    return isValid;
+                }
+
+                // ==================== MANEJO DE SECCIONES POR EDAD ====================
+                ocultarSeccionesDocumentos();
+
+                // Guardar la edad inicial al cargar datos
+                function loadInitialData() {
+                    showLoading('Cargando datos...');
+                    sendRequest('../controlador/get_registration.php', {}, 'GET')
+                        .then(response => {
+                            if (response.status === "success") {
+                                formHasBeenSaved = true;
+                                $('#curp').val(response.data.curp);
+                                $('#nombre').val(response.data.nombre);
+                                $('#apellidopaterno').val(response.data.apellidoP);
+                                $('#apellidomaterno').val(response.data.apellidoM);
+                                $('#fechanacimiento').val(response.data.fecha_nacimiento);
+                                $('#edad').val(response.data.edad);
+                                $('#terminos_privacidad').prop('checked', response.data.acepta_privacidad == 1);
+                                $('#terminos_consentimiento').prop('checked', response.data.acepta_consentimiento == 1);
+
+                                archivosCargados = {
+                                    credencial_votar: response.data.credencial_votar,
+                                    declaracion_originalidad: response.data.declaracion_originalidad,
+                                    consentimiento_expreso_adultos: response.data.consentimiento_expreso_adultos,
+                                    identificacion_fotografia: response.data.identificacion_fotografia,
+                                    carta_autorizacion: response.data.carta_autorizacion,
+                                    declaracion_originalidad_menores: response.data.declaracion_originalidad_menores,
+                                    comprobante_domicilio_tutor: response.data.comprobante_domicilio_tutor,
+                                    consentimiento_expreso_menores: response.data.consentimiento_expreso_menores,
+                                    ine_tutor: response.data.ine_tutor
+                                };
+                                inicializarCamposArchivos(archivosCargados);
+
+                                // Mostrar la sección correcta según la edad cargada
+                                const edadCargada = parseInt(response.data.edad, 10);
+                                mostrarSeccionPorEdad(edadCargada);
+                                ultimaEdad = edadCargada;
+
+                                saveFormState();
+                                response.data.status == 1 ? lockFormPermanently() : setInitialState();
+                            } else if (response.message === "No se encontraron registros para este usuario.") {
+                                formHasBeenSaved = false;
+                                inicializarCamposArchivos({
+                                    credencial_votar: '',
+                                    declaracion_originalidad: '',
+                                    consentimiento_expreso_adultos: '',
+                                    identificacion_fotografia: '',
+                                    carta_autorizacion: '',
+                                    declaracion_originalidad_menores: '',
+                                    comprobante_domicilio_tutor: '',
+                                    consentimiento_expreso_menores: '',
+                                    ine_tutor: ''
+                                });
+                                ocultarSeccionesDocumentos();
+                                ultimaEdad = null;
+                                Swal.close();
+                                setInitialState();
+                            } else {
+                                throw new Error(response.message || 'Error al cargar datos');
+                            }
+                        })
+                        .catch(error => {
+                            if (!error.responseJSON || error.responseJSON.message !== "No se encontraron registros para este usuario.") {
+                                handleError(error);
+                            } else {
+                                formHasBeenSaved = false;
+                                archivosCargados = {
+                                    credencial_votar: '',
+                                    declaracion_originalidad: '',
+                                    consentimiento_expreso_adultos: '',
+                                    identificacion_fotografia: '',
+                                    carta_autorizacion: '',
+                                    declaracion_originalidad_menores: '',
+                                    comprobante_domicilio_tutor: '',
+                                    consentimiento_expreso_menores: '',
+                                    ine_tutor: ''
+                                };
+                                inicializarCamposArchivos(archivosCargados);
+                                ocultarSeccionesDocumentos();
+                                ultimaEdad = null;
+                                Swal.close();
+                                setInitialState();
+                            }
+                        });
+                }
+
+                // Evento para cambio de edad con confirmación y limpieza de sección
+                $('#edad').on('focus', function () {
+                    ultimaEdad = $(this).val();
+                });
+
+                $('#edad').on('change', function () {
+                    const nuevaEdad = parseInt($(this).val(), 10);
+                    const edadAnterior = parseInt(ultimaEdad, 10);
+
+                    if (isNaN(nuevaEdad) || nuevaEdad === edadAnterior) {
+                        mostrarSeccionPorEdad(nuevaEdad);
+                        ultimaEdad = nuevaEdad;
+                        return;
+                    }
+
+                    let camposLimpiar = [];
+                    let mensaje = '';
+                    let seccion = '';
+
+                    if (edadAnterior >= 18 && nuevaEdad <= 17) {
+                        camposLimpiar = camposAdultos;
+                        mensaje = 'Al cambiar la edad a menor de edad, se perderán los datos y archivos cargados en la sección "Participantes mayores de edad". ¿Desea continuar?';
+                        seccion = 'adultos';
+                    } else if (edadAnterior <= 17 && nuevaEdad >= 18) {
+                        camposLimpiar = camposMenores;
+                        mensaje = 'Al cambiar la edad a mayor de edad, se perderán los datos y archivos cargados en la sección "Participantes menores de edad". ¿Desea continuar?';
+                        seccion = 'menores';
+                    } else {
+                        mostrarSeccionPorEdad(nuevaEdad);
+                        ultimaEdad = nuevaEdad;
+                        return;
+                    }
+
+                    Swal.fire({
+                        title: '¡Atención!',
+                        text: mensaje,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, continuar',
+                        cancelButtonText: 'Cancelar',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Llamada AJAX para limpiar en base de datos
+                            $.ajax({
+                                url: '../controlador/limpiar_seccion.php',
+                                type: 'POST',
+                                data: {
+                                    curp: $('#curp').val(),
+                                    seccion: seccion
+                                },
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (response.status === "success") {
+                                        limpiarCampos(camposLimpiar);
+                                        mostrarSeccionPorEdad(nuevaEdad);
+                                        ultimaEdad = nuevaEdad;
+                                        Swal.fire('Listo', 'La sección fue limpiada correctamente.', 'success');
+                                    } else {
+                                        Swal.fire('Error', response.message || 'No se pudo limpiar la sección en la base de datos.', 'error');
+                                    }
+                                },
+                                error: function () {
+                                    Swal.fire('Error', 'No se pudo limpiar la sección en la base de datos.', 'error');
+                                }
+                            });
+                        } else {
+                            $('#edad').val(edadAnterior);
+                            mostrarSeccionPorEdad(edadAnterior);
+                            ultimaEdad = edadAnterior;
+                        }
+                    });
+                });
+
+                // ==================== INICIALIZACIÓN ====================
+                setInitialState();
+                loadInitialData();
+            });
+        </script>
 
     </body>
 
