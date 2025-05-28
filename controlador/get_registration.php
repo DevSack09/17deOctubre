@@ -14,8 +14,9 @@ if ($db_connection->connect_error) {
     exit;
 }
 
-// Incluir los campos de archivos, incluyendo los de menores de edad
+// Incluir los campos de archivos y los de domicilio
 $sql = "SELECT curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento, status,
+               calle, numeroExterior, numeroInterior, colonia, cp, municipio, localidad,
                credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos,
                identificacion_fotografia, carta_autorizacion, declaracion_originalidad_menores,
                comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor

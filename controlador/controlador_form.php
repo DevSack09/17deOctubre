@@ -25,6 +25,15 @@ try {
     $acepta_privacidad = isset($_POST['terminos_privacidad']) ? 1 : 0;
     $acepta_consentimiento = isset($_POST['terminos_consentimiento']) ? 1 : 0;
 
+    // === DOMICILIO ===
+    $calle = !empty($_POST['calle']) ? $_POST['calle'] : null;
+    $numeroExterior = !empty($_POST['numeroExterior']) ? $_POST['numeroExterior'] : null;
+    $numeroInterior = !empty($_POST['numeroInterior']) ? $_POST['numeroInterior'] : null;
+    $colonia = !empty($_POST['colonia']) ? $_POST['colonia'] : null;
+    $cp = !empty($_POST['cp']) ? $_POST['cp'] : null;
+    $municipio = !empty($_POST['municipio']) ? $_POST['municipio'] : null;
+    $localidad = !empty($_POST['localidad']) ? $_POST['localidad'] : null;
+
     // === ARCHIVOS ===
     $file_fields = [
         'credencial_votar',
@@ -181,7 +190,8 @@ try {
             }
 
             $sql_update = "UPDATE registration 
-                SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?";
+                SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?,
+                    calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?";
 
             $update_params = [
                 $nombre,
@@ -190,9 +200,16 @@ try {
                 $fecha_nacimiento,
                 $edad,
                 $acepta_privacidad,
-                $acepta_consentimiento
+                $acepta_consentimiento,
+                $calle,
+                $numeroExterior,
+                $numeroInterior,
+                $colonia,
+                $cp,
+                $municipio,
+                $localidad
             ];
-            $types = "ssssiii";
+            $types = "ssssiiisssssss";
 
             foreach ($file_fields as $file_field) {
                 if (isset($uploaded_files[$file_field])) {
@@ -220,7 +237,9 @@ try {
             }
         } else {
             // INSERT
-            $sql_insert = "INSERT INTO registration (usuario_id, curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento";
+            $sql_insert = "INSERT INTO registration (
+    usuario_id, curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento,
+    calle, numeroExterior, numeroInterior, colonia, cp, municipio, localidad";
             $insert_params = [
                 $usuario_id,
                 $curp,
@@ -230,9 +249,16 @@ try {
                 $fecha_nacimiento,
                 $edad,
                 $acepta_privacidad,
-                $acepta_consentimiento
+                $acepta_consentimiento,
+                $calle,
+                $numeroExterior,
+                $numeroInterior,
+                $colonia,
+                $cp,
+                $municipio,
+                $localidad
             ];
-            $types = "isssssiii";
+            $types = "isssssiiissssss";
 
             foreach ($file_fields as $file_field) {
                 if (isset($uploaded_files[$file_field])) {
