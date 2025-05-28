@@ -34,6 +34,10 @@ try {
     $municipio = !empty($_POST['municipio']) ? $_POST['municipio'] : null;
     $localidad = !empty($_POST['localidad']) ? $_POST['localidad'] : null;
 
+    $gradoEstudios = !empty($_POST['gradoEstudios']) ? $_POST['gradoEstudios'] : null;
+    $ocupacionActual = !empty($_POST['ocupacionActual']) ? $_POST['ocupacionActual'] : null;
+
+
     // === ARCHIVOS ===
     $file_fields = [
         'credencial_votar',
@@ -191,7 +195,7 @@ try {
 
             $sql_update = "UPDATE registration 
                 SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?,
-                    calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?";
+                    calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?, gradoEstudios = ?, ocupacionActual = ?";
 
             $update_params = [
                 $nombre,
@@ -207,9 +211,11 @@ try {
                 $colonia,
                 $cp,
                 $municipio,
-                $localidad
+                $localidad,
+                $gradoEstudios,
+                $ocupacionActual
             ];
-            $types = "ssssiiisssssss";
+            $types = "ssssiiisssssssss";
 
             foreach ($file_fields as $file_field) {
                 if (isset($uploaded_files[$file_field])) {
@@ -252,6 +258,10 @@ try {
                 'cp',
                 'municipio',
                 'localidad',
+                'gradoEstudios',
+                'ocupacionActual',
+                'gradoEstudios',
+                'ocupacionActual',
                 'credencial_votar',
                 'declaracion_originalidad',
                 'consentimiento_expreso_adultos',
@@ -280,6 +290,8 @@ try {
                 $cp,
                 $municipio,
                 $localidad,
+                $gradoEstudios,
+                $ocupacionActual,
                 isset($uploaded_files['credencial_votar']) ? "" : null,
                 isset($uploaded_files['declaracion_originalidad']) ? "" : null,
                 isset($uploaded_files['consentimiento_expreso_adultos']) ? "" : null,
@@ -293,7 +305,7 @@ try {
                 $acepta_consentimiento,
                 "" // Folio temporal, se actualiza después
             ];
-            $types = "isssssissssssssssssssiiiss";
+            $types = "isssssissssssssssssssssiiiss";
 
             if (strlen($types) !== count($insert_params)) {
                 echo json_encode([

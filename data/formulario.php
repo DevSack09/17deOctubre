@@ -311,6 +311,62 @@ if (empty($_SESSION["idusuario"])) {
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Estudios Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingEstudios">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseEstudios"
+                                                    aria-expanded="false" aria-controls="collapseEstudios">
+                                                    Estudios
+                                                </button>
+                                            </h2>
+                                            <div id="collapseEstudios" class="accordion-collapse collapse"
+                                                aria-labelledby="headingEstudios" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Último grado de estudios -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="gradoEstudios">¿Último grado de
+                                                                estudios que concluyó?
+                                                                <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-graduation-cap"></i>
+                                                                <select class="form-control" id="gradoEstudios"
+                                                                    name="gradoEstudios" required disabled>
+                                                                    <option value="">Seleccione una opción</option>
+                                                                    <option value="secundaria">Secundaria</option>
+                                                                    <option value="bachillerato">Bachillerato</option>
+                                                                    <option value="licenciatura">Licenciatura</option>
+                                                                    <option value="maestria">Maestría</option>
+                                                                    <option value="doctorado">Doctorado</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, seleccione un grado de estudios.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Ocupación actual -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="ocupacionActual">¿Cuál es su
+                                                                ocupación actual?
+                                                                <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-briefcase"></i>
+                                                                <input class="form-control" id="ocupacionActual"
+                                                                    name="ocupacionActual" type="text"
+                                                                    placeholder="Ej. Profesor" required disabled />
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, introduzca su ocupación actual.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- Carga de documentos: Participantes mayores de edad -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingDocumentosAdultos">
@@ -904,6 +960,8 @@ if (empty($_SESSION["idusuario"])) {
                         '#cp',
                         '#municipio',
                         '#localidad',
+                        '#gradoEstudios',
+                        '#ocupacionActual',
                         '#terminos_privacidad',
                         '#terminos_consentimiento'
                     ];
@@ -994,6 +1052,9 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#cp').val(response.data.cp);
                                 $('#municipio').val(response.data.municipio);
                                 $('#localidad').val(response.data.localidad);
+
+                                $('#gradoEstudios').val(response.data.gradoEstudios);
+                                $('#ocupacionActual').val(response.data.ocupacionActual);
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
@@ -1443,6 +1504,9 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#cp').val(response.data.cp);
                                 $('#municipio').val(response.data.municipio);
                                 $('#localidad').val(response.data.localidad);
+
+                                $('#gradoEstudios').val(response.data.gradoEstudios);
+                                $('#ocupacionActual').val(response.data.ocupacionActual);
 
                                 // NUEVO: Inicializar bloques de archivos adjuntos según las rutas del backend
                                 archivosCargados = {
@@ -1953,6 +2017,9 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#cp').val(response.data.cp);
                                 $('#municipio').val(response.data.municipio);
                                 $('#localidad').val(response.data.localidad);
+
+                                $('#gradoEstudios').val(response.data.gradoEstudios);
+                                $('#ocupacionActual').val(response.data.ocupacionActual);
 
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
