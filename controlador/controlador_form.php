@@ -237,9 +237,34 @@ try {
             }
         } else {
             // INSERT
-            $sql_insert = "INSERT INTO registration (
-    usuario_id, curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento,
-    calle, numeroExterior, numeroInterior, colonia, cp, municipio, localidad";
+            $columns = [
+                'usuario_id',
+                'curp',
+                'nombre',
+                'apellidoP',
+                'apellidoM',
+                'fecha_nacimiento',
+                'edad',
+                'calle',
+                'numeroExterior',
+                'numeroInterior',
+                'colonia',
+                'cp',
+                'municipio',
+                'localidad',
+                'credencial_votar',
+                'declaracion_originalidad',
+                'consentimiento_expreso_adultos',
+                'identificacion_fotografia',
+                'carta_autorizacion',
+                'declaracion_originalidad_menores',
+                'comprobante_domicilio_tutor',
+                'consentimiento_expreso_menores',
+                'ine_tutor',
+                'acepta_privacidad',
+                'acepta_consentimiento',
+                'folio'
+            ];
             $insert_params = [
                 $usuario_id,
                 $curp,
@@ -248,32 +273,42 @@ try {
                 $apellidoM,
                 $fecha_nacimiento,
                 $edad,
-                $acepta_privacidad,
-                $acepta_consentimiento,
                 $calle,
                 $numeroExterior,
                 $numeroInterior,
                 $colonia,
                 $cp,
                 $municipio,
-                $localidad
+                $localidad,
+                isset($uploaded_files['credencial_votar']) ? "" : null,
+                isset($uploaded_files['declaracion_originalidad']) ? "" : null,
+                isset($uploaded_files['consentimiento_expreso_adultos']) ? "" : null,
+                isset($uploaded_files['identificacion_fotografia']) ? "" : null,
+                isset($uploaded_files['carta_autorizacion']) ? "" : null,
+                isset($uploaded_files['declaracion_originalidad_menores']) ? "" : null,
+                isset($uploaded_files['comprobante_domicilio_tutor']) ? "" : null,
+                isset($uploaded_files['consentimiento_expreso_menores']) ? "" : null,
+                isset($uploaded_files['ine_tutor']) ? "" : null,
+                $acepta_privacidad,
+                $acepta_consentimiento,
+                "" // Folio temporal, se actualiza después
             ];
-            $types = "isssssiiissssss";
+            $types = "isssssissssssssssssssiiiss";
 
-            foreach ($file_fields as $file_field) {
-                if (isset($uploaded_files[$file_field])) {
-                    $sql_insert .= ", $file_field";
-                    $insert_params[] = ""; // Se actualizará después
-                    $types .= "s";
-                }
+            if (strlen($types) !== count($insert_params)) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Desajuste entre tipos y parámetros',
+                    'types_length' => strlen($types),
+                    'params_count' => count($insert_params),
+                    'types' => $types,
+                    'params' => $insert_params
+                ]);
+                exit;
             }
-            $sql_insert .= ", folio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?";
-            foreach ($uploaded_files as $k => $v)
-                $sql_insert .= ", ?";
-            $sql_insert .= ", ?)";
 
-            $insert_params[] = ""; // Folio temporal
-            $types .= "s";
+            $placeholders = array_fill(0, count($columns), '?');
+            $sql_insert = "INSERT INTO registration (" . implode(', ', $columns) . ") VALUES (" . implode(', ', $placeholders) . ")";
 
             $stmt_insert = $db_connection->prepare($sql_insert);
 
