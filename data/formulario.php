@@ -199,118 +199,6 @@ if (empty($_SESSION["idusuario"])) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Domicilio -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingDomicilio">
-                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseDomicilio"
-                                                    aria-expanded="false" aria-controls="collapseDomicilio">
-                                                    Domicilio
-                                                </button>
-                                            </h2>
-                                            <div id="collapseDomicilio" class="accordion-collapse collapse"
-                                                aria-labelledby="headingDomicilio" data-bs-parent="#accordionExample">
-                                                <div class="accordion-body">
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="calle">Calle <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-road"></i>
-                                                                <input class="form-control" id="calle" name="calle"
-                                                                    type="text" placeholder="Ej. Reforma" required disabled>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su calle.
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label class="form-label" for="numeroExterior">No. Exterior
-                                                                <span class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-door-open"></i>
-                                                                <input class="form-control" id="numeroExterior"
-                                                                    name="numeroExterior" type="text" placeholder="Ej. 123"
-                                                                    required disabled>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca el número
-                                                                exterior.</div>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <label class="form-label" for="numeroInterior">No.
-                                                                Interior</label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-door-closed"></i>
-                                                                <input class="form-control" id="numeroInterior"
-                                                                    name="numeroInterior" type="text" placeholder="Ej. 4B"
-                                                                    disabled>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca el número
-                                                                interior.</div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <label class="form-label" for="colonia">Colonia <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-city"></i>
-                                                                <input class="form-control" id="colonia" name="colonia"
-                                                                    type="text" placeholder="Ej. Centro" required disabled>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su colonia.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="cp">Código Postal <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-mail-bulk"></i>
-                                                                <input class="form-control" id="cp" name="cp" type="text"
-                                                                    placeholder="Ej. 42000" required minlength="5"
-                                                                    maxlength="5" disabled>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su código
-                                                                postal.</div>
-                                                            <div class="invalid-feedback min-max-length">El código postal
-                                                                debe tener 5 dígitos.</div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="municipio">Municipio <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-map"></i>
-                                                                <select class="form-control" id="municipio" name="municipio"
-                                                                    required disabled>
-                                                                    <option value="">Seleccione un municipio</option>
-                                                                    <option value="Cardonal">Cardonal</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, seleccione un
-                                                                municipio.</div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <label class="form-label" for="localidad">Localidad <span
-                                                                    class="required">*</span></label>
-                                                            <div class="input-icon">
-                                                                <i class="fas fa-map-pin"></i>
-                                                                <input class="form-control" id="localidad" name="localidad"
-                                                                    type="text" placeholder="Ej. Pachuca de Soto" required
-                                                                    disabled>
-                                                            </div>
-                                                            <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su
-                                                                localidad.</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <!-- Carga de documentos: Participantes mayores de edad -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingDocumentosAdultos">
@@ -898,12 +786,6 @@ if (empty($_SESSION["idusuario"])) {
                         '#apellidopaterno',
                         '#fechanacimiento',
                         '#edad',
-                        '#calle',
-                        '#numeroExterior',
-                        '#colonia',
-                        '#cp',
-                        '#municipio',
-                        '#localidad',
                         '#terminos_privacidad',
                         '#terminos_consentimiento'
                     ];
@@ -986,14 +868,6 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#edad').val(data.edad);
                                 $('#terminos_privacidad').prop('checked', data.acepta_privacidad == 1);
                                 $('#terminos_consentimiento').prop('checked', data.acepta_consentimiento == 1);
-
-                                $('#calle').val(response.data.calle);
-                                $('#numeroExterior').val(response.data.numeroExterior);
-                                $('#numeroInterior').val(response.data.numeroInterior);
-                                $('#colonia').val(response.data.colonia);
-                                $('#cp').val(response.data.cp);
-                                $('#municipio').val(response.data.municipio);
-                                $('#localidad').val(response.data.localidad);
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
@@ -1436,14 +1310,6 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#terminos_privacidad').prop('checked', response.data.acepta_privacidad == 1);
                                 $('#terminos_consentimiento').prop('checked', response.data.acepta_consentimiento == 1);
 
-                                $('#calle').val(response.data.calle);
-                                $('#numeroExterior').val(response.data.numeroExterior);
-                                $('#numeroInterior').val(response.data.numeroInterior);
-                                $('#colonia').val(response.data.colonia);
-                                $('#cp').val(response.data.cp);
-                                $('#municipio').val(response.data.municipio);
-                                $('#localidad').val(response.data.localidad);
-
                                 // NUEVO: Inicializar bloques de archivos adjuntos según las rutas del backend
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
@@ -1458,7 +1324,7 @@ if (empty($_SESSION["idusuario"])) {
                                 };
                                 inicializarCamposArchivos(archivosCargados);
 
-
+                                saveFormState();
                                 response.data.status == 1 ? lockFormPermanently() : setInitialState();
                             } else if (response.message === "No se encontraron registros para este usuario.") {
                                 // Caso normal sin registros
@@ -1634,37 +1500,34 @@ if (empty($_SESSION["idusuario"])) {
                             showLoading('Guardando progreso...');
 
                             const disabledFields = prepareFormForSubmit();
-                            const formData = new FormData($form[0]);
+                            const formData = new FormData($form[0]); // Aquí el cambio principal
                             restoreAfterSubmit(disabledFields);
 
                             $.ajax({
                                 url: '../controlador/controlador_form.php',
                                 type: 'POST',
                                 data: formData,
-                                processData: false,
-                                contentType: false,
+                                processData: false, // Importante para archivos
+                                contentType: false, // Importante para archivos
                                 dataType: 'json',
                                 success: function (response) {
                                     if (response.status === "success") {
                                         formHasBeenSaved = true;
-                                        // Espera a que la alerta de loading se cierre antes de mostrar la de éxito
-                                        Swal.close();
-                                        setTimeout(() => {
-                                            Swal.fire({
-                                                title: "¡Progreso guardado!",
-                                                text: "Puede continuar más tarde.",
-                                                icon: "success"
-                                            }).then(() => {
-                                                disableForm();
-                                                loadInitialData();
-                                            });
-                                        }, 200); // Pequeño retraso para asegurar cierre de loading
+                                        Swal.fire({
+                                            title: "¡Progreso guardado!",
+                                            text: "Puede continuar más tarde.",
+                                            icon: "success"
+                                        }).then(() => {
+                                            disableForm();
+                                            loadInitialData();
+
+                                        });
                                     } else {
                                         handleError({ responseJSON: response });
                                     }
                                 },
                                 error: handleError,
-                                complete: function () { /* No cerrar SweetAlert aquí */ }
+                                complete: function () { if (loadingAlert) Swal.close(); }
                             });
                         }
                     });
@@ -1946,14 +1809,6 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#terminos_privacidad').prop('checked', response.data.acepta_privacidad == 1);
                                 $('#terminos_consentimiento').prop('checked', response.data.acepta_consentimiento == 1);
 
-                                $('#calle').val(response.data.calle);
-                                $('#numeroExterior').val(response.data.numeroExterior);
-                                $('#numeroInterior').val(response.data.numeroInterior);
-                                $('#colonia').val(response.data.colonia);
-                                $('#cp').val(response.data.cp);
-                                $('#municipio').val(response.data.municipio);
-                                $('#localidad').val(response.data.localidad);
-
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
                                     declaracion_originalidad: response.data.declaracion_originalidad,
@@ -1972,6 +1827,7 @@ if (empty($_SESSION["idusuario"])) {
                                 mostrarSeccionPorEdad(edadCargada);
                                 ultimaEdad = edadCargada;
 
+                                saveFormState();
                                 response.data.status == 1 ? lockFormPermanently() : setInitialState();
                             } else if (response.message === "No se encontraron registros para este usuario.") {
                                 formHasBeenSaved = false;
