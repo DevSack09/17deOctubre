@@ -75,6 +75,7 @@ if (empty($_SESSION["idusuario"])) {
                     </div>
                     <section>
                         <div class="card mb-4">
+                            <!-- Progress bar -->
                             <div class="card-header">
                                 <h4 style="color: #495057;"><strong>Progreso del formulario:</strong></h4>
                                 <div class="progress custom-height mb-3">
@@ -88,6 +89,7 @@ if (empty($_SESSION["idusuario"])) {
                                 <form class="g-3 needs-validation" id="formRegistro"
                                     action="../controlador/controlador_form.php" method="post" enctype="multipart/form-data"
                                     novalidate>
+                                    <!-- Curp -->
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label" for="curp">CURP <span class="required">*</span></label>
                                         <div class="input-icon">
@@ -111,6 +113,7 @@ if (empty($_SESSION["idusuario"])) {
                                     </div>
 
                                     <div class="accordion" id="accordionExample">
+                                        <!-- Datos personales -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingDatosPersonales">
                                                 <button class="accordion-button fw-bold fs-5" type="button"
@@ -683,9 +686,8 @@ if (empty($_SESSION["idusuario"])) {
                 'right-trim': true,
             }); 
         </script>
+        <!-- FUNCIONES INPUT FILE -->
         <script>
-            // ==================== FUNCIONES INPUT FILE ====================
-
             function getArchivoUrl(archivoRuta) {
                 // Quita "/data" si lo tiene
                 archivoRuta = archivoRuta.replace(/^data\//, '');
@@ -1090,7 +1092,7 @@ if (empty($_SESSION["idusuario"])) {
                 });
             });
         </script>
-        <!-- obtener información -->
+        <!-- procesamiento -->
         <script>
             $(document).ready(function () {
                 // ==================== CONSTANTES Y VARIABLES ====================
@@ -1559,6 +1561,7 @@ if (empty($_SESSION["idusuario"])) {
                 loadInitialData();
             });
         </script>
+        <!-- Menjo de secciones por edad -->
         <script>
             $(document).ready(function () {
                 // ==================== CONSTANTES Y VARIABLES ====================
