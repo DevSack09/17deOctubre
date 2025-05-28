@@ -117,7 +117,7 @@ if (empty($_SESSION["idusuario"])) {
                                             información detenidamente
                                             antes de finalizar.</li>
                                     </ol>
-                                    <div class="alert alert-info">
+                                    <div class="alert alert-primary">
                                         <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
                                         Todos los campos marcados con un asterisco (<span style="color: red;">*</span>) son
                                         obligatorios. La omisión de esta información

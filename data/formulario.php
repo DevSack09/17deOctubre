@@ -227,7 +227,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary text-center"
+                                                                <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong>
@@ -261,7 +261,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary text-center"
+                                                                <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong>
@@ -297,7 +297,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary text-center"
+                                                                <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong>
@@ -317,7 +317,7 @@ if (empty($_SESSION["idusuario"])) {
                                                         </div>
                                                     </div>
                                                     <!-- Mensaje importante -->
-                                                    <div class="alert alert-info">
+                                                    <div class="alert alert-primary">
                                                         <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
                                                         Todos los documentos deben estar en <strong>formato PDF</strong>,
                                                         ser legibles y no exceder 3MB.
@@ -351,12 +351,12 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <input class="form-control" type="file"
                                                                     id="identificacion_fotografia"
                                                                     name="identificacion_fotografia" accept=".pdf" required>
-                                                                <div class="invalid-feedback d-none">Debes subir un archivo
-                                                                    PDF válido.</div>
+                                                                <div class="invalid-feedback d-none">Debes subir ula
+                                                                    identificación con fotografía en pdf.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary text-center"
+                                                                <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong> Ya cargaste un archivo para este
@@ -392,7 +392,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary text-center"
+                                                                <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong> Ya cargaste un archivo para este
@@ -433,7 +433,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary text-center"
+                                                                <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong> Ya cargaste un archivo para este
@@ -470,7 +470,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary text-center"
+                                                                <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong> Ya cargaste un archivo para este
@@ -510,7 +510,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary text-center"
+                                                                <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong> Ya cargaste un archivo para este
@@ -544,7 +544,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
-                                                                <div class="alert alert-primary text-center"
+                                                                <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong> Ya cargaste un archivo para este
@@ -565,7 +565,7 @@ if (empty($_SESSION["idusuario"])) {
                                                     </div>
 
                                                     <!-- Mensaje importante -->
-                                                    <div class="alert alert-info">
+                                                    <div class="alert alert-primary">
                                                         <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
                                                         Todos los documentos deben estar en <strong>formato PDF</strong>,
                                                         ser legibles y no exceder 3MB.
@@ -777,28 +777,68 @@ if (empty($_SESSION["idusuario"])) {
                 };
 
                 function actualizarProgreso() {
+                    // Campos generales siempre visibles y requeridos
+                    const generales = [
+                        '#curp',
+                        '#nombre',
+                        '#apellidopaterno',
+                        '#fechanacimiento',
+                        '#edad',
+                        '#terminos_privacidad',
+                        '#terminos_consentimiento'
+                    ];
+
+                    // Detectar qué sección está visible
+                    let visibles = [];
+                    if ($('#collapseDocumentosAdultos').closest('.accordion-item').is(':visible')) {
+                        visibles = [
+                            '#credencial_votar',
+                            '#declaracion_originalidad',
+                            '#consentimiento_expreso_adultos'
+                        ];
+                    } else if ($('#collapseDocumentosMenores').closest('.accordion-item').is(':visible')) {
+                        visibles = [
+                            '#identificacion_fotografia',
+                            '#carta_autorizacion',
+                            '#declaracion_originalidad_menores',
+                            '#comprobante_domicilio_tutor',
+                            '#consentimiento_expreso_menores',
+                            '#ine_tutor'
+                        ];
+                    }
+
+                    const camposAContar = generales.concat(visibles);
                     let completados = 0;
 
-                    requiredFields.forEach((field) => {
-                        if (field.type === "checkbox") {
-                            if (field.checked) {
-                                completados++;
+                    console.log('--- Campos que se están contabilizando en la progress bar ---');
+                    camposAContar.forEach(selector => {
+                        const $field = $(selector);
+                        // Para #curp, cuenta aunque esté deshabilitado
+                        if (selector === '#curp') {
+                            let estado = ($field.val() && $field.val().trim() !== "") ? 'completado' : 'pendiente';
+                            if ($field.val() && $field.val().trim() !== "") completados++;
+                            console.log(`${selector}: ${estado}`);
+                        } else if ($field.length && $field.closest('.accordion-item').is(':visible')) {
+                            let estado = '';
+                            if ($field.attr('type') === 'checkbox') {
+                                estado = $field.is(':checked') ? 'completado' : 'pendiente';
+                                if ($field.is(':checked')) completados++;
+                            } else if ($field.attr('type') === 'file') {
+                                const fieldId = $field.attr('id');
+                                const tieneArchivo = ($field.val() && $field.val().trim() !== "") || (archivosCargados[fieldId] && archivosCargados[fieldId].trim() !== "");
+                                estado = tieneArchivo ? 'completado' : 'pendiente';
+                                if (tieneArchivo) completados++;
+                            } else {
+                                estado = ($field.val() && $field.val().trim() !== "") ? 'completado' : 'pendiente';
+                                if ($field.val() && $field.val().trim() !== "") completados++;
                             }
-                        } else if (field.type === "file") {
-                            // --- NUEVO: Si ya hay archivo cargado, cuenta como completado ---
-                            if (field.value.trim() !== "" || archivoYaCargado(field.id)) {
-                                completados++;
-                            }
-                        } else if (field.value.trim() !== "") {
-                            completados++;
+                            console.log(`${selector}: ${estado}`);
                         }
                     });
 
-                    const porcentaje = Math.round((completados / totalRequired()) * 100);
-
-                    progressBar.style.width = `${porcentaje}%`;
-                    progressBar.setAttribute("aria-valuenow", porcentaje);
-                    progressBar.textContent = `${porcentaje}%`;
+                    const porcentaje = Math.round((completados / camposAContar.length) * 100);
+                    $('.progress-bar').css('width', porcentaje + '%').attr('aria-valuenow', porcentaje).text(porcentaje + '%');
+                    console.log(`Progreso: ${completados}/${camposAContar.length} (${porcentaje}%)`);
                 }
 
                 requiredFields.forEach((field) => {
@@ -1660,6 +1700,7 @@ if (empty($_SESSION["idusuario"])) {
 
                 function sendRequest(url, data = {}, method = 'POST') {
                     showLoading();
+
                     return $.ajax({
                         url: url,
                         type: method,
@@ -1673,11 +1714,13 @@ if (empty($_SESSION["idusuario"])) {
                 function handleError(error) {
                     console.error('Error:', error);
                     let message = 'Error en el servidor';
+
                     if (error.responseJSON && error.responseJSON.message) {
                         message = error.responseJSON.message;
                     } else if (error.statusText) {
                         message = error.statusText;
                     }
+
                     Swal.fire('Error', message, 'error');
                 }
 
