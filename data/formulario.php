@@ -2021,7 +2021,7 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#gradoEstudios').val(response.data.gradoEstudios);
                                 $('#ocupacionActual').val(response.data.ocupacionActual);
 
-                                // NUEVO: Inicializar bloques de archivos adjuntos según las rutas del backend
+                                // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
                                     declaracion_originalidad: response.data.declaracion_originalidad,
@@ -2184,12 +2184,21 @@ if (empty($_SESSION["idusuario"])) {
             }
 
             $(document).ready(function () {
-                // Evento para calcular edad automáticamente al cambiar la fecha de nacimiento
                 $('#fechanacimiento').on('change', function () {
                     const fecha = $(this).val();
                     const edad = calcularEdadDesdeFecha(fecha);
                     $('#edad').val(edad).trigger('change');
                 });
+            });
+            /* ==================== CALCULAR EDAD DESDE FECHA DE NACIMIENTO ==================== */
+            function soloNumerosInput(selector) {
+                $(document).on('input', selector, function () {
+                    this.value = this.value.replace(/\D/g, '');
+                });
+            }
+
+            $(document).ready(function () {
+                soloNumerosInput('#edad, #numeroExterior, #numeroInterior, #cp');
             });
         </script>
 
