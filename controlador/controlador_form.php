@@ -260,8 +260,6 @@ try {
                 'localidad',
                 'gradoEstudios',
                 'ocupacionActual',
-                'gradoEstudios',
-                'ocupacionActual',
                 'credencial_votar',
                 'declaracion_originalidad',
                 'consentimiento_expreso_adultos',

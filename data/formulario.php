@@ -1508,7 +1508,7 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#gradoEstudios').val(response.data.gradoEstudios);
                                 $('#ocupacionActual').val(response.data.ocupacionActual);
 
-                                // NUEVO: Inicializar bloques de archivos adjuntos según las rutas del backend
+                                // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
                                     declaracion_originalidad: response.data.declaracion_originalidad,
@@ -2021,6 +2021,7 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#gradoEstudios').val(response.data.gradoEstudios);
                                 $('#ocupacionActual').val(response.data.ocupacionActual);
 
+                                // NUEVO: Inicializar bloques de archivos adjuntos según las rutas del backend
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
                                     declaracion_originalidad: response.data.declaracion_originalidad,
@@ -2033,6 +2034,7 @@ if (empty($_SESSION["idusuario"])) {
                                     ine_tutor: response.data.ine_tutor
                                 };
                                 inicializarCamposArchivos(archivosCargados);
+
 
                                 // Mostrar la sección correcta según la edad cargada
                                 const edadCargada = parseInt(response.data.edad, 10);
@@ -2163,6 +2165,31 @@ if (empty($_SESSION["idusuario"])) {
                 // ==================== INICIALIZACIÓN ====================
                 setInitialState();
                 loadInitialData();
+            });
+        </script>
+        <!-- ==================== CALCULAR EDAD DESDE FECHA DE NACIMIENTO ==================== -->
+        <script>
+            function calcularEdadDesdeFecha(fechaNacimiento) {
+                if (!fechaNacimiento) return '';
+                const hoy = new Date();
+                const partes = fechaNacimiento.split('-');
+                if (partes.length !== 3) return '';
+                const nacimiento = new Date(partes[0], partes[1] - 1, partes[2]);
+                let edad = hoy.getFullYear() - nacimiento.getFullYear();
+                const m = hoy.getMonth() - nacimiento.getMonth();
+                if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+                    edad--;
+                }
+                return edad > 0 ? edad : '';
+            }
+
+            $(document).ready(function () {
+                // Evento para calcular edad automáticamente al cambiar la fecha de nacimiento
+                $('#fechanacimiento').on('change', function () {
+                    const fecha = $(this).val();
+                    const edad = calcularEdadDesdeFecha(fecha);
+                    $('#edad').val(edad).trigger('change');
+                });
             });
         </script>
 
