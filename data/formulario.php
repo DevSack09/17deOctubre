@@ -550,6 +550,70 @@ if (empty($_SESSION["idusuario"])) {
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Redes Sociales -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingRedesSociales">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseRedesSociales"
+                                                    aria-expanded="false" aria-controls="collapseRedesSociales">
+                                                    Redes sociales
+                                                </button>
+                                            </h2>
+                                            <div id="collapseRedesSociales" class="accordion-collapse collapse"
+                                                aria-labelledby="headingRedesSociales" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Facebook -->
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="facebook">Facebook</label>
+                                                            <div class="input-icon">
+                                                                <i class="fab fa-facebook-f"></i>
+                                                                <input class="form-control" id="facebook" name="facebook"
+                                                                    type="text" placeholder="Ej. facebook.com/tuusuario"
+                                                                    disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                        </div>
+
+                                                        <!-- TikTok -->
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="tiktok">TikTok</label>
+                                                            <div class="input-icon">
+                                                                <i class="fab fa-tiktok"></i>
+                                                                <input class="form-control" id="tiktok" name="tiktok"
+                                                                    type="text" placeholder="Ej. tiktok.com/@tuusuario"
+                                                                    disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                        </div>
+
+                                                        <!-- Instagram -->
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="instagram">Instagram</label>
+                                                            <div class="input-icon">
+                                                                <i class="fab fa-instagram"></i>
+                                                                <input class="form-control" id="instagram" name="instagram"
+                                                                    type="text" placeholder="Ej. instagram.com/tuusuario"
+                                                                    disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                        </div>
+
+                                                        <!-- Otra red social -->
+                                                        <div class="col-md-3">
+                                                            <label class="form-label" for="otra">Otra</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-globe"></i>
+                                                                <input class="form-control" id="otra" name="otraRedSocial"
+                                                                    type="text" placeholder="Otra red social o enlace"
+                                                                    disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- Carga de documentos: Participantes mayores de edad -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingDocumentosAdultos">
@@ -1251,7 +1315,12 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#correo').val(response.data.correo);
                                 $('#numerofijo').val(response.data.numerofijo);
                                 $('#numeromovil').val(response.data.numeromovil);
-                                $('#confirmarnumeromovil').val(response.data.numeromovil); // Si tienes confirmación en backend
+                                $('#confirmarnumeromovil').val(response.data.numeromovil);
+
+                                $('#facebook').val(response.data.facebook);
+                                $('#tiktok').val(response.data.tiktok);
+                                $('#instagram').val(response.data.instagram);
+                                $('#otra').val(response.data.otraRedSocial);
 
 
                                 // --- NUEVO: Actualiza archivosCargados ---
@@ -1716,6 +1785,11 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#confirmarnumerofijo').val(response.data.numerofijo); // Si tienes confirmación en backend
                                 $('#numeromovil').val(response.data.numeromovil);
                                 $('#confirmarnumeromovil').val(response.data.numeromovil); // Si tienes confirmación en backend
+
+                                $('#facebook').val(response.data.facebook);
+                                $('#tiktok').val(response.data.tiktok);
+                                $('#instagram').val(response.data.instagram);
+                                $('#otra').val(response.data.otraRedSocial);
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
@@ -2240,6 +2314,11 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#confirmarnumerofijo').val(response.data.numerofijo); // Si tienes confirmación en backend
                                 $('#numeromovil').val(response.data.numeromovil);
                                 $('#confirmarnumeromovil').val(response.data.numeromovil); // Si tienes confirmación en backend
+
+                                $('#facebook').val(response.data.facebook);
+                                $('#tiktok').val(response.data.tiktok);
+                                $('#instagram').val(response.data.instagram);
+                                $('#otra').val(response.data.otraRedSocial);
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {

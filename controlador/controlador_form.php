@@ -46,6 +46,12 @@ try {
     $numerofijo = !empty($_POST['numerofijo']) ? $_POST['numerofijo'] : null;
     $numeromovil = !empty($_POST['numeromovil']) ? $_POST['numeromovil'] : null;
 
+    $facebook = !empty($_POST['facebook']) ? $_POST['facebook'] : null;
+    $tiktok = !empty($_POST['tiktok']) ? $_POST['tiktok'] : null;
+    $instagram = !empty($_POST['instagram']) ? $_POST['instagram'] : null;
+    $otraRedSocial = !empty($_POST['otraRedSocial']) ? $_POST['otraRedSocial'] : null;
+
+
 
     // === ARCHIVOS ===
     $file_fields = [
@@ -206,7 +212,8 @@ try {
     SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?,
         calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?, gradoEstudios = ?, ocupacionActual = ?,
         gradoActual = ?, estudiosActuales = ?, cargoActual = ?, centroEstudiosTrabajo = ?,
-        correo = ?, numerofijo = ?, numeromovil = ?";
+        correo = ?, numerofijo = ?, numeromovil = ?,
+        facebook = ?, tiktok = ?, instagram = ?, otraRedSocial = ?";
 
             $update_params = [
                 $nombre,
@@ -231,9 +238,13 @@ try {
                 $centroEstudiosTrabajo,
                 $correo,
                 $numerofijo,
-                $numeromovil
+                $numeromovil,
+                $facebook,
+                $tiktok,
+                $instagram,
+                $otraRedSocial
             ];
-            $types = "ssssiiissssssssssssssss"; // 23 caracteres
+            $types = "ssssiiissssssssssssssssssss"; // 23 caracteres
 
             // Agrega archivos si existen
             foreach ($file_fields as $file_field) {
@@ -295,6 +306,10 @@ try {
                 'correo',
                 'numerofijo',
                 'numeromovil',
+                'facebook',
+                'tiktok',
+                'instagram',
+                'otraRedSocial',
                 // ...archivos y otros campos...
                 'credencial_votar',
                 'declaracion_originalidad',
@@ -334,6 +349,10 @@ try {
                 $correo,
                 $numerofijo,
                 $numeromovil,
+                $facebook,
+                $tiktok,
+                $instagram,
+                $otraRedSocial,
                 isset($uploaded_files['credencial_votar']) ? "" : null,
                 isset($uploaded_files['declaracion_originalidad']) ? "" : null,
                 isset($uploaded_files['consentimiento_expreso_adultos']) ? "" : null,
@@ -347,7 +366,7 @@ try {
                 $acepta_consentimiento,
                 "" // Folio temporal
             ];
-            $types = "isssssissssssssssssssssssssiiiss";
+            $types = "isssssissssssssssssssssssssssssiiiss";
 
             if (strlen($types) !== count($insert_params)) {
                 echo json_encode([
