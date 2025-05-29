@@ -2387,6 +2387,54 @@ if (empty($_SESSION["idusuario"])) {
                 loadInitialData();
             });
         </script>
+
+        <script>
+            // ...existing code...
+
+            /**
+             * Valida que los campos de confirmación de teléfono coincidan con su original.
+             * Muestra feedback con SweetAlert si no coinciden al salir del campo de confirmación.
+             */
+            function validarConfirmacionTelefonosSweetAlert() {
+                // Número fijo
+                $('#confirmarnumerofijo').on('blur', function () {
+                    const fijo = $('#numerofijo').val();
+                    const confirmarFijo = $('#confirmarnumerofijo').val();
+                    if (confirmarFijo !== '' && fijo !== '' && fijo !== confirmarFijo) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Números fijos no coinciden',
+                            text: 'El número fijo y su confirmación no son iguales. Corrige para continuar.',
+                            confirmButtonText: 'Aceptar'
+                        }).then(() => {
+                            $('#confirmarnumerofijo').focus();
+                        });
+                    }
+                });
+
+                // Número móvil
+                $('#confirmarnumeromovil').on('blur', function () {
+                    const movil = $('#numeromovil').val();
+                    const confirmarMovil = $('#confirmarnumeromovil').val();
+                    if (confirmarMovil !== '' && movil !== '' && movil !== confirmarMovil) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Números móviles no coinciden',
+                            text: 'El número móvil y su confirmación no son iguales. Corrige para continuar.',
+                            confirmButtonText: 'Aceptar'
+                        }).then(() => {
+                            $('#confirmarnumeromovil').focus();
+                        });
+                    }
+                });
+            }
+
+            $(document).ready(function () {
+                // ...existing code...
+                validarConfirmacionTelefonosSweetAlert();
+                // ...existing code...
+            });
+        </script>
         <!-- ==================== CALCULAR EDAD DESDE FECHA DE NACIMIENTO ==================== -->
         <script>
             function calcularEdadDesdeFecha(fechaNacimiento) {
