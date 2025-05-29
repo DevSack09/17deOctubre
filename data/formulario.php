@@ -614,6 +614,121 @@ if (empty($_SESSION["idusuario"])) {
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Ensayo -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingEnsayo">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseEnsayo"
+                                                    aria-expanded="false" aria-controls="collapseEnsayo">
+                                                    Ensayo
+                                                </button>
+                                            </h2>
+                                            <div id="collapseEnsayo" class="accordion-collapse collapse"
+                                                aria-labelledby="headingEnsayo" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Seudónimo -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="seudonimo">
+                                                                Seudónimo con el que se identificará durante el desarrollo
+                                                                de este concurso:
+                                                                <span class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-user-secret"></i>
+                                                                <input class="form-control" id="seudonimo" name="seudonimo"
+                                                                    type="text" placeholder="Ej. PlumaLibre" required
+                                                                    disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, introduzca su seudónimo.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Título del Ensayo -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="titulo_ensayo">
+                                                                Título del Ensayo <span class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-pen-nib"></i>
+                                                                <input class="form-control" id="titulo_ensayo"
+                                                                    name="titulo_ensayo" type="text"
+                                                                    placeholder="Título de tu ensayo" required disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, introduzca el título del ensayo.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Categoría -->
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="categoria">
+                                                                Categoría en la que concursas <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-list"></i>
+                                                                <select class="form-control" id="categoria" name="categoria"
+                                                                    required disabled>
+                                                                    <option value="" disabled selected>Seleccione una
+                                                                        categoría</option>
+                                                                    <option value="Letras jóvenes">Letras jóvenes (15-19
+                                                                        años)</option>
+                                                                    <option value="Letras contemporáneas">Letras
+                                                                        contemporáneas (20-29 años)</option>
+                                                                    <option value="Letras trascendencia">Letras
+                                                                        trascendencia (30 años en adelante)</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, seleccione una categoría.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Archivo del Ensayo -->
+                                                        <div class="col-md-6 mb-3" id="grupo_archivo_ensayo">
+                                                            <label class="form-label" for="archivo_ensayo">
+                                                                Cargue su ensayo en formato PDF <span
+                                                                    class="required">*</span>
+                                                                <small class="text-muted">(Formato PDF, máximo 3MB)</small>
+                                                            </label>
+                                                            <div
+                                                                class="input-group file-input-group mb-2 input-file-section">
+                                                                <input class="form-control" type="file" id="archivo_ensayo"
+                                                                    name="archivo_ensayo" accept=".pdf" required disabled>
+                                                                <div class="invalid-feedback d-none">Debes subir el PDF de
+                                                                    tu ensayo.</div>
+                                                                <div class="valid-feedback d-none">Archivo listo.</div>
+                                                            </div>
+                                                            <div class="archivo-cargado-section" style="display:none;">
+                                                                <div class="alert alert-success text-center"
+                                                                    style="padding: 0.25rem 1rem; font-size: 0.9rem;">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                    <strong>Éxito:</strong>
+                                                                    Ya cargaste tu ensayo.
+                                                                </div>
+                                                                <div class="mb-2 d-flex justify-content-center">
+                                                                    <a href="#" target="_blank"
+                                                                        class="btn btn-outline-primary btn-view-file me-2">
+                                                                        Ver ensayo cargado
+                                                                    </a>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-danger btn-reload-file">
+                                                                        Volver a cargar ensayo
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- Carga de documentos: Participantes mayores de edad -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingDocumentosAdultos">
@@ -1212,6 +1327,10 @@ if (empty($_SESSION["idusuario"])) {
                         '#centroEstudiosTrabajo',
                         '#correo',
                         '#numeromovil',
+                        '#seudonimo',
+                        '#titulo_ensayo',
+                        '#categoria',
+                        '#archivo_ensayo',
                         '#confirmarnumeromovil',
                         '#terminos_privacidad',
                         '#terminos_consentimiento'
@@ -1322,9 +1441,14 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#instagram').val(response.data.instagram);
                                 $('#otra').val(response.data.otraRedSocial);
 
+                                $('#seudonimo').val(response.data.seudonimo);
+                                $('#titulo_ensayo').val(response.data.titulo_ensayo);
+                                $('#categoria').val(response.data.categoria);
+
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
+                                    archivo_ensayo: response.data.archivo_ensayo,
                                     credencial_votar: data.credencial_votar,
                                     declaracion_originalidad: data.declaracion_originalidad,
                                     consentimiento_expreso_adultos: data.consentimiento_expreso_adultos,
@@ -1791,8 +1915,29 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#instagram').val(response.data.instagram);
                                 $('#otra').val(response.data.otraRedSocial);
 
+                                $('#seudonimo').val(response.data.seudonimo);
+                                $('#titulo_ensayo').val(response.data.titulo_ensayo);
+                                $('#categoria').val(response.data.categoria);
+
+                                const $grupoArchivoEnsayo = $('#grupo_archivo_ensayo');
+                                const $fileSectionEnsayo = $grupoArchivoEnsayo.find('.input-file-section');
+                                const $archivoCargadoSectionEnsayo = $grupoArchivoEnsayo.find('.archivo-cargado-section');
+                                const $btnViewEnsayo = $grupoArchivoEnsayo.find('.btn-view-file');
+                                const archivoEnsayoRuta = response.data.archivo_ensayo;
+
+                                if (archivoEnsayoRuta && archivoEnsayoRuta.trim() !== '') {
+                                    $fileSectionEnsayo.hide();
+                                    $archivoCargadoSectionEnsayo.show();
+                                    $btnViewEnsayo.attr('href', getArchivoUrl(archivoEnsayoRuta));
+                                } else {
+                                    $fileSectionEnsayo.show();
+                                    $archivoCargadoSectionEnsayo.hide();
+                                    $('#archivo_ensayo').val('');
+                                }
+
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
+                                    archivo_ensayo: response.data.archivo_ensayo, // <-- agrega esta línea
                                     credencial_votar: response.data.credencial_votar,
                                     declaracion_originalidad: response.data.declaracion_originalidad,
                                     consentimiento_expreso_adultos: response.data.consentimiento_expreso_adultos,
@@ -2320,6 +2465,26 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#instagram').val(response.data.instagram);
                                 $('#otra').val(response.data.otraRedSocial);
 
+                                $('#seudonimo').val(response.data.seudonimo);
+                                $('#titulo_ensayo').val(response.data.titulo_ensayo);
+                                $('#categoria').val(response.data.categoria);
+
+                                const $grupoArchivoEnsayo = $('#grupo_archivo_ensayo');
+                                const $fileSectionEnsayo = $grupoArchivoEnsayo.find('.input-file-section');
+                                const $archivoCargadoSectionEnsayo = $grupoArchivoEnsayo.find('.archivo-cargado-section');
+                                const $btnViewEnsayo = $grupoArchivoEnsayo.find('.btn-view-file');
+                                const archivoEnsayoRuta = response.data.archivo_ensayo;
+
+                                if (archivoEnsayoRuta && archivoEnsayoRuta.trim() !== '') {
+                                    $fileSectionEnsayo.hide();
+                                    $archivoCargadoSectionEnsayo.show();
+                                    $btnViewEnsayo.attr('href', getArchivoUrl(archivoEnsayoRuta));
+                                } else {
+                                    $fileSectionEnsayo.show();
+                                    $archivoCargadoSectionEnsayo.hide();
+                                    $('#archivo_ensayo').val('');
+                                }
+
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
@@ -2464,6 +2629,70 @@ if (empty($_SESSION["idusuario"])) {
                 // ==================== INICIALIZACIÓN ====================
                 setInitialState();
                 loadInitialData();
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                const $grupoArchivoEnsayo = $('#grupo_archivo_ensayo');
+                const $inputArchivoEnsayo = $grupoArchivoEnsayo.find('input[type="file"]');
+                const $fileSectionEnsayo = $grupoArchivoEnsayo.find('.input-file-section');
+                const $archivoCargadoSectionEnsayo = $grupoArchivoEnsayo.find('.archivo-cargado-section');
+                const $btnViewEnsayo = $grupoArchivoEnsayo.find('.btn-view-file');
+                const $btnReloadEnsayo = $grupoArchivoEnsayo.find('.btn-reload-file');
+                const $validFeedbackEnsayo = $fileSectionEnsayo.find('.valid-feedback');
+                const $invalidFeedbackEnsayo = $fileSectionEnsayo.find('.invalid-feedback');
+
+                $inputArchivoEnsayo.on('change', function () {
+                    const file = this.files[0];
+                    let valid = true;
+
+                    if (file) {
+                        if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith('.pdf')) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Archivo no válido',
+                                text: 'Sólo se permite subir archivos en formato PDF.',
+                            });
+                            this.value = "";
+                            valid = false;
+                        } else if (file.size > 3 * 1024 * 1024) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Archivo demasiado grande',
+                                text: 'El archivo debe pesar máximo 3 MB.',
+                            });
+                            this.value = "";
+                            valid = false;
+                        }
+                    }
+
+                    if (valid && file) {
+                        $inputArchivoEnsayo.addClass('is-valid').removeClass('is-invalid');
+                        $invalidFeedbackEnsayo.removeClass('d-block').addClass('d-none');
+                        $validFeedbackEnsayo.removeClass('d-none').addClass('d-block');
+                    } else {
+                        $inputArchivoEnsayo.addClass('is-invalid').removeClass('is-valid');
+                        $invalidFeedbackEnsayo.removeClass('d-none').addClass('d-block');
+                        $validFeedbackEnsayo.removeClass('d-block').addClass('d-none');
+                    }
+                });
+
+                $btnReloadEnsayo.off('click').on('click', function () {
+                    Swal.fire({
+                        title: '¿Volver a cargar archivo?',
+                        text: 'Esto eliminará el archivo actual y te permitirá seleccionar uno nuevo. ¿Estás seguro?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, volver a cargar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $archivoCargadoSectionEnsayo.hide();
+                            $fileSectionEnsayo.show();
+                            $inputArchivoEnsayo.val('');
+                        }
+                    });
+                });
             });
         </script>
 
