@@ -42,6 +42,10 @@ try {
     $cargoActual = !empty($_POST['cargoActual']) ? $_POST['cargoActual'] : null;
     $centroEstudiosTrabajo = !empty($_POST['centroEstudiosTrabajo']) ? $_POST['centroEstudiosTrabajo'] : null;
 
+    $correo = !empty($_POST['correo']) ? $_POST['correo'] : null;
+    $numerofijo = !empty($_POST['numerofijo']) ? $_POST['numerofijo'] : null;
+    $numeromovil = !empty($_POST['numeromovil']) ? $_POST['numeromovil'] : null;
+
 
     // === ARCHIVOS ===
     $file_fields = [
@@ -201,7 +205,8 @@ try {
             $sql_update = "UPDATE registration 
     SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?,
         calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?, gradoEstudios = ?, ocupacionActual = ?,
-        gradoActual = ?, estudiosActuales = ?, cargoActual = ?, centroEstudiosTrabajo = ?";
+        gradoActual = ?, estudiosActuales = ?, cargoActual = ?, centroEstudiosTrabajo = ?,
+        correo = ?, numerofijo = ?, numeromovil = ?";
 
             $update_params = [
                 $nombre,
@@ -223,9 +228,12 @@ try {
                 $gradoActual,
                 $estudiosActuales,
                 $cargoActual,
-                $centroEstudiosTrabajo
+                $centroEstudiosTrabajo,
+                $correo,
+                $numerofijo,
+                $numeromovil
             ];
-            $types = "ssssiiisssssssssssss";
+            $types = "ssssiiissssssssssssssss"; // 23 caracteres
 
             // Agrega archivos si existen
             foreach ($file_fields as $file_field) {
@@ -284,6 +292,9 @@ try {
                 'estudiosActuales',
                 'cargoActual',
                 'centroEstudiosTrabajo',
+                'correo',
+                'numerofijo',
+                'numeromovil',
                 // ...archivos y otros campos...
                 'credencial_votar',
                 'declaracion_originalidad',
@@ -320,6 +331,9 @@ try {
                 $estudiosActuales,
                 $cargoActual,
                 $centroEstudiosTrabajo,
+                $correo,
+                $numerofijo,
+                $numeromovil,
                 isset($uploaded_files['credencial_votar']) ? "" : null,
                 isset($uploaded_files['declaracion_originalidad']) ? "" : null,
                 isset($uploaded_files['consentimiento_expreso_adultos']) ? "" : null,

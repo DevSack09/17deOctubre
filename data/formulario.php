@@ -446,6 +446,110 @@ if (empty($_SESSION["idusuario"])) {
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Datos de contacto -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingDatosContacto">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseDatosContacto"
+                                                    aria-expanded="false" aria-controls="collapseDatosContacto">
+                                                    Datos de contacto
+                                                </button>
+                                            </h2>
+                                            <div id="collapseDatosContacto" class="accordion-collapse collapse"
+                                                aria-labelledby="headingDatosContacto" data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Correo Electrónico -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="correo">
+                                                                Correo electrónico <span class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-envelope"></i>
+                                                                <input class="form-control" id="correo" name="correo"
+                                                                    type="email" placeholder="Ej. ejemplo@correo.com"
+                                                                    required disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, introduzca un correo válido.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Número Fijo -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="numerofijo">Número fijo</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-phone"></i>
+                                                                <input class="form-control" id="numerofijo"
+                                                                    name="numerofijo" type="text"
+                                                                    placeholder="Ej. XXXXXXXXXX" minlength="10"
+                                                                    maxlength="10" disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, introduzca un número válido.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Confirmar Número Fijo -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="confirmarnumerofijo">Confirmar
+                                                                número fijo</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-phone-volume"></i>
+                                                                <input class="form-control" id="confirmarnumerofijo"
+                                                                    name="confirmarnumerofijo" type="text"
+                                                                    placeholder="Confirme su número fijo" minlength="10"
+                                                                    maxlength="10" disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Los números fijos no coinciden.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Número Móvil -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="numeromovil">
+                                                                Número móvil <span class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-mobile-alt"></i>
+                                                                <input class="form-control" id="numeromovil"
+                                                                    name="numeromovil" type="text"
+                                                                    placeholder="Ej. XXXXXXXXXX" required minlength="10"
+                                                                    maxlength="10" disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, introduzca su número móvil.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Confirmar Número Móvil -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="confirmarnumeromovil">
+                                                                Confirmar número móvil <span class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-check-circle"></i>
+                                                                <input class="form-control" id="confirmarnumeromovil"
+                                                                    name="confirmarnumeromovil" type="text"
+                                                                    placeholder="Confirme su número móvil" required
+                                                                    minlength="10" maxlength="10" disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Los números móviles no coinciden.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- Carga de documentos: Participantes mayores de edad -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingDocumentosAdultos">
@@ -1041,10 +1145,10 @@ if (empty($_SESSION["idusuario"])) {
                         '#localidad',
                         '#gradoEstudios',
                         '#ocupacionActual',
-                        '#gradoActual',
-                        '#estudiosActuales',
-                        '#cargoActual',
                         '#centroEstudiosTrabajo',
+                        '#correo',
+                        '#numeromovil',
+                        '#confirmarnumeromovil',
                         '#terminos_privacidad',
                         '#terminos_consentimiento'
                     ];
@@ -1143,6 +1247,12 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#estudiosActuales').val(response.data.estudiosActuales);
                                 $('#cargoActual').val(response.data.cargoActual);
                                 $('#centroEstudiosTrabajo').val(response.data.centroEstudiosTrabajo);
+
+                                $('#correo').val(response.data.correo);
+                                $('#numerofijo').val(response.data.numerofijo);
+                                $('#numeromovil').val(response.data.numeromovil);
+                                $('#confirmarnumeromovil').val(response.data.numeromovil); // Si tienes confirmación en backend
+
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
@@ -1600,6 +1710,12 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#estudiosActuales').val(response.data.estudiosActuales);
                                 $('#cargoActual').val(response.data.cargoActual);
                                 $('#centroEstudiosTrabajo').val(response.data.centroEstudiosTrabajo);
+
+                                $('#correo').val(response.data.correo);
+                                $('#numerofijo').val(response.data.numerofijo);
+                                $('#confirmarnumerofijo').val(response.data.numerofijo); // Si tienes confirmación en backend
+                                $('#numeromovil').val(response.data.numeromovil);
+                                $('#confirmarnumeromovil').val(response.data.numeromovil); // Si tienes confirmación en backend
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
@@ -2119,6 +2235,12 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#cargoActual').val(response.data.cargoActual);
                                 $('#centroEstudiosTrabajo').val(response.data.centroEstudiosTrabajo);
 
+                                $('#correo').val(response.data.correo);
+                                $('#numerofijo').val(response.data.numerofijo);
+                                $('#confirmarnumerofijo').val(response.data.numerofijo); // Si tienes confirmación en backend
+                                $('#numeromovil').val(response.data.numeromovil);
+                                $('#confirmarnumeromovil').val(response.data.numeromovil); // Si tienes confirmación en backend
+
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
@@ -2296,7 +2418,7 @@ if (empty($_SESSION["idusuario"])) {
             }
 
             $(document).ready(function () {
-                soloNumerosInput('#edad, #numeroExterior, #numeroInterior, #cp');
+                soloNumerosInput('#edad, #numeroExterior, #numeroInterior, #cp, #numerofijo, #confirmarnumerofijo, #numeromovil, #confirmarnumeromovil');
             });
         </script>
 
