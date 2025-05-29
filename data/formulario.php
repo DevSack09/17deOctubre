@@ -367,6 +367,85 @@ if (empty($_SESSION["idusuario"])) {
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Estudios que cursa actualmente y/o cargo que desempeña -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingEstudiosActuales">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseEstudiosActuales"
+                                                    aria-expanded="false" aria-controls="collapseEstudiosActuales">
+                                                    Estudios que cursa actualmente y/o cargo que desempeña
+                                                </button>
+                                            </h2>
+                                            <div id="collapseEstudiosActuales" class="accordion-collapse collapse"
+                                                aria-labelledby="headingEstudiosActuales"
+                                                data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Grado Actual -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="gradoActual">Grado</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-layer-group"></i>
+                                                                <input class="form-control" id="gradoActual"
+                                                                    name="gradoActual" type="text"
+                                                                    placeholder="Ej. Tercer semestre" disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Campo no válido.</div>
+                                                        </div>
+
+                                                        <!-- Estudios Actuales -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label"
+                                                                for="estudiosActuales">Estudios</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-book"></i>
+                                                                <input class="form-control" id="estudiosActuales"
+                                                                    name="estudiosActuales" type="text"
+                                                                    placeholder="Ej. Derecho" disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Campo no válido.</div>
+                                                        </div>
+
+                                                        <!-- Cargo Actual -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="cargoActual">Cargo</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-user-tie"></i>
+                                                                <input class="form-control" id="cargoActual"
+                                                                    name="cargoActual" type="text"
+                                                                    placeholder="Ej. Asistente administrativo" disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">Campo no válido.</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Centro de Estudios o Lugar de Trabajo -->
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label" for="centroEstudiosTrabajo">
+                                                                Nombre del centro de estudios y/o lugar de trabajo <span
+                                                                    class="required">*</span>
+                                                            </label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-school"></i>
+                                                                <input class="form-control" id="centroEstudiosTrabajo"
+                                                                    name="centroEstudiosTrabajo" type="text"
+                                                                    placeholder="Ej. Universidad Autónoma de Hidalgo"
+                                                                    required disabled>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Por favor, introduzca Nombre del centro de estudios y/o
+                                                                lugar de trabajo.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- Carga de documentos: Participantes mayores de edad -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingDocumentosAdultos">
@@ -962,6 +1041,10 @@ if (empty($_SESSION["idusuario"])) {
                         '#localidad',
                         '#gradoEstudios',
                         '#ocupacionActual',
+                        '#gradoActual',
+                        '#estudiosActuales',
+                        '#cargoActual',
+                        '#centroEstudiosTrabajo',
                         '#terminos_privacidad',
                         '#terminos_consentimiento'
                     ];
@@ -1055,6 +1138,11 @@ if (empty($_SESSION["idusuario"])) {
 
                                 $('#gradoEstudios').val(response.data.gradoEstudios);
                                 $('#ocupacionActual').val(response.data.ocupacionActual);
+
+                                $('#gradoActual').val(response.data.gradoActual);
+                                $('#estudiosActuales').val(response.data.estudiosActuales);
+                                $('#cargoActual').val(response.data.cargoActual);
+                                $('#centroEstudiosTrabajo').val(response.data.centroEstudiosTrabajo);
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
@@ -1507,6 +1595,11 @@ if (empty($_SESSION["idusuario"])) {
 
                                 $('#gradoEstudios').val(response.data.gradoEstudios);
                                 $('#ocupacionActual').val(response.data.ocupacionActual);
+
+                                $('#gradoActual').val(response.data.gradoActual);
+                                $('#estudiosActuales').val(response.data.estudiosActuales);
+                                $('#cargoActual').val(response.data.cargoActual);
+                                $('#centroEstudiosTrabajo').val(response.data.centroEstudiosTrabajo);
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
@@ -2020,6 +2113,11 @@ if (empty($_SESSION["idusuario"])) {
 
                                 $('#gradoEstudios').val(response.data.gradoEstudios);
                                 $('#ocupacionActual').val(response.data.ocupacionActual);
+
+                                $('#gradoActual').val(response.data.gradoActual);
+                                $('#estudiosActuales').val(response.data.estudiosActuales);
+                                $('#cargoActual').val(response.data.cargoActual);
+                                $('#centroEstudiosTrabajo').val(response.data.centroEstudiosTrabajo);
 
                                 // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {

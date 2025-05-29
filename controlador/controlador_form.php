@@ -37,6 +37,11 @@ try {
     $gradoEstudios = !empty($_POST['gradoEstudios']) ? $_POST['gradoEstudios'] : null;
     $ocupacionActual = !empty($_POST['ocupacionActual']) ? $_POST['ocupacionActual'] : null;
 
+    $gradoActual = !empty($_POST['gradoActual']) ? $_POST['gradoActual'] : null;
+    $estudiosActuales = !empty($_POST['estudiosActuales']) ? $_POST['estudiosActuales'] : null;
+    $cargoActual = !empty($_POST['cargoActual']) ? $_POST['cargoActual'] : null;
+    $centroEstudiosTrabajo = !empty($_POST['centroEstudiosTrabajo']) ? $_POST['centroEstudiosTrabajo'] : null;
+
 
     // === ARCHIVOS ===
     $file_fields = [
@@ -194,8 +199,9 @@ try {
             }
 
             $sql_update = "UPDATE registration 
-                SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?,
-                    calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?, gradoEstudios = ?, ocupacionActual = ?";
+    SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?,
+        calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?, gradoEstudios = ?, ocupacionActual = ?,
+        gradoActual = ?, estudiosActuales = ?, cargoActual = ?, centroEstudiosTrabajo = ?";
 
             $update_params = [
                 $nombre,
@@ -213,10 +219,15 @@ try {
                 $municipio,
                 $localidad,
                 $gradoEstudios,
-                $ocupacionActual
+                $ocupacionActual,
+                $gradoActual,
+                $estudiosActuales,
+                $cargoActual,
+                $centroEstudiosTrabajo
             ];
-            $types = "ssssiiisssssssss";
+            $types = "ssssiiisssssssssssss";
 
+            // Agrega archivos si existen
             foreach ($file_fields as $file_field) {
                 if (isset($uploaded_files[$file_field])) {
                     $sql_update .= ", $file_field = ?";
@@ -228,19 +239,28 @@ try {
             $update_params[] = $curp;
             $types .= "s";
 
-            $stmt_update = $db_connection->prepare($sql_update);
-            if ($stmt_update) {
-                $stmt_update->bind_param($types, ...$update_params);
-
-                if ($stmt_update->execute()) {
-                    echo json_encode(['status' => 'success', 'message' => 'Registro actualizado correctamente']);
-                } else {
-                    echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el registro', 'error' => $stmt_update->error]);
-                }
-                $stmt_update->close();
-            } else {
-                echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta de actualización', 'error' => $db_connection->error]);
+            // Chequeo antes de bind_param
+            if (strlen($types) !== count($update_params)) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Desajuste entre tipos y parámetros en UPDATE',
+                    'types_length' => strlen($types),
+                    'params_count' => count($update_params),
+                    'types' => $types,
+                    'params' => $update_params
+                ]);
+                exit;
             }
+
+            $stmt_update = $db_connection->prepare($sql_update);
+            $stmt_update->bind_param($types, ...$update_params);
+
+            if ($stmt_update->execute()) {
+                echo json_encode(['status' => 'success', 'message' => 'Registro actualizado correctamente']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el registro', 'error' => $stmt_update->error]);
+            }
+            $stmt_update->close();
         } else {
             // INSERT
             $columns = [
@@ -260,6 +280,11 @@ try {
                 'localidad',
                 'gradoEstudios',
                 'ocupacionActual',
+                'gradoActual',
+                'estudiosActuales',
+                'cargoActual',
+                'centroEstudiosTrabajo',
+                // ...archivos y otros campos...
                 'credencial_votar',
                 'declaracion_originalidad',
                 'consentimiento_expreso_adultos',
@@ -273,6 +298,7 @@ try {
                 'acepta_consentimiento',
                 'folio'
             ];
+
             $insert_params = [
                 $usuario_id,
                 $curp,
@@ -290,6 +316,10 @@ try {
                 $localidad,
                 $gradoEstudios,
                 $ocupacionActual,
+                $gradoActual,
+                $estudiosActuales,
+                $cargoActual,
+                $centroEstudiosTrabajo,
                 isset($uploaded_files['credencial_votar']) ? "" : null,
                 isset($uploaded_files['declaracion_originalidad']) ? "" : null,
                 isset($uploaded_files['consentimiento_expreso_adultos']) ? "" : null,
@@ -301,9 +331,9 @@ try {
                 isset($uploaded_files['ine_tutor']) ? "" : null,
                 $acepta_privacidad,
                 $acepta_consentimiento,
-                "" // Folio temporal, se actualiza después
+                "" // Folio temporal
             ];
-            $types = "isssssissssssssssssssssiiiss";
+            $types = "isssssissssssssssssssssssssiiiss";
 
             if (strlen($types) !== count($insert_params)) {
                 echo json_encode([
