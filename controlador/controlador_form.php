@@ -51,16 +51,10 @@ try {
     $instagram = !empty($_POST['instagram']) ? $_POST['instagram'] : null;
     $otraRedSocial = !empty($_POST['otraRedSocial']) ? $_POST['otraRedSocial'] : null;
 
-    $seudonimo = !empty($_POST['seudonimo']) ? $_POST['seudonimo'] : null;
-    $titulo_ensayo = !empty($_POST['titulo_ensayo']) ? $_POST['titulo_ensayo'] : null;
-    $categoria = !empty($_POST['categoria']) ? $_POST['categoria'] : null;
 
-
-    $archivo_ensayo = null;
 
     // === ARCHIVOS ===
     $file_fields = [
-        'archivo_ensayo',
         'credencial_votar',
         'declaracion_originalidad',
         'consentimiento_expreso_adultos',
@@ -119,7 +113,7 @@ try {
     }
 
     // Verificar si existe el registro
-    $sql_check = "SELECT id, folio, archivo_ensayo, credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos, identificacion_fotografia, carta_autorizacion, declaracion_originalidad_menores, comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor FROM registration WHERE curp = ?";
+    $sql_check = "SELECT id, folio, credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos, identificacion_fotografia, carta_autorizacion, declaracion_originalidad_menores, comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor FROM registration WHERE curp = ?";
     $stmt_check = $db_connection->prepare($sql_check);
 
     if ($stmt_check) {
@@ -145,7 +139,6 @@ try {
             $stmt_check->bind_result(
                 $id,
                 $folio,
-                $archivo_ensayo_actual,
                 $credencial_votar,
                 $declaracion_originalidad,
                 $consentimiento_expreso_adultos,
@@ -159,7 +152,6 @@ try {
             $stmt_check->fetch();
             $registro_id = $id;
             $current_files = [
-                'archivo_ensayo' => $archivo_ensayo_actual,
                 'credencial_votar' => $credencial_votar,
                 'declaracion_originalidad' => $declaracion_originalidad,
                 'consentimiento_expreso_adultos' => $consentimiento_expreso_adultos,
@@ -221,8 +213,7 @@ try {
         calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?, gradoEstudios = ?, ocupacionActual = ?,
         gradoActual = ?, estudiosActuales = ?, cargoActual = ?, centroEstudiosTrabajo = ?,
         correo = ?, numerofijo = ?, numeromovil = ?,
-        facebook = ?, tiktok = ?, instagram = ?, otraRedSocial = ?,
-        seudonimo = ?, titulo_ensayo = ?, categoria = ?";
+        facebook = ?, tiktok = ?, instagram = ?, otraRedSocial = ?";
 
             $update_params = [
                 $nombre,
@@ -251,21 +242,9 @@ try {
                 $facebook,
                 $tiktok,
                 $instagram,
-                $otraRedSocial,
-                $seudonimo,
-                $titulo_ensayo,
-                $categoria
+                $otraRedSocial
             ];
-
-            if ($archivo_ensayo) {
-                $sql_update .= ", archivo_ensayo = ?";
-                $update_params[] = $archivo_ensayo;
-            }
-
-            $types = "ssssiiisssssssssssssssssssssss"; // Ajusta la cantidad de caracteres según los campos
-            if ($archivo_ensayo) {
-                $types .= "s";
-            }
+            $types = "ssssiiissssssssssssssssssss"; // 23 caracteres
 
             // Agrega archivos si existen
             foreach ($file_fields as $file_field) {
@@ -331,10 +310,6 @@ try {
                 'tiktok',
                 'instagram',
                 'otraRedSocial',
-                'seudonimo',
-                'titulo_ensayo',
-                'categoria',
-                'archivo_ensayo',
                 // ...archivos y otros campos...
                 'credencial_votar',
                 'declaracion_originalidad',
@@ -378,10 +353,6 @@ try {
                 $tiktok,
                 $instagram,
                 $otraRedSocial,
-                $seudonimo,
-                $titulo_ensayo,
-                $categoria,
-                $archivo_ensayo,
                 isset($uploaded_files['credencial_votar']) ? "" : null,
                 isset($uploaded_files['declaracion_originalidad']) ? "" : null,
                 isset($uploaded_files['consentimiento_expreso_adultos']) ? "" : null,
@@ -395,7 +366,7 @@ try {
                 $acepta_consentimiento,
                 "" // Folio temporal
             ];
-            $types = "isssssisssssssssssssssssssssssssssssssiiiss";
+            $types = "isssssissssssssssssssssssssssssiiiss";
 
             if (strlen($types) !== count($insert_params)) {
                 echo json_encode([
