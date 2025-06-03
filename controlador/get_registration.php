@@ -19,6 +19,7 @@ $sql = "SELECT curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acept
                calle, numeroExterior, numeroInterior, colonia, cp, municipio, localidad, gradoEstudios, ocupacionActual,
                gradoActual, estudiosActuales, cargoActual, centroEstudiosTrabajo,
                correo, numerofijo, numeromovil, facebook, tiktok, instagram, otraRedSocial,
+               seudonimo, titulo_ensayo, categoria, archivo_ensayo,
                credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos,
                identificacion_fotografia, carta_autorizacion, declaracion_originalidad_menores,
                comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor
