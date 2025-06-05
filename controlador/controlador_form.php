@@ -55,6 +55,24 @@ try {
     $titulo_ensayo = !empty($_POST['titulo_ensayo']) ? $_POST['titulo_ensayo'] : null;
     $categoria = !empty($_POST['categoria']) ? $_POST['categoria'] : null;
 
+    $discapacidad = isset($_POST['discapacidad']) ? $_POST['discapacidad'] : null;
+    $discapacidad_cual = !empty($_POST['discapacidad_cual']) ? $_POST['discapacidad_cual'] : null;
+    $tipo_discapacidad = !empty($_POST['tipo_discapacidad']) ? $_POST['tipo_discapacidad'] : null;
+
+    $lengua_indigena = isset($_POST['lengua_indigena']) ? $_POST['lengua_indigena'] : null;
+    $lengua_cual = !empty($_POST['lengua_cual']) ? $_POST['lengua_cual'] : null;
+
+    $auto_indigena = isset($_POST['auto_indigena']) ? $_POST['auto_indigena'] : null;
+
+    $comunidad_indigena = isset($_POST['comunidad_indigena']) ? $_POST['comunidad_indigena'] : null;
+    $comunidad_cual = !empty($_POST['comunidad_cual']) ? $_POST['comunidad_cual'] : null;
+
+    $diversidad = isset($_POST['diversidad']) ? $_POST['diversidad'] : null;
+    $diversidad_cual = !empty($_POST['diversidad_cual']) ? $_POST['diversidad_cual'] : null;
+
+    $medio_convocatoria = !empty($_POST['medio_convocatoria']) ? $_POST['medio_convocatoria'] : null;
+
+
 
     $archivo_ensayo = null;
 
@@ -217,12 +235,17 @@ try {
             }
 
             $sql_update = "UPDATE registration 
-    SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?,
-        calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?, gradoEstudios = ?, ocupacionActual = ?,
-        gradoActual = ?, estudiosActuales = ?, cargoActual = ?, centroEstudiosTrabajo = ?,
-        correo = ?, numerofijo = ?, numeromovil = ?,
-        facebook = ?, tiktok = ?, instagram = ?, otraRedSocial = ?,
-        seudonimo = ?, titulo_ensayo = ?, categoria = ?";
+                SET nombre = ?, apellidoP = ?, apellidoM = ?, fecha_nacimiento = ?, edad = ?, acepta_privacidad = ?, acepta_consentimiento = ?,
+                    calle = ?, numeroExterior = ?, numeroInterior = ?, colonia = ?, cp = ?, municipio = ?, localidad = ?, gradoEstudios = ?, ocupacionActual = ?,
+                    gradoActual = ?, estudiosActuales = ?, cargoActual = ?, centroEstudiosTrabajo = ?,
+                    correo = ?, numerofijo = ?, numeromovil = ?,
+                    facebook = ?, tiktok = ?, instagram = ?, otraRedSocial = ?,
+                    seudonimo = ?, titulo_ensayo = ?, categoria = ?,
+                    discapacidad = ?, discapacidad_cual = ?, tipo_discapacidad = ?,
+                    lengua_indigena = ?, lengua_cual = ?,
+                    auto_indigena = ?, comunidad_indigena = ?, comunidad_cual = ?,
+                    diversidad = ?, diversidad_cual = ?,
+                    medio_convocatoria = ?";
 
             $update_params = [
                 $nombre,
@@ -254,7 +277,18 @@ try {
                 $otraRedSocial,
                 $seudonimo,
                 $titulo_ensayo,
-                $categoria
+                $categoria,
+                $discapacidad,
+                $discapacidad_cual,
+                $tipo_discapacidad,
+                $lengua_indigena,
+                $lengua_cual,
+                $auto_indigena,
+                $comunidad_indigena,
+                $comunidad_cual,
+                $diversidad,
+                $diversidad_cual,
+                $medio_convocatoria
             ];
 
             if ($archivo_ensayo) {
@@ -262,7 +296,7 @@ try {
                 $update_params[] = $archivo_ensayo;
             }
 
-            $types = "ssssiiisssssssssssssssssssssss"; // Ajusta la cantidad de caracteres según los campos
+            $types = "ssssiiissssssssssssssssssssssssssssssssss"; // Ajusta la cantidad de caracteres según los campos
             if ($archivo_ensayo) {
                 $types .= "s";
             }
@@ -334,6 +368,17 @@ try {
                 'seudonimo',
                 'titulo_ensayo',
                 'categoria',
+                'discapacidad',
+                'discapacidad_cual',
+                'tipo_discapacidad',
+                'lengua_indigena',
+                'lengua_cual',
+                'auto_indigena',
+                'comunidad_indigena',
+                'comunidad_cual',
+                'diversidad',
+                'diversidad_cual',
+                'medio_convocatoria',
                 'archivo_ensayo',
                 // ...archivos y otros campos...
                 'credencial_votar',
@@ -381,6 +426,17 @@ try {
                 $seudonimo,
                 $titulo_ensayo,
                 $categoria,
+                $discapacidad,
+                $discapacidad_cual,
+                $tipo_discapacidad,
+                $lengua_indigena,
+                $lengua_cual,
+                $auto_indigena,
+                $comunidad_indigena,
+                $comunidad_cual,
+                $diversidad,
+                $diversidad_cual,
+                $medio_convocatoria,
                 $archivo_ensayo,
                 isset($uploaded_files['credencial_votar']) ? "" : null,
                 isset($uploaded_files['declaracion_originalidad']) ? "" : null,
@@ -395,7 +451,7 @@ try {
                 $acepta_consentimiento,
                 "" // Folio temporal
             ];
-            $types = "isssssisssssssssssssssssssssssssssssssiiiss";
+            $types = "isssssissssssssssssssssssssssssssssssssssssssssssiiiss";
 
             if (strlen($types) !== count($insert_params)) {
                 echo json_encode([

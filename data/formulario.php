@@ -1106,6 +1106,267 @@ if (empty($_SESSION["idusuario"])) {
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- Acciones afirmativas -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingAccionesAfirmativas">
+                                                <button class="accordion-button fw-bold fs-5 collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseAccionesAfirmativas"
+                                                    aria-expanded="false" aria-controls="collapseAccionesAfirmativas">
+                                                    Acciones afirmativas
+                                                </button>
+                                            </h2>
+                                            <div id="collapseAccionesAfirmativas" class="accordion-collapse collapse"
+                                                aria-labelledby="headingAccionesAfirmativas"
+                                                data-bs-parent="#accordionExample">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <!-- Persona con discapacidad -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Es una persona con
+                                                                discapacidad?
+                                                                <span class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="discapacidad" id="discapacidad_si" value="sí"
+                                                                    required disabled />
+                                                                <label class="form-check-label"
+                                                                    for="discapacidad_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="discapacidad" id="discapacidad_no" value="no"
+                                                                    required disabled />
+                                                                <label class="form-check-label"
+                                                                    for="discapacidad_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- ¿Cuál es la discapacidad? -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="discapacidad_cual">¿Cuál?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-wheelchair"></i>
+                                                                <input type="text" class="form-control"
+                                                                    id="discapacidad_cual" name="discapacidad_cual" required
+                                                                    disabled />
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Tipo de discapacidad -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="tipo_discapacidad">¿De qué tipo
+                                                                es?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-universal-access"></i>
+                                                                <select class="form-control" id="tipo_discapacidad"
+                                                                    name="tipo_discapacidad" required disabled>
+                                                                    <option value="" disabled selected>
+                                                                        Seleccione una opción
+                                                                    </option>
+                                                                    <option value="física o motora">
+                                                                        Física o motora
+                                                                    </option>
+                                                                    <option value="sensorial">Sensorial</option>
+                                                                    <option value="intelectual">
+                                                                        Intelectual
+                                                                    </option>
+                                                                    <option value="mental">Mental</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Habla lengua indígena -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Habla alguna lengua indígena?
+                                                                <span class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="lengua_indigena" id="lengua_si" value="sí"
+                                                                    required disabled />
+                                                                <label class="form-check-label" for="lengua_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="lengua_indigena" id="lengua_no" value="no"
+                                                                    required disabled />
+                                                                <label class="form-check-label" for="lengua_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- ¿Cuál es la lengua? -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="lengua_cual">¿Cuál?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-language"></i>
+                                                                <input type="text" class="form-control" id="lengua_cual"
+                                                                    name="lengua_cual" required disabled />
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-4">
+                                                        <!-- Auto adscripción indígena -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Se auto adscribe como
+                                                                indígena?
+                                                                <span class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="auto_indigena" id="auto_indigena_si" value="sí"
+                                                                    required disabled />
+                                                                <label class="form-check-label"
+                                                                    for="auto_indigena_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="auto_indigena" id="auto_indigena_no" value="no"
+                                                                    required disabled />
+                                                                <label class="form-check-label"
+                                                                    for="auto_indigena_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Comunidad indígena -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Forma parte de una comunidad
+                                                                indígena?
+                                                                <span class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="comunidad_indigena" id="comunidad_si" value="sí"
+                                                                    required disabled />
+                                                                <label class="form-check-label"
+                                                                    for="comunidad_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="comunidad_indigena" id="comunidad_no" value="no"
+                                                                    required disabled />
+                                                                <label class="form-check-label"
+                                                                    for="comunidad_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- ¿Cuál es la comunidad? -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="comunidad_cual">¿Cuál?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-users"></i>
+                                                                <input type="text" class="form-control" id="comunidad_cual"
+                                                                    name="comunidad_cual" required disabled />
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Diversidad sexual y de género -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label d-block">¿Se autoadscribe como persona
+                                                                de la diversidad
+                                                                sexual y de género?
+                                                                <span class="required">*</span></label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="diversidad" id="diversidad_si" value="sí" required
+                                                                    disabled />
+                                                                <label class="form-check-label"
+                                                                    for="diversidad_si">Sí</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="diversidad" id="diversidad_no" value="no" required
+                                                                    disabled />
+                                                                <label class="form-check-label"
+                                                                    for="diversidad_no">No</label>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- ¿Cuál es la diversidad? -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="diversidad_cual">¿Cuál?</label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-rainbow"></i>
+                                                                <input type="text" class="form-control" id="diversidad_cual"
+                                                                    name="diversidad_cual" required disabled />
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mb-3">
+                                                        <!-- Medio convocatoria -->
+                                                        <div class="col-md-4">
+                                                            <label class="form-label" for="medio_convocatoria">¿Cómo se
+                                                                enteró de la convocatoria?
+                                                                <span class="required">*</span></label>
+                                                            <div class="input-icon">
+                                                                <i class="fas fa-bullhorn"></i>
+                                                                <select class="form-control" id="medio_convocatoria"
+                                                                    name="medio_convocatoria" required disabled>
+                                                                    <option value="" disabled selected>
+                                                                        Seleccione una opción
+                                                                    </option>
+                                                                    <option value="pagina web">Página web</option>
+                                                                    <option value="rrss">RRSS</option>
+                                                                    <option value="cartel">Cartel</option>
+                                                                    <option value="platica informativa">
+                                                                        Plática informativa
+                                                                    </option>
+                                                                    <option value="publicacion">
+                                                                        Publicación
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="valid-feedback">Muy bien!</div>
+                                                            <div class="invalid-feedback">
+                                                                Este campo es obligatorio.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- Términos -->
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="headingTerminos">
@@ -1388,6 +1649,8 @@ if (empty($_SESSION["idusuario"])) {
                     $('.progress-bar').css('width', porcentaje + '%').attr('aria-valuenow', porcentaje).text(porcentaje + '%');
                     console.log(`Progreso: ${completados}/${camposAContar.length} (${porcentaje}%)`);
                 }
+
+                window.actualizarProgreso = actualizarProgreso;
 
                 requiredFields.forEach((field) => {
                     const eventType = field.tagName === "SELECT" ? "change" : "input";
@@ -1918,6 +2181,69 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#seudonimo').val(response.data.seudonimo);
                                 $('#titulo_ensayo').val(response.data.titulo_ensayo);
                                 $('#categoria').val(response.data.categoria);
+
+
+                                // === ACCIONES AFIRMATIVAS ===
+                                // Discapacidad
+                                if (response.data.discapacidad === "sí") {
+                                    $('#discapacidad_si').prop('checked', true);
+                                } else if (response.data.discapacidad === "no") {
+                                    $('#discapacidad_no').prop('checked', true);
+                                } else {
+                                    $('input[name="discapacidad"]').prop('checked', false);
+                                }
+                                $('#discapacidad_cual').val(response.data.discapacidad_cual || '');
+                                $('#tipo_discapacidad').val(response.data.tipo_discapacidad || '');
+
+                                // Lengua indígena
+                                if (response.data.lengua_indigena === "sí") {
+                                    $('#lengua_si').prop('checked', true);
+                                } else if (response.data.lengua_indigena === "no") {
+                                    $('#lengua_no').prop('checked', true);
+                                } else {
+                                    $('input[name="lengua_indigena"]').prop('checked', false);
+                                }
+                                $('#lengua_cual').val(response.data.lengua_cual || '');
+
+                                // Auto adscripción indígena
+                                if (response.data.auto_indigena === "sí") {
+                                    $('#auto_indigena_si').prop('checked', true);
+                                } else if (response.data.auto_indigena === "no") {
+                                    $('#auto_indigena_no').prop('checked', true);
+                                } else {
+                                    $('input[name="auto_indigena"]').prop('checked', false);
+                                }
+
+                                // Comunidad indígena
+                                if (response.data.comunidad_indigena === "sí") {
+                                    $('#comunidad_si').prop('checked', true);
+                                } else if (response.data.comunidad_indigena === "no") {
+                                    $('#comunidad_no').prop('checked', true);
+                                } else {
+                                    $('input[name="comunidad_indigena"]').prop('checked', false);
+                                }
+                                $('#comunidad_cual').val(response.data.comunidad_cual || '');
+
+                                // Diversidad sexual y de género
+                                if (response.data.diversidad === "sí") {
+                                    $('#diversidad_si').prop('checked', true);
+                                } else if (response.data.diversidad === "no") {
+                                    $('#diversidad_no').prop('checked', true);
+                                } else {
+                                    $('input[name="diversidad"]').prop('checked', false);
+                                }
+                                $('#diversidad_cual').val(response.data.diversidad_cual || '');
+
+                                // Medio de convocatoria
+                                $('#medio_convocatoria').val(response.data.medio_convocatoria || '');
+
+                                // Dispara los triggers para que se apliquen las reglas de habilitación/requerido
+                                $('input[name="discapacidad"]').trigger('change');
+                                $('input[name="lengua_indigena"]').trigger('change');
+                                $('input[name="auto_indigena"]').trigger('change');
+                                $('input[name="comunidad_indigena"]').trigger('change');
+                                $('input[name="diversidad"]').trigger('change');
+
 
                                 const $grupoArchivoEnsayo = $('#grupo_archivo_ensayo');
                                 const $fileSectionEnsayo = $grupoArchivoEnsayo.find('.input-file-section');
@@ -2469,6 +2795,69 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#titulo_ensayo').val(response.data.titulo_ensayo);
                                 $('#categoria').val(response.data.categoria);
 
+
+                                // === ACCIONES AFIRMATIVAS ===
+                                // Discapacidad
+                                if (response.data.discapacidad === "sí") {
+                                    $('#discapacidad_si').prop('checked', true);
+                                } else if (response.data.discapacidad === "no") {
+                                    $('#discapacidad_no').prop('checked', true);
+                                } else {
+                                    $('input[name="discapacidad"]').prop('checked', false);
+                                }
+                                $('#discapacidad_cual').val(response.data.discapacidad_cual || '');
+                                $('#tipo_discapacidad').val(response.data.tipo_discapacidad || '');
+
+                                // Lengua indígena
+                                if (response.data.lengua_indigena === "sí") {
+                                    $('#lengua_si').prop('checked', true);
+                                } else if (response.data.lengua_indigena === "no") {
+                                    $('#lengua_no').prop('checked', true);
+                                } else {
+                                    $('input[name="lengua_indigena"]').prop('checked', false);
+                                }
+                                $('#lengua_cual').val(response.data.lengua_cual || '');
+
+                                // Auto adscripción indígena
+                                if (response.data.auto_indigena === "sí") {
+                                    $('#auto_indigena_si').prop('checked', true);
+                                } else if (response.data.auto_indigena === "no") {
+                                    $('#auto_indigena_no').prop('checked', true);
+                                } else {
+                                    $('input[name="auto_indigena"]').prop('checked', false);
+                                }
+
+                                // Comunidad indígena
+                                if (response.data.comunidad_indigena === "sí") {
+                                    $('#comunidad_si').prop('checked', true);
+                                } else if (response.data.comunidad_indigena === "no") {
+                                    $('#comunidad_no').prop('checked', true);
+                                } else {
+                                    $('input[name="comunidad_indigena"]').prop('checked', false);
+                                }
+                                $('#comunidad_cual').val(response.data.comunidad_cual || '');
+
+                                // Diversidad sexual y de género
+                                if (response.data.diversidad === "sí") {
+                                    $('#diversidad_si').prop('checked', true);
+                                } else if (response.data.diversidad === "no") {
+                                    $('#diversidad_no').prop('checked', true);
+                                } else {
+                                    $('input[name="diversidad"]').prop('checked', false);
+                                }
+                                $('#diversidad_cual').val(response.data.diversidad_cual || '');
+
+                                // Medio de convocatoria
+                                $('#medio_convocatoria').val(response.data.medio_convocatoria || '');
+
+                                // Dispara los triggers para que se apliquen las reglas de habilitación/requerido
+                                $('input[name="discapacidad"]').trigger('change');
+                                $('input[name="lengua_indigena"]').trigger('change');
+                                $('input[name="auto_indigena"]').trigger('change');
+                                $('input[name="comunidad_indigena"]').trigger('change');
+                                $('input[name="diversidad"]').trigger('change');
+
+
                                 const $grupoArchivoEnsayo = $('#grupo_archivo_ensayo');
                                 const $fileSectionEnsayo = $grupoArchivoEnsayo.find('.input-file-section');
                                 const $archivoCargadoSectionEnsayo = $grupoArchivoEnsayo.find('.archivo-cargado-section');
@@ -2775,6 +3164,65 @@ if (empty($_SESSION["idusuario"])) {
 
             $(document).ready(function () {
                 soloNumerosInput('#edad, #numeroExterior, #numeroInterior, #cp, #numerofijo, #confirmarnumerofijo, #numeromovil, #confirmarnumeromovil');
+            });
+        </script>
+
+        <script>
+            // ...coloca este bloque después de cargar jQuery y antes de cualquier integración de progress bar...
+
+            $(document).ready(function () {
+                // --- 1. Discapacidad ---
+                $('input[name="discapacidad"]').on('change', function () {
+                    if ($('#discapacidad_si').is(':checked')) {
+                        $('#discapacidad_cual').prop('disabled', false).prop('required', true);
+                        $('#tipo_discapacidad').prop('disabled', false).prop('required', true);
+                    } else {
+                        $('#discapacidad_cual').val('').prop('disabled', true).prop('required', false)
+                            .removeClass('is-valid is-invalid');
+                        $('#tipo_discapacidad').val('').prop('disabled', true).prop('required', false)
+                            .removeClass('is-valid is-invalid');
+                    }
+                    actualizarProgreso && actualizarProgreso();
+                });
+
+                // --- 2. Lengua indígena ---
+                $('input[name="lengua_indigena"]').on('change', function () {
+                    if ($('#lengua_si').is(':checked')) {
+                        $('#lengua_cual').prop('disabled', false).prop('required', true);
+                    } else {
+                        $('#lengua_cual').val('').prop('disabled', true).prop('required', false)
+                            .removeClass('is-valid is-invalid');
+                    }
+                    actualizarProgreso && actualizarProgreso();
+                });
+
+                // --- 3. Comunidad indígena ---
+                $('input[name="comunidad_indigena"]').on('change', function () {
+                    if ($('#comunidad_si').is(':checked')) {
+                        $('#comunidad_cual').prop('disabled', false).prop('required', true);
+                    } else {
+                        $('#comunidad_cual').val('').prop('disabled', true).prop('required', false)
+                            .removeClass('is-valid is-invalid');
+                    }
+                    actualizarProgreso && actualizarProgreso();
+                });
+
+                // --- 4. Diversidad sexual y de género ---
+                $('input[name="diversidad"]').on('change', function () {
+                    if ($('#diversidad_si').is(':checked')) {
+                        $('#diversidad_cual').prop('disabled', false).prop('required', true);
+                    } else {
+                        $('#diversidad_cual').val('').prop('disabled', true).prop('required', false)
+                            .removeClass('is-valid is-invalid');
+                    }
+                    actualizarProgreso && actualizarProgreso();
+                });
+
+                // Al cargar la página, deja los campos en el estado correcto según lo seleccionado
+                $('input[name="discapacidad"]').trigger('change');
+                $('input[name="lengua_indigena"]').trigger('change');
+                $('input[name="comunidad_indigena"]').trigger('change');
+                $('input[name="diversidad"]').trigger('change');
             });
         </script>
 

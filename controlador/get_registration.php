@@ -22,7 +22,12 @@ $sql = "SELECT curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acept
                seudonimo, titulo_ensayo, categoria, archivo_ensayo,
                credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos,
                identificacion_fotografia, carta_autorizacion, declaracion_originalidad_menores,
-               comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor
+               comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor,
+               discapacidad, discapacidad_cual, tipo_discapacidad,
+               lengua_indigena, lengua_cual,
+               auto_indigena, comunidad_indigena, comunidad_cual,
+               diversidad, diversidad_cual,
+               medio_convocatoria
         FROM registration WHERE usuario_id = ?";
 $stmt = $db_connection->prepare($sql);
 
