@@ -1594,7 +1594,14 @@ if (empty($_SESSION["idusuario"])) {
                         '#archivo_ensayo',
                         '#confirmarnumeromovil',
                         '#terminos_privacidad',
-                        '#terminos_consentimiento'
+                        '#terminos_consentimiento',
+
+                        'input[name="discapacidad"]',
+                        'input[name="lengua_indigena"]',
+                        'input[name="auto_indigena"]',
+                        'input[name="comunidad_indigena"]',
+                        'input[name="diversidad"]',
+                        '#medio_convocatoria'
                     ];
 
                     // Detectar qué sección está visible
@@ -1618,30 +1625,50 @@ if (empty($_SESSION["idusuario"])) {
 
                     const camposAContar = generales.concat(visibles);
                     let completados = 0;
-
+                    let radiosContados = {};
                     console.log('--- Campos que se están contabilizando en la progress bar ---');
+
                     camposAContar.forEach(selector => {
-                        const $field = $(selector);
-                        // Para #curp, cuenta aunque esté deshabilitado
-                        if (selector === '#curp') {
-                            let estado = ($field.val() && $field.val().trim() !== "") ? 'completado' : 'pendiente';
-                            if ($field.val() && $field.val().trim() !== "") completados++;
-                            console.log(`${selector}: ${estado}`);
-                        } else if ($field.length && $field.closest('.accordion-item').is(':visible')) {
-                            let estado = '';
-                            if ($field.attr('type') === 'checkbox') {
-                                estado = $field.is(':checked') ? 'completado' : 'pendiente';
-                                if ($field.is(':checked')) completados++;
-                            } else if ($field.attr('type') === 'file') {
-                                const fieldId = $field.attr('id');
-                                const tieneArchivo = ($field.val() && $field.val().trim() !== "") || (archivosCargados[fieldId] && archivosCargados[fieldId].trim() !== "");
-                                estado = tieneArchivo ? 'completado' : 'pendiente';
-                                if (tieneArchivo) completados++;
-                            } else {
-                                estado = ($field.val() && $field.val().trim() !== "") ? 'completado' : 'pendiente';
-                                if ($field.val() && $field.val().trim() !== "") completados++;
+                        // --- INICIO BLOQUE MEJORADO PARA RADIO BUTTON ---
+                        if (selector.startsWith('input[name=')) {
+                            const nameMatch = selector.match(/name="([^"]+)"/);
+                            if (nameMatch) {
+                                const name = nameMatch[1];
+                                if (radiosContados[name]) return;
+                                radiosContados[name] = true;
+                                // Selecciona todos los radios del grupo, sin importar si están habilitados o visibles
+                                const $radios = $(`input[name="${name}"]`);
+                                let estado = $radios.is(':checked') ? 'completado' : 'pendiente';
+                                if ($radios.is(':checked')) {
+                                    completados++;
+                                }
+                                console.log(`input[name="${name}"]: ${estado}`);
                             }
-                            console.log(`${selector}: ${estado}`);
+                        }
+                        // --- FIN BLOQUE PARA RADIO BUTTON ---
+                        else {
+                            const $field = $(selector);
+                            // Para #curp, cuenta aunque esté deshabilitado
+                            if (selector === '#curp') {
+                                let estado = ($field.val() && $field.val().trim() !== "") ? 'completado' : 'pendiente';
+                                if ($field.val() && $field.val().trim() !== "") completados++;
+                                console.log(`${selector}: ${estado}`);
+                            } else if ($field.length && $field.closest('.accordion-item').is(':visible')) {
+                                let estado = '';
+                                if ($field.attr('type') === 'checkbox') {
+                                    estado = $field.is(':checked') ? 'completado' : 'pendiente';
+                                    if ($field.is(':checked')) completados++;
+                                } else if ($field.attr('type') === 'file') {
+                                    const fieldId = $field.attr('id');
+                                    const tieneArchivo = ($field.val() && $field.val().trim() !== "") || (archivosCargados[fieldId] && archivosCargados[fieldId].trim() !== "");
+                                    estado = tieneArchivo ? 'completado' : 'pendiente';
+                                    if (tieneArchivo) completados++;
+                                } else {
+                                    estado = ($field.val() && $field.val().trim() !== "") ? 'completado' : 'pendiente';
+                                    if ($field.val() && $field.val().trim() !== "") completados++;
+                                }
+                                console.log(`${selector}: ${estado}`);
+                            }
                         }
                     });
 
@@ -2240,9 +2267,15 @@ if (empty($_SESSION["idusuario"])) {
                                 // Dispara los triggers para que se apliquen las reglas de habilitación/requerido
                                 $('input[name="discapacidad"]').trigger('change');
                                 $('input[name="lengua_indigena"]').trigger('change');
+                                $('input[name="auto_indigena"]').trigger('change'); // <-- FALTABA ESTE
                                 $('input[name="auto_indigena"]').trigger('change');
                                 $('input[name="comunidad_indigena"]').trigger('change');
                                 $('input[name="diversidad"]').trigger('change');
+
+                                // Llama a la barra de progreso después de los triggers
+                                if (typeof actualizarProgreso === 'function') {
+                                    actualizarProgreso();
+                                }
 
 
                                 const $grupoArchivoEnsayo = $('#grupo_archivo_ensayo');
@@ -2853,9 +2886,15 @@ if (empty($_SESSION["idusuario"])) {
                                 // Dispara los triggers para que se apliquen las reglas de habilitación/requerido
                                 $('input[name="discapacidad"]').trigger('change');
                                 $('input[name="lengua_indigena"]').trigger('change');
+                                $('input[name="auto_indigena"]').trigger('change'); // <-- FALTABA ESTE
                                 $('input[name="auto_indigena"]').trigger('change');
                                 $('input[name="comunidad_indigena"]').trigger('change');
                                 $('input[name="diversidad"]').trigger('change');
+
+                                // Llama a la barra de progreso después de los triggers
+                                if (typeof actualizarProgreso === 'function') {
+                                    actualizarProgreso();
+                                }
 
 
                                 const $grupoArchivoEnsayo = $('#grupo_archivo_ensayo');
@@ -3221,8 +3260,14 @@ if (empty($_SESSION["idusuario"])) {
                 // Al cargar la página, deja los campos en el estado correcto según lo seleccionado
                 $('input[name="discapacidad"]').trigger('change');
                 $('input[name="lengua_indigena"]').trigger('change');
+                $('input[name="auto_indigena"]').trigger('change'); // <-- FALTABA ESTE
                 $('input[name="comunidad_indigena"]').trigger('change');
                 $('input[name="diversidad"]').trigger('change');
+
+                // Llama a la barra de progreso después de los triggers
+                if (typeof actualizarProgreso === 'function') {
+                    actualizarProgreso();
+                }
             });
         </script>
 
