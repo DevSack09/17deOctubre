@@ -2154,6 +2154,30 @@ if (empty($_SESSION["idusuario"])) {
                         }
                     });
 
+                    $form.find('input[type="radio"][required]').each(function () {
+                        const name = $(this).attr('name');
+                        const $group = $form.find(`input[name="${name}"]`);
+                        const $container = $group.closest('.col-md-4, .form-check, .form-group');
+                        const $invalidFeedback = $container.find('.invalid-feedback');
+                        const $validFeedback = $container.find('.valid-feedback');
+
+                        // Solo validar una vez por grupo
+                        if ($group.data('validated')) return;
+                        $group.data('validated', true);
+
+                        if ($group.is(':checked')) {
+                            $group.removeClass('is-invalid').addClass('is-valid');
+                            $invalidFeedback.removeClass('d-block').addClass('d-none');
+                            $validFeedback.removeClass('d-none').addClass('d-block');
+                        } else {
+                            $group.removeClass('is-valid').addClass('is-invalid');
+                            $invalidFeedback.removeClass('d-none').addClass('d-block'); // <-- Esto muestra el texto
+                            $validFeedback.removeClass('d-block').addClass('d-none');
+                            isValid = false;
+                        }
+                    });
+                    $form.find('input[type="radio"][required]').removeData('validated');
+
                     return isValid;
                 }
 
