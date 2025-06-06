@@ -99,7 +99,7 @@ if (empty($_SESSION["idusuario"])) {
                                                 data-validacion-manual="true" onblur="validarCurp()">
                                         </div>
                                         <a href="https://www.gob.mx/curp/" target="_blank">Si no conoces tu CURP, haz clic
-                                            aquí para obtenerla</a>
+                                            aquí.</a>
                                         <div id="curp-feedback" class="text-danger mt-2" style="display: none;">
                                             <!-- Mensaje de error se mostrará aquí -->
                                         </div>
@@ -702,8 +702,8 @@ if (empty($_SESSION["idusuario"])) {
                                                                 class="input-group file-input-group mb-2 input-file-section">
                                                                 <input class="form-control" type="file" id="archivo_ensayo"
                                                                     name="archivo_ensayo" accept=".pdf" required disabled>
-                                                                <div class="invalid-feedback d-none">Debes subir el PDF de
-                                                                    tu ensayo.</div>
+                                                                <div class="invalid-feedback d-none">Por favor, cargue su
+                                                                    ensayo.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
@@ -711,7 +711,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong>
-                                                                    Ya cargaste tu ensayo.
+                                                                    Ya cargó tu ensayo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
                                                                     <a href="#" target="_blank"
@@ -755,8 +755,8 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <input class="form-control" type="file"
                                                                     id="credencial_votar" name="credencial_votar"
                                                                     accept=".pdf" required>
-                                                                <div class="invalid-feedback d-none">Debes subir el PDF de
-                                                                    tu credencial para votar.</div>
+                                                                <div class="invalid-feedback d-none">Debe subir el PDF de
+                                                                    su credencial para votar.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
@@ -764,7 +764,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong>
-                                                                    Ya cargaste un archivo para este campo.
+                                                                    Ya cargó un archivo para este campo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
                                                                     <a href="#" target="_blank"
@@ -789,8 +789,8 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <input class="form-control" type="file"
                                                                     id="declaracion_originalidad"
                                                                     name="declaracion_originalidad" accept=".pdf" required>
-                                                                <div class="invalid-feedback d-none">Debes subir el PDF de
-                                                                    tu declaración de originalidad.</div>
+                                                                <div class="invalid-feedback d-none">Debe subir el PDF de
+                                                                    su declaración de originalidad.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
                                                             <div class="archivo-cargado-section" style="display:none;">
@@ -798,7 +798,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong>
-                                                                    Ya cargaste un archivo para este campo.
+                                                                    Ya cargó un archivo para este campo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
                                                                     <a href="#" target="_blank"
@@ -825,7 +825,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                     id="consentimiento_expreso_adultos"
                                                                     name="consentimiento_expreso_adultos" accept=".pdf"
                                                                     required>
-                                                                <div class="invalid-feedback d-none">Debes subir el PDF de
+                                                                <div class="invalid-feedback d-none">Debe subir el PDF de
                                                                     consentimiento expreso.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
@@ -834,7 +834,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
                                                                     <strong>Éxito:</strong>
-                                                                    Ya cargaste un archivo para este campo.
+                                                                    Ya cargó un archivo para este campo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
                                                                     <a href="#" target="_blank"
@@ -884,7 +884,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <input class="form-control" type="file"
                                                                     id="identificacion_fotografia"
                                                                     name="identificacion_fotografia" accept=".pdf" required>
-                                                                <div class="invalid-feedback d-none">Debes subir ula
+                                                                <div class="invalid-feedback d-none">Debe subir una
                                                                     identificación con fotografía en pdf.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
@@ -892,7 +892,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
-                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    <strong>Éxito:</strong> Ya cargó un archivo para este
                                                                     campo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
@@ -920,7 +920,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <input class="form-control" type="file"
                                                                     id="carta_autorizacion" name="carta_autorizacion"
                                                                     accept=".pdf" required>
-                                                                <div class="invalid-feedback d-none">Debes subir la carta de
+                                                                <div class="invalid-feedback d-none">Debe subir la carta de
                                                                     autorización en PDF.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
@@ -928,7 +928,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
-                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    <strong>Éxito:</strong> Ya cargó un archivo para este
                                                                     campo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
@@ -961,7 +961,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                     id="declaracion_originalidad_menores"
                                                                     name="declaracion_originalidad_menores" accept=".pdf"
                                                                     required>
-                                                                <div class="invalid-feedback d-none">Debes subir este
+                                                                <div class="invalid-feedback d-none">Debe subir este
                                                                     documento en PDF.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
@@ -969,7 +969,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
-                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    <strong>Éxito:</strong> Ya cargó un archivo para este
                                                                     campo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
@@ -998,7 +998,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                     id="comprobante_domicilio_tutor"
                                                                     name="comprobante_domicilio_tutor" accept=".pdf"
                                                                     required>
-                                                                <div class="invalid-feedback d-none">Debes subir un
+                                                                <div class="invalid-feedback d-none">Debe subir un
                                                                     comprobante en PDF.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
@@ -1006,7 +1006,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
-                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    <strong>Éxito:</strong> Ya cargó un archivo para este
                                                                     campo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
@@ -1038,7 +1038,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                     id="consentimiento_expreso_menores"
                                                                     name="consentimiento_expreso_menores" accept=".pdf"
                                                                     required>
-                                                                <div class="invalid-feedback d-none">Debes subir este
+                                                                <div class="invalid-feedback d-none">Debe subir este
                                                                     documento en PDF.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
@@ -1046,7 +1046,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
-                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    <strong>Éxito:</strong> Ya cargó un archivo para este
                                                                     campo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
@@ -1072,7 +1072,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 class="input-group file-input-group mb-2 input-file-section">
                                                                 <input class="form-control" type="file" id="ine_tutor"
                                                                     name="ine_tutor" accept=".pdf" required>
-                                                                <div class="invalid-feedback d-none">Debes subir una
+                                                                <div class="invalid-feedback d-none">Debe subir una
                                                                     identificación en PDF.</div>
                                                                 <div class="valid-feedback d-none">Archivo listo.</div>
                                                             </div>
@@ -1080,7 +1080,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <div class="alert alert-success text-center"
                                                                     style="padding: 0.25rem 1rem; font-size: 0.9rem;">
                                                                     <i class="fas fa-check-circle"></i>
-                                                                    <strong>Éxito:</strong> Ya cargaste un archivo para este
+                                                                    <strong>Éxito:</strong> Ya cargó un archivo para este
                                                                     campo.
                                                                 </div>
                                                                 <div class="mb-2 d-flex justify-content-center">
@@ -3292,6 +3292,56 @@ if (empty($_SESSION["idusuario"])) {
                 if (typeof actualizarProgreso === 'function') {
                     actualizarProgreso();
                 }
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const correoInput = document.getElementById('correo');
+                let alertaActiva = null;
+
+                // Función mejorada para validar Gmail
+                function esGmailValido(correo) {
+                    if (!correo) return false;
+
+                    // Validación estricta de Gmail
+                    const regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+                    return regex.test(correo);
+                }
+
+                // Función para mostrar/ocultar alerta
+                function manejarAlerta(correo) {
+                    const esValido = esGmailValido(correo);
+
+                    if (!esValido && correo) { // Solo muestra alerta si hay texto pero no es válido
+                        if (!alertaActiva) {
+                            alertaActiva = Swal.fire({
+                                icon: 'error',
+                                title: 'Correo no válido',
+                                html: 'Solo se permiten cuentas de <strong>Gmail</strong>.<br>Ejemplo: <strong>usuario@gmail.com</strong>',
+                                confirmButtonText: 'Entendido',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            }).then(() => {
+                                alertaActiva = null;
+                                correoInput.focus();
+                            });
+                        }
+                    } else if (alertaActiva) {
+                        // Cierra la alerta si existe y el correo ahora es válido
+                        Swal.close();
+                        alertaActiva = null;
+                    }
+                }
+
+                // Validación cuando se pierde el foco
+                correoInput.addEventListener('blur', function () {
+                    manejarAlerta(correoInput.value.trim());
+                });
+
+                // Validación mientras se escribe (para corrección inmediata)
+                correoInput.addEventListener('input', function () {
+                    manejarAlerta(correoInput.value.trim());
+                });
             });
         </script>
 
