@@ -59,6 +59,7 @@ if ($stmt_check) {
                 $template = str_replace('{folio}', $folio, $template);
                 $template = str_replace('{categoria}', $categoria, $template);
                 $template = str_replace('{fecha_registro}', $fecha_registro, $template);
+                $template = str_replace('{usuario_id}', $usuario_id, $template);
 
                 $mail = new PHPMailer(true);
                 $mail->isSMTP();
