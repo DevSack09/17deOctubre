@@ -24,7 +24,7 @@ if ($db_connection->connect_error) {
     exit;
 }
 
-$sql_check = "SELECT id, folio, fecha_registro FROM registration WHERE curp = ? AND usuario_id = ?";
+$sql_check = "SELECT id, folio, categoria, fecha_registro FROM registration WHERE curp = ? AND usuario_id = ?";
 $stmt_check = $db_connection->prepare($sql_check);
 
 if ($stmt_check) {
@@ -33,7 +33,7 @@ if ($stmt_check) {
     $stmt_check->store_result();
 
     if ($stmt_check->num_rows > 0) {
-        $stmt_check->bind_result($id, $folio, $fecha_registro);
+        $stmt_check->bind_result($id, $folio, $categoria, $fecha_registro);
         $stmt_check->fetch();
 
         // Actualizar el estado del formulario a "finalizado"
@@ -57,6 +57,7 @@ if ($stmt_check) {
                 $template = file_get_contents('../template/succes.html');
                 $template = str_replace('{nombre}', $nombre, $template);
                 $template = str_replace('{folio}', $folio, $template);
+                $template = str_replace('{categoria}', $categoria, $template);
                 $template = str_replace('{fecha_registro}', $fecha_registro, $template);
 
                 $mail = new PHPMailer(true);
