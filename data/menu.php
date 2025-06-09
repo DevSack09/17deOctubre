@@ -54,12 +54,23 @@ function moduloHabilitado($modulo, $permisos)
                 </a>
             </li>
         <?php endif; ?>
+        <?php if (moduloHabilitado('descarga', $permisos_usuario)): ?>
+            <li class="sidebar-list-item">
+                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'descarga.php' ? 'active' : ''; ?>"
+                    href="descarga.php">
+                    <svg class="svg-icon svg-icon-md me-3">
+                        <use xlink:href="icons/orion-svg-sprite.svg#attachment-1"> </use>
+                    </svg>
+                    <span class="sidebar-link-title">Descarga de documentos</span>
+                </a>
+            </li>
+        <?php endif; ?>
         <?php if (moduloHabilitado('formulario', $permisos_usuario)): ?>
             <li class="sidebar-list-item">
                 <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'formulario.php' ? 'active' : ''; ?>"
                     href="formulario.php">
                     <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="icons/orion-svg-sprite.svg#portfolio-grid-1"> </use>
+                        <use xlink:href="icons/orion-svg-sprite.svg#survey-1"> </use>
                     </svg>
                     <span class="sidebar-link-title">Formulario</span>
                 </a>
@@ -73,17 +84,6 @@ function moduloHabilitado($modulo, $permisos)
                         <use xlink:href="icons/orion-svg-sprite.svg#survey-1"> </use>
                     </svg>
                     <span class="sidebar-link-title">Reportes</span>
-                </a>
-            </li>
-        <?php endif; ?>
-        <?php if (moduloHabilitado('descarga', $permisos_usuario)): ?>
-            <li class="sidebar-list-item">
-                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'descarga.php' ? 'active' : ''; ?>"
-                    href="descarga.php">
-                    <svg class="svg-icon svg-icon-md me-3">
-                        <use xlink:href="icons/orion-svg-sprite.svg#download-1"> </use>
-                    </svg>
-                    <span class="sidebar-link-title">Descarga de documentos</span>
                 </a>
             </li>
         <?php endif; ?>
