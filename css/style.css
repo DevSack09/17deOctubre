@@ -498,34 +498,76 @@ body.dark-theme .link-forgot-password:hover {
 }
 /* ************************************************************************************** */
 /* Switch para cambiar entre dark y light */
+
 .theme-switch {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
   top: 10px;
   right: 10px;
   z-index: 1000;
-  display: flex;
-  align-items: center;
+  height: 30px;
+  padding: 0 8px;
+  background: #666666;
+  border-radius: 15px;
   cursor: pointer;
+  transition: background 0.3s ease;
+  margin: 0 auto;
 }
 
+/* Fondo en modo oscuro */
+.dark-theme .theme-switch {
+  background: #2c3e50;
+}
+
+/* Estilos para ambos iconos */
 .theme-switch i {
-  font-size: 24px;
-  margin-left: 5px;
-  transition: transform 0.3s ease, color 0.3s ease;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
-.theme-switch i.light-icon {
+/* Icono del sol */
+.theme-switch .light-icon {
   color: #f39c12;
 }
 
-.theme-switch i.dark-icon {
+/* Icono de la luna */
+.theme-switch .dark-icon {
   color: #2c3e50;
 }
 
-.theme-switch i.animate {
-  transform: scale(1.2) rotate(360deg);
+/* Cambio de colores en modo oscuro */
+.dark-theme .theme-switch .light-icon {
+  color: #f1c40f;
 }
 
+.dark-theme .theme-switch .dark-icon {
+  color: #ecf0f1;
+}
+
+/* Indicador de estado (opcional) */
+.theme-switch::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dark-theme .theme-switch::before {
+  transform: translateX(30px);
+  background: #34495e;
+}
 /* ************************************************************************************** */
 .google-login-button {
   display: inline-flex;

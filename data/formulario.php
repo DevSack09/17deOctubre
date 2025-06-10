@@ -36,6 +36,10 @@ if (empty($_SESSION["idusuario"])) {
         <link rel="shortcut icon" href="../img/IEEH.png">
 
         <style>
+            .navbar .nav-item.dropdown.ms-auto {
+                margin-right: 20px;
+                /* Ajusta este valor según necesites */
+            }
         </style>
     </head>
 
@@ -59,6 +63,12 @@ if (empty($_SESSION["idusuario"])) {
                             </div>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../controlador/controlador_cerrar.php">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="theme-switch" id="themeSwitch">
+                            <i class="fas fa-sun light-icon" id="lightIcon"></i>
+                            <i class="fas fa-moon dark-icon" id="darkIcon" style="display: none;"></i>
                         </div>
                     </li>
                 </ul>
@@ -1462,6 +1472,7 @@ if (empty($_SESSION["idusuario"])) {
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Main Theme JS File-->
         <script src="js/theme.js"></script>
+        <script src="../js/darkLight.js"></script>
         <!-- <script src="js/forms-validation.js"></script> -->
         <!-- Prism for syntax highlighting-->
         <script src="vendor/prismjs/prism.js"></script>

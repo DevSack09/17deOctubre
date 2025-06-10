@@ -75,34 +75,73 @@
 
 /* ************************************************************************************** */
 /* Switch para cambiar entre dark y light */
+/* Theme Switch simplificado */
 .theme-switch {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 1000;
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 60px;
+  height: 30px;
+  padding: 0 8px;
+  background: #666666;
+  border-radius: 15px;
   cursor: pointer;
+  transition: background 0.3s ease;
+  margin: 0 auto;
 }
 
+/* Fondo en modo oscuro */
+.dark-theme .theme-switch {
+  background: #2c3e50;
+}
+
+/* Estilos para ambos iconos */
 .theme-switch i {
-  font-size: 24px;
-  margin-left: 5px;
-  transition: transform 0.3s ease, color 0.3s ease;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
-.theme-switch i.light-icon {
+/* Icono del sol */
+.theme-switch .light-icon {
   color: #f39c12;
 }
 
-.theme-switch i.dark-icon {
+/* Icono de la luna */
+.theme-switch .dark-icon {
   color: #2c3e50;
 }
 
-.theme-switch i.animate {
-  transform: scale(1.2) rotate(360deg);
+/* Cambio de colores en modo oscuro */
+.dark-theme .theme-switch .light-icon {
+  color: #f1c40f;
 }
 
+.dark-theme .theme-switch .dark-icon {
+  color: #ecf0f1;
+}
+
+/* Indicador de estado (opcional) */
+.theme-switch::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dark-theme .theme-switch::before {
+  transform: translateX(30px);
+  background: #34495e;
+}
 /* ************************************************************************************** */
 @keyframes fadeIn {
   from {
@@ -141,4 +180,246 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+/* ===================== TEMA OSCURO ===================== */
+
+/* Fondo y texto general */
+body.dark-theme {
+  background-color: #1e1e2f !important;
+  color: #f5f5fa !important;
+}
+
+/* Contenedores principales */
+body.dark-theme .container,
+body.dark-theme .container-fluid,
+body.dark-theme .page-holder,
+body.dark-theme .modal-content {
+  background-color: #29293b !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
+
+/* Tarjetas */
+body.dark-theme .card-header,
+body.dark-theme .accordion,
+body.dark-theme .accordion-header,
+body.dark-theme .accordion-item,
+body.dark-theme .card-body {
+  background-color: #1e1e2f !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
+
+body.dark-theme .accordion-button {
+  background-color: #2c2c3a !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
+
+body.dark-theme .swal2-popup,
+body.dark-theme .swal2-modal,
+body.dark-theme .swal2-icon-info,
+body.dark-theme .swal2-show {
+  background-color: #4c4c50 !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
+
+/* Títulos y subtítulos */
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6,
+body.dark-theme .title,
+body.dark-theme .section-title,
+body.dark-theme .card-title,
+body.dark-theme .form-label,
+body.dark-theme .label,
+body.dark-theme .sidebar-link,
+body.dark-theme .card-heading {
+  color: #f5f5fa !important;
+}
+
+/* Navbar y menú lateral */
+body.dark-theme .navbar,
+body.dark-theme .navbar-brand,
+body.dark-theme .sidebar,
+body.dark-theme .dropdown-menu {
+  background-color: #1e1e2f !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
+
+body.dark-theme .navbar .nav-link,
+body.dark-theme .navbar .navbar-brand,
+body.dark-theme .navbar .dropdown-header,
+body.dark-theme .navbar .dropdown-item {
+  color: #f5f5fa !important;
+}
+
+body.dark-theme .navbar .dropdown-menu {
+  background-color: #23233a !important;
+  color: #f5f5fa !important;
+}
+
+/* Footer */
+body.dark-theme .footer {
+  background-color: #23233a !important;
+  color: #bdbdd7 !important;
+}
+
+/* Botones */
+body.dark-theme .btn-primary {
+  background-color: #9a6ee2 !important;
+  border-color: #9a6ee2 !important;
+  color: #fff !important;
+}
+body.dark-theme .btn-primary:hover,
+body.dark-theme .btn-primary:focus {
+  background-color: #835ec0 !important;
+  border-color: #7b58b5 !important;
+}
+
+body.dark-theme .btn-outline-primary {
+  color: #9a6ee2 !important;
+  border-color: #9a6ee2 !important;
+  background: transparent !important;
+}
+body.dark-theme .btn-outline-primary:hover {
+  background-color: #9a6ee2 !important;
+  color: #fff !important;
+}
+
+body.dark-theme .btn-outline-secondary {
+  color: #bdbdd7 !important;
+  border-color: #bdbdd7 !important;
+  background: transparent !important;
+}
+body.dark-theme .btn-outline-secondary:hover {
+  background-color: #bdbdd7 !important;
+  color: #23233a !important;
+}
+
+body.dark-theme .btn:hover {
+  background-color: #666 !important;
+}
+
+/* Inputs y selects */
+body.dark-theme .form-control,
+body.dark-theme .form-select,
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+  background-color: #2d2d3f !important;
+  color: #ffffff !important;
+  border-color: #555 !important;
+}
+
+body.dark-theme .input-icon i {
+  color: #ffffff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-theme .form-control:focus,
+body.dark-theme .form-select:focus {
+  border-color: #9a6ee2 !important;
+  box-shadow: 0 0 0 0.2rem rgba(154, 110, 226, 0.15) !important;
+}
+
+/* Placeholders */
+body.dark-theme ::placeholder {
+  color: #bdbdd7 !important;
+  opacity: 1;
+}
+
+/* Tablas */
+body.dark-theme table,
+body.dark-theme .table {
+  background-color: #23233a !important;
+  color: #f5f5fa !important;
+}
+body.dark-theme .table th,
+body.dark-theme .table td {
+  border-color: #2d2d44 !important;
+}
+body.dark-theme .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #29294a !important;
+}
+
+/* Alertas */
+body.dark-theme .alert {
+  background-color: #2d2d44 !important;
+  color: #f5f5fa !important;
+  border-color: #9a6ee2 !important;
+}
+
+/* Iconos del theme switch */
+body.dark-theme .theme-switch i.light-icon {
+  color: #f5f5fa !important;
+}
+body.dark-theme .theme-switch i.dark-icon {
+  color: #9a6ee2 !important;
+}
+
+/* Animación de flecha de descarga */
+body.dark-theme .arrow-circle-glow {
+  background: radial-gradient(circle, #9a6ee2 60%, #23233a 100%) !important;
+  box-shadow: 0 0 40px 10px #9a6ee2, 0 4px 12px rgba(154, 110, 226, 0.3) !important;
+}
+body.dark-theme .arrow-circle-glow i {
+  color: #fff !important;
+  text-shadow: 0 0 12px #9a6ee2, 0 0 20px #9a6ee2 !important;
+}
+
+/* Menú lateral */
+body.dark-theme .sidebar,
+body.dark-theme .sidebar-menu {
+  background-color: #1e1e2f !important;
+  color: #f5f5fa !important;
+}
+
+/* Select2 (si usas) */
+body.dark-theme .select2-container--default .select2-selection--single {
+  background-color: #23233a !important;
+  color: #f5f5fa !important;
+  border-color: #3a3a5a !important;
+}
+body.dark-theme .select2-container--default .select2-results__option {
+  background-color: #23233a !important;
+  color: #f5f5fa !important;
+}
+
+/* Scrollbar personalizado para dark */
+body.dark-theme ::-webkit-scrollbar {
+  background: #23233a;
+}
+body.dark-theme ::-webkit-scrollbar-thumb {
+  background: #9a6ee2;
+  border-radius: 8px;
+}
+
+/* Links */
+body.dark-theme a {
+  color: #bdbdd7;
+}
+body.dark-theme a:hover {
+  color: #9a6ee2;
+}
+
+/* Otros elementos útiles */
+body.dark-theme .dropdown-menu {
+  background-color: #23233a !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
+body.dark-theme .dropdown-item {
+  color: #f5f5fa !important;
+}
+body.dark-theme .dropdown-item:hover,
+body.dark-theme .dropdown-item:focus {
+  background-color: #29294a !important;
+  color: #9a6ee2 !important;
 }

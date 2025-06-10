@@ -157,15 +157,16 @@ if (empty($_SESSION["idusuario"])) {
                     font-size: 20px;
                 }
             }
+
+            .navbar .nav-item.dropdown.ms-auto {
+                margin-right: 20px;
+                /* Ajusta este valor según necesites */
+            }
         </style>
 
     </head>
 
     <body>
-        <div class="theme-switch" id="themeSwitch">
-            <i class="fas fa-sun light-icon" id="lightIcon"></i>
-            <i class="fas fa-moon dark-icon" id="darkIcon" style="display: none;"></i>
-        </div>
         <!-- navbar-->
         <header class="header">
             <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
@@ -186,6 +187,12 @@ if (empty($_SESSION["idusuario"])) {
                             </div>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../controlador/controlador_cerrar.php">Cerrar Sesión</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="theme-switch" id="themeSwitch">
+                            <i class="fas fa-sun light-icon" id="lightIcon"></i>
+                            <i class="fas fa-moon dark-icon" id="darkIcon" style="display: none;"></i>
                         </div>
                     </li>
                 </ul>
