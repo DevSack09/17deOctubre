@@ -173,7 +173,7 @@ if (empty($_SESSION["idusuario"])) {
                 <a class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#"><i class="fas fa-align-left"></i></a>
                 <a class="navbar-brand fw-bold text-uppercase text-base" style="text-align: center;" href="index.php">
                     <span class="d-none d-brand-partial">Premio 17 de octubre </span><br>
-                    <span class="d-none d-sm-inline">Dédima Tercera Edición </span>
+                    <span class="d-none d-sm-inline">Décima Tercera Edición </span>
                 </a>
                 <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">
                     <li class="nav-item dropdown ms-auto">
@@ -224,6 +224,7 @@ if (empty($_SESSION["idusuario"])) {
                                             <option selected disabled value="">Seleccione su rango de edad</option>
                                             <option value="menores">Mujeres de 15 a 17 años</option>
                                             <option value="mayores">Mujeres de 18 años en adelante</option>
+                                            <option value="todas">Todas las categorías</option>
                                         </select>
                                     </div>
                                 </div>
@@ -243,7 +244,7 @@ if (empty($_SESSION["idusuario"])) {
                                             </button>
                                             <a href="https://www.win-rar.com/download.html" target="_blank"
                                                 class="btn btn-outline-secondary">
-                                                <i class="fas fa-download"></i> Descargar WinRAR
+                                                <i class="fas fa-download"></i> Obtener aplicación WinRAR
                                             </a>
                                         </div>
                                     </div>
@@ -298,13 +299,23 @@ if (empty($_SESSION["idusuario"])) {
             // Documentos disponibles
             const documentos = {
                 menores: [
-                    { nombre: "Carta de autorización", url: "Docs/Menores/Carta de autorización.docx" },
-                    { nombre: "Declaración de originalidad", url: "Docs/Menores/Declaración de originalidad.docx" },
-                    { nombre: "Formato de consentimiento", url: "Docs/Menores/Formato de consentimiento.docx" }
+                    { nombre: "CARTA DE AUTORIZACIÓN", url: "Docs/Menores/CARTA DE AUTORIZACIÓN.docx" },
+                    { nombre: "DECLARACIÓN DE ORIGINALIDAD", url: "Docs/Menores/DOCD PARA PERSONAS MENORES DE EDAD 2025.docx" },
+                    { nombre: "CONSENTIMIENTO EXPRESO MENORES 2025", url: "Docs/Menores/CONSENTIMIENTO EXPRESO MENORES 2025.docx" }
                 ],
                 mayores: [
-                    { nombre: "Declaración de originalidad", url: "Docs/Mayores/Declaración de originalidad.docx" },
-                    { nombre: "Formato Consentimiento Expreso", url: "Docs/Mayores/Formato Consentimiento Expreso.docx" }
+                    { nombre: "DECLARACIÓN DE  ORIGINALIDAD Y CESIÓN DE DERECHOS 2025", url: "Docs/Mayores/DECLARACIÓN DE ORIGINALIDAD Y CESIÓN DE DERECHOS 2025.docx" },
+                    { nombre: "CONSENTIMIENTO EXPRESO PREMIO 17 OCTUBRE", url: "Docs/Mayores/CONSENTIMIENTO EXPRESO PREMIO 17 OCTUBRE.docx" }
+                ],
+                todas: [
+                    { nombre: "AVISO DE PRIVACIDAD INTEGRAL", url: "Docs/Todos/API 2025.pdf" },
+                    { nombre: "AVISO DE PRIVACIDAD SIMPLIFICADO", url: "Docs/Todos/APS 2025.pdf" },
+                    { nombre: "CONVOCATORIA EXTENSA", url: "Docs/Todos/CONVOCATORIA EXTENSA_VF_10.06.25.pdf" },
+                    { nombre: "GUÍA NORMAS APA", url: "Docs/Todos/Guía-Normas-APA-7ma-Edición.pdf" },
+                    { nombre: "PLANTILLA ENSAYO 2025", url: "Docs/Todos/Plantilla Ensayo 2025 APA 7.docx" },
+                    { nombre: "RÚBRICA LETRAS CON TRASCENDENCIA", url: "Docs/Todos/Rúbrica Letras con Trascendencia.pdf" },
+                    { nombre: "RÚBRICA LETRAS CONTEMPORÁNEAS", url: "Docs/Todos/Rúbrica Letras Contemporáneas.pdf" },
+                    { nombre: "RÚBRICA LETRAS JÓVENES", url: "Docs/Todos/Rúbrica Letras Jóvenes.pdf" }
                 ]
             };
 
@@ -320,31 +331,38 @@ if (empty($_SESSION["idusuario"])) {
             // Evento al cambiar la selección
             selectEdad.addEventListener('change', function () {
                 const valor = this.value;
+                documentosContainer.style.display = valor ? 'block' : 'none';
+                listaDocumentos.innerHTML = '';
 
-                if (valor) {
-                    documentosContainer.style.display = 'block';
-                    listaDocumentos.innerHTML = '';
-
-                    documentos[valor].forEach(doc => {
-                        const docElement = document.createElement('div');
-                        docElement.className = 'col';
-                        docElement.innerHTML = `
-                                                            <div class="card h-100 border-0 shadow-sm">
-                                                                <div class="card-body text-center">
-                                                                    <i class="fas fa-file-word text-primary mb-3" style="font-size: 3rem;"></i>
-                                                                    <h6 class="card-title">${doc.nombre}</h6>
-                                                                    <a href="${doc.url}" download class="btn btn-sm btn-outline-primary mt-2 w-100">
-                                                                        <i class="fas fa-download"></i> Descargar
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        `;
-                        listaDocumentos.appendChild(docElement);
-                    });
-                } else {
-                    documentosContainer.style.display = 'none';
+                if (valor === 'todas') {
+                    // Mostrar documentos de TODAS las categorías (menores + mayores + comunes)
+                    const todosDocumentos = [...documentos.todas];
+                    renderDocumentos(todosDocumentos);
+                } else if (valor) {
+                    // Mostrar documentos de la categoría seleccionada
+                    renderDocumentos(documentos[valor]);
                 }
             });
+
+            // Función auxiliar para evitar código repetido
+            function renderDocumentos(documentosArray) {
+                documentosArray.forEach(doc => {
+                    const docElement = document.createElement('div');
+                    docElement.className = 'col';
+                    docElement.innerHTML = `
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fas fa-file-word text-primary mb-3" style="font-size: 3rem;"></i>
+                    <h6 class="card-title">${doc.nombre}</h6>
+                    <a href="${doc.url}" download class="btn btn-sm btn-outline-primary mt-2 w-100">
+                        <i class="fas fa-download"></i> Descargar
+                    </a>
+                </div>
+            </div>
+        `;
+                    listaDocumentos.appendChild(docElement);
+                });
+            }
 
             // Cambia el contenido y diseño de la animación de flecha
             arrowAnimation.innerHTML = `
@@ -414,11 +432,10 @@ if (empty($_SESSION["idusuario"])) {
 
             // Evento para descargar ZIP
             descargarZipBtn.addEventListener('click', function () {
+                if (!selectEdad.value) return; // Validación
+
                 zipText.style.display = 'none';
                 loadingIcon.style.display = 'inline-block';
-
-                // Mostrar animación de flecha y mensaje
-                arrowAnimation.style.display = 'flex';
 
                 fetch(`../controlador/documentos-zip.php?tipo=${selectEdad.value}`)
                     .then(response => {
@@ -440,11 +457,9 @@ if (empty($_SESSION["idusuario"])) {
                         alert('Error al descargar el archivo ZIP');
                     })
                     .finally(() => {
-                        // Mantener la animación y el mensaje visibles por más tiempo (5 segundos)
                         setTimeout(() => {
                             zipText.style.display = 'inline-block';
                             loadingIcon.style.display = 'none';
-                            arrowAnimation.style.display = 'none';
                         }, 3000);
                     });
             });

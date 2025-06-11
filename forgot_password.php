@@ -49,9 +49,9 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
         <div class="panels-container">
           <div class="panel left-panel">
             <div class="content">
-              <h3>IEEH | Sistema de Almacén</h3>
-              <p>
-                Cuidar lo que almacenamos es proteger lo que construimos juntoso.
+              <h1>Premio 17 de octubre | IEEH</h1>
+              <p style="font-size: 20px;">
+                No compartas tu contraseña con nadie.
               </p>
               <!-- <button class="btn transparent" id="sign-up-btn">
               Registrarse

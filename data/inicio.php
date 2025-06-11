@@ -49,7 +49,7 @@ if (empty($_SESSION["idusuario"])) {
                 <a class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#"><i class="fas fa-align-left"></i></a>
                 <a class="navbar-brand fw-bold text-uppercase text-base" style="text-align: center;" href="index.php">
                     <span class="d-none d-brand-partial">Premio 17 de octubre </span><br>
-                    <span class="d-none d-sm-inline">Dédima Tercera Edición </span>
+                    <span class="d-none d-sm-inline">Décima Tercera Edición </span>
                 </a>
                 <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">
                     <li class="nav-item dropdown ms-auto">
@@ -101,7 +101,7 @@ if (empty($_SESSION["idusuario"])) {
                                             completar tu registro de
                                             manera exitosa.</li>
                                         <br>
-                                        <li><strong>Tiempo de llenado:</strong> La completitud del formulario puede tomar
+                                        <li><strong>Tiempo de llenado:</strong> El completar el formulario puede tomar
                                             hasta 60 minutos. Te
                                             recomendamos dedicar el tiempo necesario para evitar interrupciones y asegurar
                                             que la información

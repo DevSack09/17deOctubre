@@ -49,7 +49,7 @@ if (empty($_SESSION["idusuario"])) {
                 <a class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#"><i class="fas fa-align-left"></i></a>
                 <a class="navbar-brand fw-bold text-uppercase text-base" style="text-align: center;" href="index.php">
                     <span class="d-none d-brand-partial">Premio 17 de octubre </span><br>
-                    <span class="d-none d-sm-inline">Dédima Tercera Edición </span>
+                    <span class="d-none d-sm-inline">Décima Tercera Edición </span>
                 </a>
                 <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">
                     <li class="nav-item dropdown ms-auto">
@@ -137,7 +137,7 @@ if (empty($_SESSION["idusuario"])) {
                                                 <div class="accordion-body">
                                                     <div class="row mb-3">
                                                         <div class="col-md-4">
-                                                            <label class="form-label" for="apellidopaterno">Apellido paterno
+                                                            <label class="form-label" for="apellidopaterno">Primer apellido
                                                                 <span class="required">*</span></label>
                                                             <div class="input-icon">
                                                                 <i class="fas fa-user-tag"></i>
@@ -146,21 +146,21 @@ if (empty($_SESSION["idusuario"])) {
                                                                     disabled required>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su apellido
-                                                                paterno.
+                                                            <div class="invalid-feedback">Por favor, introduzca su primer
+                                                                apellido.
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <label class="form-label" for="apellidomaterno">Apellido
-                                                                Materno</label>
+                                                            <label class="form-label" for="apellidomaterno">Segundo
+                                                                apellido</label>
                                                             <div class="input-icon">
                                                                 <i class="fas fa-user-tag"></i>
                                                                 <input class="form-control" id="apellidomaterno" type="text"
                                                                     placeholder="Ej. Pérez" name="apellidomaterno" disabled>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
-                                                            <div class="invalid-feedback">Por favor, introduzca su apellido
-                                                                materno.
+                                                            <div class="invalid-feedback">Por favor, introduzca su segundo
+                                                                apellido.
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
@@ -2439,7 +2439,7 @@ if (empty($_SESSION["idusuario"])) {
 
                     Swal.fire({
                         title: "¿Finalizar formulario?",
-                        text: "Una vez finalizado, no será posible realizar cambios o modificaciones en la información proporcionada. Por favor, asegúrate de revisar cuidadosamente todos los datos antes de enviarlo.",
+                        text: "Una vez finalizado, no será posible realizar cambios o modificaciones en la información proporcionada. Por favor, asegúrese de revisar cuidadosamente todos los datos antes de enviarlo.",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonText: "Sí, finalizar",
@@ -3310,49 +3310,41 @@ if (empty($_SESSION["idusuario"])) {
                 const correoInput = document.getElementById('correo');
                 let alertaActiva = null;
 
-                // Función mejorada para validar Gmail
-                function esGmailValido(correo) {
+                // Función para validar cualquier correo electrónico válido
+                function esCorreoValido(correo) {
                     if (!correo) return false;
-
-                    // Validación estricta de Gmail
-                    const regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+                    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                     return regex.test(correo);
                 }
 
-                // Función para mostrar/ocultar alerta
+                // Función mejorada para mostrar/ocultar alerta
                 function manejarAlerta(correo) {
-                    const esValido = esGmailValido(correo);
+                    // Si ya hay una alerta activa, no hacer nada
+                    if (alertaActiva !== null) return;
 
-                    if (!esValido && correo) { // Solo muestra alerta si hay texto pero no es válido
-                        if (!alertaActiva) {
-                            alertaActiva = Swal.fire({
-                                icon: 'error',
-                                title: 'Correo no válido',
-                                html: 'Solo se permiten cuentas de <strong>Gmail</strong>.<br>Ejemplo: <strong>usuario@gmail.com</strong>',
-                                confirmButtonText: 'Entendido',
-                                allowOutsideClick: false,
-                                allowEscapeKey: false
-                            }).then(() => {
-                                alertaActiva = null;
-                                correoInput.focus();
-                            });
-                        }
-                    } else if (alertaActiva) {
-                        // Cierra la alerta si existe y el correo ahora es válido
-                        Swal.close();
-                        alertaActiva = null;
+                    const esValido = esCorreoValido(correo);
+
+                    if (!esValido && correo) {
+                        alertaActiva = Swal.fire({
+                            icon: 'error',
+                            title: 'Correo no válido',
+                            html: 'Por favor ingresa un correo electrónico válido.<br>Ejemplo: <strong>usuario@dominio.com</strong>',
+                            confirmButtonText: 'Entendido',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        }).then(() => {
+                            alertaActiva = null;
+                            correoInput.focus();
+                        });
                     }
                 }
 
-                // Validación cuando se pierde el foco
+                // Validación solo cuando se pierde el foco
                 correoInput.addEventListener('blur', function () {
                     manejarAlerta(correoInput.value.trim());
                 });
 
-                // Validación mientras se escribe (para corrección inmediata)
-                correoInput.addEventListener('input', function () {
-                    manejarAlerta(correoInput.value.trim());
-                });
+                // Eliminado el event listener de 'input' para evitar validación mientras escribe
             });
         </script>
 

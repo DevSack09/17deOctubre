@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Port = 587;
         $mail->CharSet = "UTF-8";
 
-        $mail->setFrom('reclutanotifi23@gmail.com', 'Sitema Control de Almacén | IEEH');
+        $mail->setFrom('reclutanotifi23@gmail.com', 'Premio 17 de octubre | IEEH');
         $mail->addAddress($email);
         $mail->Subject = 'Restablecimiento de contraseña';
         $mail->Body = $template;

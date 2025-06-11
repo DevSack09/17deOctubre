@@ -83,9 +83,9 @@ if (empty($_SESSION["idusuario"])) {
     <header class="header">
       <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
         <a class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#"><i class="fas fa-align-left"></i></a>
-        <a class="navbar-brand fw-bold text-uppercase text-base" href="index.php">
-          <span class="d-none d-brand-partial"> </span>
-          <span class="d-none d-sm-inline">Sistema de Control de Almacén</span>
+        <a class="navbar-brand fw-bold text-uppercase text-base" style="text-align: center;" href="index.php">
+          <span class="d-none d-brand-partial">Premio 17 de octubre </span><br>
+          <span class="d-none d-sm-inline">Décima Tercera Edición </span>
         </a>
         <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">
           <li class="nav-item dropdown ms-auto">
@@ -96,11 +96,15 @@ if (empty($_SESSION["idusuario"])) {
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated" aria-labelledby="userInfo">
               <div class="dropdown-header text-gray-700">
                 <h6 class="text-uppercase font-weight-bold"><?php echo $nombreCompleto; ?></h6>
-                <smallsmall align='right'><b><?php echo $rolDescripcion; ?></b></small>
-
               </div>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="../controlador/controlador_cerrar.php">Cerrar Sesión</a>
+            </div>
+          </li>
+          <li>
+            <div class="theme-switch" id="themeSwitch">
+              <i class="fas fa-sun light-icon" id="lightIcon"></i>
+              <i class="fas fa-moon dark-icon" id="darkIcon" style="display: none;"></i>
             </div>
           </li>
         </ul>

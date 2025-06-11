@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $apellidoM = $_POST["apellidoM"] ?? '';
 
     // Verificar campos vacíos
-    if (empty($email) || empty($nombre) || empty($apellidoP) || empty($apellidoM)) {
+    if (empty($email) || empty($nombre) || empty($apellidoP)) {
         echo json_encode(["status" => "error", "message" => "Todos los campos son obligatorios."]);
         exit;
     }
@@ -26,11 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Validar que el correo sea de Gmail
+    /* // Validar que el correo sea de Gmail
     if (!preg_match('/@gmail\.com$/i', $email)) {
         echo json_encode(["status" => "error", "message" => "Solo se permiten correos de Gmail."]);
         exit;
-    }
+    } */
 
     // Verificar si el correo ya está registrado
     $stmt = $db_connection->prepare("SELECT COUNT(*) FROM usuario WHERE email = ?");

@@ -63,8 +63,12 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                                 href="forgot_password.php">
                                 Olvidé mi contraseña
                             </a>
+                            <!-- <a style="font-size: 15px; text-align: left;" class="link-forgot-password" id="sign-up-btn"
+                                href="#">
+                                Si aun no tienes una cuenta registrate aquí.
+                            </a> -->
                             <!-- Campo oculto para almacenar el token de reCAPTCHA -->
-                            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+                            <input type="hidden" name="recaptcha_response" id="recaptchaResponse"><br>
                             <input name="btningresar" type="submit" value="Iniciar sesión" class="btn solid" />
                             <div class="social-login">
                                 <a href="<?php echo htmlspecialchars($google_login_url); ?>" class="google-login-button">
@@ -117,18 +121,18 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                 <div class="panels-container">
                     <div class="panel left-panel">
                         <div class="content">
-                            <h3>Premio 17 de octubre | IEEH</h3>
+                            <h1>Premio 17 de octubre | IEEH</h1>
                             <!-- <p>El corazón del Instituto está en su almacén: donde cada entrada y salida impulsa el crecimiento, la eficiencia y el éxito.</p> -->
-                            <p>Si aun no tienes una cuenta registrate aquí.</p>
+                            <p style="font-size: 20px;">Si aun no tienes una cuenta registrate aquí.</p>
                             <button class="btn transparent" id="sign-up-btn">Registrarse</button>
                         </div>
                         <img src="img/undraw_calendar_8r6s.svg" class="image" alt="" />
                     </div>
                     <div class="panel right-panel">
                         <div class="content">
-                            <h3>Premio 17 de octubre | IEEH</h3>
+                            <h1>Premio 17 de octubre | IEEH</h1>
                             <!-- <p>Un almacén organizado es la clave para un trabajo exitoso.</p> -->
-                            <p>Si ya tienes una cuenta inicia sesión aquí.</p>
+                            <p style="font-size: 20px;">Si ya tienes una cuenta inicia sesión aquí.</p>
                             <button class="btn transparent" id="sign-in-btn"> Iniciar sesión</button>
                         </div>
                         <img src="img/undraw_workspace_s6wf.svg" class="image" alt="" />

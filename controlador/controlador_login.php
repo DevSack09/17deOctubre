@@ -69,8 +69,9 @@ if (isset($_GET['code'])) {
         $response_keys = json_decode($response, true);
 
         if ($response_keys["success"] && $response_keys["score"] >= 0.5) {
-            if (!preg_match('/^[a-zA-Z0-9._%+-]+@gmail\.com$/', $email)) {
                 echo '<div class="error-msg"><i class="fa fa-times-circle"></i> Solo se permiten correos gmail.</div>';
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo '<div class="error-msg"><i class="fa fa-times-circle"></i> Por favor ingresa un correo electrónico válido.</div>';
             } else {
                 $stmt = $db_connection->prepare("SELECT u.*, r.descripcion FROM usuario AS u INNER JOIN rol AS r ON u.rol = r.idrol WHERE u.email = ?");
                 $stmt->bind_param("s", $email);
