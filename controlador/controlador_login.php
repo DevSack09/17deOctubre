@@ -69,7 +69,6 @@ if (isset($_GET['code'])) {
         $response_keys = json_decode($response, true);
 
         if ($response_keys["success"] && $response_keys["score"] >= 0.5) {
-                echo '<div class="error-msg"><i class="fa fa-times-circle"></i> Solo se permiten correos gmail.</div>';
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 echo '<div class="error-msg"><i class="fa fa-times-circle"></i> Por favor ingresa un correo electrónico válido.</div>';
             } else {
