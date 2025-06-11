@@ -73,10 +73,10 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                 <div class="panels-container">
                     <div class="panel left-panel">
                         <div class="content">
-                            <h1>Premio 17 de octubre | IEEH</h>
-                                <p style="font-size: 20px;">
-                                    La seguridad comienza contigo: protege tu contraseña, mantén tus datos seguros.
-                                </p>
+                            <h1>Premio 17 de octubre | IEEH</h1>
+                            <p style="font-size: 20px;">
+                                La seguridad comienza contigo: protege tu contraseña, mantén tus datos seguros.
+                            </p>
                         </div>
                         <img src="img/undraw_fingerprint-login_19qv.svg" class="image" alt="" />
                     </div>

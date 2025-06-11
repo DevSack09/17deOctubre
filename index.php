@@ -50,7 +50,7 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                             ?>
                             <div class="input-field">
                                 <i class="fas fa-user"></i>
-                                <input id="email" name="email" type="text" placeholder="Email" />
+                                <input id="email" name="email" type="text" placeholder="Correo electrónico" />
                             </div>
                             <div class="input-field">
                                 <i class="fas fa-lock"></i>
@@ -123,7 +123,7 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                         <div class="content">
                             <h1>Premio 17 de octubre | IEEH</h1>
                             <!-- <p>El corazón del Instituto está en su almacén: donde cada entrada y salida impulsa el crecimiento, la eficiencia y el éxito.</p> -->
-                            <p style="font-size: 20px;">Si aun no tienes una cuenta registrate aquí.</p>
+                            <p style="font-size: 20px;">¿Aún no tienes una cuenta? Regístrate aquí.</p>
                             <button class="btn transparent" id="sign-up-btn">Registrarse</button>
                         </div>
                         <img src="img/undraw_calendar_8r6s.svg" class="image" alt="" />
