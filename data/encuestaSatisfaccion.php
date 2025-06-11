@@ -291,6 +291,28 @@ if ($usuario_id) {
     document.getElementById('surveyForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
+      // Validar campos requeridos
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      const q3 = document.querySelector('input[name="q3"]:checked');
+
+      // Validar preguntas de radio
+      if (!q1 || !q2 || !q3) {
+        let missingFields = [];
+        if (!q1) missingFields.push("Pregunta 1");
+        if (!q2) missingFields.push("Pregunta 2");
+        if (!q3) missingFields.push("Pregunta 3");
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Campos requeridos',
+          html: `Por favor responde las siguientes preguntas:<br><br>• ${missingFields.join('<br>• ')}`,
+          confirmButtonColor: '#9a6ee2'
+        });
+        return;
+      }
+
+      // Si todo está validado, proceder con el envío
       const form = e.target;
       const formData = new FormData(form);
 
@@ -329,6 +351,17 @@ if ($usuario_id) {
             confirmButtonColor: '#9a6ee2'
           });
         });
+    });
+
+    // Opcional: Resaltar visualmente los campos no respondidos
+    document.querySelectorAll('.radio-group').forEach(group => {
+      group.addEventListener('change', function () {
+        const questionName = this.querySelector('input[type="radio"]').name;
+        const errorElement = document.getElementById(`error-${questionName}`);
+        if (errorElement) {
+          errorElement.textContent = '';
+        }
+      });
     });
   </script>
 </body>

@@ -1524,7 +1524,7 @@ if (empty($_SESSION["idusuario"])) {
                                                     </div>
 
                                                     <!-- Aceptación del Formato para Otorgar Consentimiento Expreso -->
-                                                    <div hidden class="row mb-3">
+                                                    <div class="row mb-3">
                                                         <div class="col-md-12">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
@@ -1533,7 +1533,7 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <label class="form-check-label"
                                                                     for="terminos_consentimiento">
                                                                     He leído y comprendo los términos de
-                                                                    <a href="ruta_al_archivo/formato_para_otorgar_consentimiento_expreso.pdf"
+                                                                    <a href="Docs/Mayores/CONSENTIMIENTO EXPRESO PREMIO 17 OCTUBRE.pdf"
                                                                         target="_blank">
                                                                         Formato para Otorgar Consentimiento Expreso
                                                                     </a>.
