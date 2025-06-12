@@ -2586,10 +2586,19 @@ if (empty($_SESSION["idusuario"])) {
                                                         title: "¡Formulario finalizado!",
                                                         text: "Formulario finalizado correctamente. Se ha enviado un correo de confirmación a la dirección registrada.",
                                                         icon: "success",
-                                                        confirmButtonText: "OK",
+                                                        confirmButtonText: "Encuesta de retroalimentación",
                                                         allowOutsideClick: false
-                                                    }).then(() => {
-                                                        lockFormPermanently();
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            // Abrir la encuesta en una pestaña nueva
+                                                            window.open(
+                                                                "http://localhost/17deoctubre/data/encuestasatisfaccion.php?usuario_id=" + encodeURIComponent(response2.usuario_id),
+                                                                "_blank"
+                                                            );
+                                                            lockFormPermanently();
+                                                        } else {
+                                                            lockFormPermanently();
+                                                        }
                                                     });
                                                 } else {
                                                     handleError({ responseJSON: response2 });

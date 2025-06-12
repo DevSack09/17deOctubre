@@ -197,7 +197,7 @@ if ($usuario_id) {
 <body>
   <div class="container">
     <header>
-      <img src="https://i.postimg.cc/wTXLnyx1/IEEH-SF01.png" alt="IEEH Logo" style="width: 150px" />
+      <img src="http://200.57.172.51/IEEH.png" alt="IEEH Logo" style="width: 150px" />
       <h1>ENCUESTA DE RETROALIMENTACIÓN</h1>
       <h2>
         Premio 17 de Octubre<br />Convocatoria 2025<br />Décima Tercera

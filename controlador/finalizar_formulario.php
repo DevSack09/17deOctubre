@@ -80,9 +80,17 @@ if ($stmt_check) {
                 // Enviar correo y responder según resultado
                 try {
                     $mail->send();
-                    echo json_encode(['status' => 'success', 'message' => 'Formulario finalizado correctamente. Se ha enviado un correo de confirmación.']);
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'Formulario finalizado correctamente. Se ha enviado un correo de confirmación.',
+                        'usuario_id' => $usuario_id
+                    ]);
                 } catch (Exception $e) {
-                    echo json_encode(['status' => 'success', 'message' => 'Formulario finalizado correctamente, pero no se pudo enviar el correo de confirmación.']);
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'Formulario finalizado correctamente, pero no se pudo enviar el correo de confirmación.',
+                        'usuario_id' => $usuario_id
+                    ]);
                 }
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el estado del formulario']);
