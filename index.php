@@ -180,6 +180,8 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                         title: 'Consulta las bases',
                         text: 'Consulta las bases en la convocatoria.',
                         icon: 'info',
+                        showCancelButton: true,
+                        cancelButtonText: 'Cerrar',
                         confirmButtonText: 'Ver convocatoria',
                         allowOutsideClick: false
                     }).then((result) => {
