@@ -6,7 +6,7 @@ if (!empty($_POST["btningresar"])) {
         $password = $_POST["password"];
 
         // Validar reCAPTCHA v3
-        $recaptcha_secret = '6LcMXigqAAAAAPWofdJl2-L9H91qjPZ4uC2dLcbM';
+        $recaptcha_secret = '6LeNjtEeAAAAAKtWbs5SH7XVF2VxKxAMBCoGGtKn';
         $recaptcha_response = $_POST['recaptcha_response'];
 
         $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptcha_secret}&response={$recaptcha_response}");

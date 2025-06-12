@@ -112,10 +112,10 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
             <script src="js/app.js"></script>
             <script src="js/darkLight.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script src="https://www.google.com/recaptcha/api.js?render=6LcMXigqAAAAAC0N6KZ7uED5UyrQSgifIjSj0TjP"></script>
+            <script src="https://www.google.com/recaptcha/api.js?render=6LeNjtEeAAAAAOrQQrPhnszItMGLpovxZtXGKQAi"></script>
             <script>
                 grecaptcha.ready(function () {
-                    grecaptcha.execute('6LcMXigqAAAAAC0N6KZ7uED5UyrQSgifIjSj0TjP', { action: 'login' }).then(function (token) {
+                    grecaptcha.execute('6LeNjtEeAAAAAOrQQrPhnszItMGLpovxZtXGKQAi', { action: 'login' }).then(function (token) {
                         document.getElementById('recaptchaResponse').value = token;
                     });
                 });
