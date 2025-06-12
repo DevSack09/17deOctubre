@@ -437,7 +437,7 @@ if (empty($_SESSION["idusuario"])) {
                                                 <button class="accordion-button fw-bold fs-5 collapsed" type="button"
                                                     data-bs-toggle="collapse" data-bs-target="#collapseEstudios"
                                                     aria-expanded="false" aria-controls="collapseEstudios">
-                                                    Estudios
+                                                    Estudios concluidos y ocupación actual
                                                 </button>
                                             </h2>
                                             <div id="collapseEstudios" class="accordion-collapse collapse"
@@ -1231,7 +1231,7 @@ if (empty($_SESSION["idusuario"])) {
                                                 <button class="accordion-button fw-bold fs-5 collapsed" type="button"
                                                     data-bs-toggle="collapse" data-bs-target="#collapseAccionesAfirmativas"
                                                     aria-expanded="false" aria-controls="collapseAccionesAfirmativas">
-                                                    Acciones afirmativas
+                                                    Grupos de atencion prioritaria
                                                 </button>
                                             </h2>
                                             <div id="collapseAccionesAfirmativas" class="accordion-collapse collapse"
@@ -1528,15 +1528,14 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <label class="form-check-label"
                                                                     for="terminos_consentimiento">
                                                                     He leído y comprendo los términos de
-                                                                    <a href="Docs/Mayores/CONSENTIMIENTO EXPRESO PREMIO 17 OCTUBRE.pdf"
-                                                                        target="_blank">
-                                                                        Formato para Otorgar Consentimiento Expreso
+                                                                    <a href="Docs/Todos/APS 2025.pdf" target="_blank">
+                                                                        Aviso de Privacidad Simplificado
                                                                     </a>.
                                                                 </label>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
                                                             <div class="invalid-feedback">Debe aceptar los términos del
-                                                                Formato para Otorgar Consentimiento Expreso.</div>
+                                                                Aviso de Privacidad Simplificado.</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2531,7 +2530,7 @@ if (empty($_SESSION["idusuario"])) {
                                                 if (response2.status === "success") {
                                                     Swal.fire({
                                                         title: "¡Formulario finalizado!",
-                                                        text: "Formulario finalizado correctamente. Se ha enviado un correo de confirmación a la dirección registrada.",
+                                                        text: "Formulario finalizado correctamente. Se ha enviado un correo de confirmación a la dirección registrada.\n\nAyúdanos a mejorar respondiendo la siguiente encuesta:",
                                                         icon: "success",
                                                         confirmButtonText: "Encuesta de retroalimentación",
                                                         allowOutsideClick: false

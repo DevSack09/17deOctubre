@@ -31,8 +31,6 @@ switch ($tipo) {
     case 'todas':
         $documentos = [
 
-            $basePath . '../data/Docs/Todos/API 2025.pdf',
-            $basePath . '../data/Docs/Todos/APS 2025.pdf',
             $basePath . '../data/Docs/Todos/CONVOCATORIA EXTENSA_VF_10.06.25.pdf',
             $basePath . '../data/Docs/Todos/Guía-Normas-APA-7ma-Edición.pdf',
             $basePath . '../data/Docs/Todos/Plantilla Ensayo 2025 APA 7.docx',

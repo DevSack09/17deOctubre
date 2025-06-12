@@ -219,9 +219,9 @@ if (empty($_SESSION["idusuario"])) {
                                         <i class="fas fa-user-tag"></i>
                                         <select class="form-control" id="download" name="download">
                                             <option selected disabled value="">Seleccione su rango de edad</option>
+                                            <option value="todas">Documentos generales</option>
                                             <option value="menores">Mujeres de 15 a 17 años</option>
                                             <option value="mayores">Mujeres de 18 años en adelante</option>
-                                            <option value="todas">Todas las categorías</option>
                                         </select>
                                     </div>
                                 </div>
@@ -304,8 +304,6 @@ if (empty($_SESSION["idusuario"])) {
                     { nombre: "CONSENTIMIENTO EXPRESO PREMIO 17 OCTUBRE", url: "Docs/Mayores/CONSENTIMIENTO EXPRESO PREMIO 17 OCTUBRE.docx" }
                 ],
                 todas: [
-                    { nombre: "AVISO DE PRIVACIDAD INTEGRAL", url: "Docs/Todos/API 2025.pdf" },
-                    { nombre: "AVISO DE PRIVACIDAD SIMPLIFICADO", url: "Docs/Todos/APS 2025.pdf" },
                     { nombre: "CONVOCATORIA EXTENSA", url: "Docs/Todos/CONVOCATORIA EXTENSA_VF_10.06.25.pdf" },
                     { nombre: "GUÍA NORMAS APA", url: "Docs/Todos/Guía-Normas-APA-7ma-Edición.pdf" },
                     { nombre: "PLANTILLA ENSAYO 2025", url: "Docs/Todos/Plantilla Ensayo 2025 APA 7.docx" },

@@ -174,6 +174,21 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                     this.querySelector('i').classList.toggle('fa-eye-slash');
                 });
             </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Consulta las bases',
+                        text: 'Consulta las bases en la convocatoria.',
+                        icon: 'info',
+                        confirmButtonText: 'Ver convocatoria',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.open('data/Docs/Todos/CONVOCATORIA EXTENSA_VF_10.06.25.pdf', '_blank');
+                        }
+                    });
+                });
+            </script>
         </body>
 
         </html>
