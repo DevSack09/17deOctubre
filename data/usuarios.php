@@ -26,7 +26,7 @@ if (empty($_SESSION["idusuario"])) {
     <link rel="stylesheet" href="vendor/prismjs/plugins/toolbar/prism-toolbar.css">
     <link rel="stylesheet" href="vendor/prismjs/themes/prism-okaidia.css">
     <!-- The Main Theme stylesheet (Contains also Bootstrap CSS)-->
-    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="css/style.violet.css" id="theme-stylesheet">
     <!-- dataTables-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.css" rel="stylesheet">
@@ -37,6 +37,11 @@ if (empty($_SESSION["idusuario"])) {
     <!-- Favicon-->
     <link rel="shortcut icon" href="../img/IEEH.png">
     <style>
+      .navbar .nav-item.dropdown.ms-auto {
+        margin-right: 20px;
+        /* Ajusta este valor según necesites */
+      }
+
       .dataTables_filter {
         display: none;
       }
@@ -377,6 +382,7 @@ if (empty($_SESSION["idusuario"])) {
 
     <!-- Main Theme JS File-->
     <script src="js/theme.js"></script>
+    <script src="../js/darkLight.js"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- DataTable --->
@@ -545,7 +551,7 @@ if (empty($_SESSION["idusuario"])) {
             {
               extend: 'excel',
               footer: true,
-              title: 'USUARIOS ALMACÉN | IEEH',
+              title: 'USUARIOS PREMIO 17 DE OCTUBRE | IEEH',
               filename: 'Usuarios_Excel',
               text: 'Excel <i class="fas fa-file-excel"></i>',
               className: 'excelButton',
@@ -553,7 +559,7 @@ if (empty($_SESSION["idusuario"])) {
             {
               extend: 'pdf',
               footer: true,
-              title: 'USUARIOS ALMACÉN | IEEH',
+              title: 'USUARIOS PREMIO 17 DE OCTUBRE | IEEH',
               filename: 'Usuarios_pdf',
               text: 'PDF <i class="far fa-file-pdf"></i>',
               orientation: 'landscape',
@@ -562,7 +568,7 @@ if (empty($_SESSION["idusuario"])) {
             {
               extend: 'print',
               footer: true,
-              title: 'USUARIOS ALMACÉN | IEEH',
+              title: 'USUARIOS PREMIO 17 DE OCTUBRE | IEEH',
               filename: 'Print_File',
               text: 'Imprimir <i class="fa fa-print"></i>',
               orientation: 'landscape',
@@ -571,7 +577,7 @@ if (empty($_SESSION["idusuario"])) {
             {
               extend: 'copy',
               footer: true,
-              title: 'USUARIOS ALMACÉN | IEEH',
+              title: 'USUARIOS PREMIO 17 DE OCTUBRE | IEEH',
               filename: 'Copy_File',
               text: 'Copiar <i class="fa fa-clone"></i>',
               className: 'copyButton',

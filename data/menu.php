@@ -23,8 +23,8 @@ function moduloHabilitado($modulo, $permisos)
     <ul class="list-unstyled">
         <?php if (moduloHabilitado('dashboard', $permisos_usuario)): ?>
             <li class="sidebar-list-item">
-                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'dashboard.php' ? 'active' : ''; ?>"
-                    href="dashboard.php">
+                <a class="sidebar-link text-muted <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>"
+                    href="index.php">
                     <svg class="svg-icon svg-icon-md me-3">
                         <use xlink:href="icons/orion-svg-sprite.svg#mental-illness-1"> </use>
                     </svg>

@@ -20,7 +20,7 @@ if ($usuario_id) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Encuesta de Satisfacción - Premio 17 de Octubre</title>
+  <title>Encuesta de retroalimentación - Premio 17 de Octubre</title>
   <style>
     :root {
       --primary-color: #9a6ee2;

@@ -423,3 +423,200 @@ body.dark-theme .dropdown-item:focus {
   background-color: #29294a !important;
   color: #9a6ee2 !important;
 }
+
+/* Indicadores en modo oscuro */
+body.dark-theme .card-widget {
+  background: #23233a !important;
+  color: #f5f5fa !important;
+  border: 1px solid #2d2d44 !important;
+  box-shadow: 0 2px 8px rgba(154, 110, 226, 0.08);
+}
+
+body.dark-theme .card-widget-body {
+  background: transparent !important;
+  color: #f5f5fa !important;
+}
+
+body.dark-theme .card-widget .text h6,
+body.dark-theme .card-widget .text span {
+  color: #f5f5fa !important;
+}
+
+body.dark-theme .dot.bg-indigo {
+  background: #9a6ee2 !important;
+}
+body.dark-theme .dot.bg-green {
+  background: #4fd18b !important;
+}
+body.dark-theme .dot.bg-blue {
+  background: #4a90e2 !important;
+}
+
+body.dark-theme .icon.bg-indigo {
+  background: #9a6ee2 !important;
+  color: #fff !important;
+}
+body.dark-theme .icon.bg-green {
+  background: #4fd18b !important;
+  color: #fff !important;
+}
+body.dark-theme .icon.bg-blue {
+  background: #4a90e2 !important;
+  color: #fff !important;
+}
+
+/* ===================== DATA TABLE DARK THEME ===================== */
+body.dark-theme .dataTables_wrapper,
+body.dark-theme table.dataTable,
+body.dark-theme .table,
+body.dark-theme .table-responsive {
+  background-color: #23233a !important;
+  color: #f5f5fa !important;
+}
+
+body.dark-theme table.dataTable th,
+body.dark-theme table.dataTable td,
+body.dark-theme .table th,
+body.dark-theme .table td {
+  background-color: #23233a !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
+
+body.dark-theme table.dataTable thead th,
+body.dark-theme .table thead th,
+body.dark-theme .table-dark th {
+  background-color: #1e1e2f !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
+
+body.dark-theme table.dataTable tfoot th,
+body.dark-theme .table tfoot th {
+  background-color: #1e1e2f !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
+
+body.dark-theme table.dataTable tbody tr {
+  background-color: #23233a !important;
+  color: #f5f5fa !important;
+}
+
+body.dark-theme table.dataTable tbody tr.selected,
+body.dark-theme table.dataTable tbody tr:hover {
+  background-color: #29294a !important;
+  color: #fff !important;
+}
+
+body.dark-theme .dataTables_filter input,
+body.dark-theme .dataTables_length select,
+body.dark-theme .dataTables_paginate .paginate_button,
+body.dark-theme .dataTables_info,
+body.dark-theme .dataTables_processing,
+body.dark-theme .form-control-sm {
+  background-color: #2d2d3f !important;
+  color: #f5f5fa !important;
+  border-color: #555 !important;
+}
+
+body.dark-theme .dataTables_filter label,
+body.dark-theme .dataTables_length label,
+body.dark-theme .dataTables_info {
+  color: #bdbdd7 !important;
+}
+
+body.dark-theme .dataTables_paginate .paginate_button {
+  background: #23233a !important;
+  color: #bdbdd7 !important;
+  border: 1px solid #2d2d44 !important;
+  margin: 0 2px;
+}
+
+body.dark-theme .dataTables_paginate .paginate_button.current,
+body.dark-theme .dataTables_paginate .paginate_button:hover {
+  background: #9a6ee2 !important;
+  color: #fff !important;
+  border: 1px solid #9a6ee2 !important;
+}
+
+body.dark-theme
+  .dataTables_wrapper
+  .dataTables_paginate
+  .paginate_button.disabled,
+body.dark-theme
+  .dataTables_wrapper
+  .dataTables_paginate
+  .paginate_button.disabled:hover {
+  background: #23233a !important;
+  color: #555 !important;
+  border: 1px solid #2d2d44 !important;
+  cursor: not-allowed;
+}
+
+body.dark-theme .dataTables_wrapper .dataTables_length select,
+body.dark-theme .dataTables_wrapper .dataTables_filter input {
+  background-color: #2d2d3f !important;
+  color: #f5f5fa !important;
+  border: 1px solid #555 !important;
+}
+
+body.dark-theme .dt-button,
+body.dark-theme .buttons-html5,
+body.dark-theme .buttons-print {
+  background-color: #29294a !important;
+  color: #f5f5fa !important;
+  border: 1px solid #9a6ee2 !important;
+}
+
+body.dark-theme .dt-button:hover,
+body.dark-theme .buttons-html5:hover,
+body.dark-theme .buttons-print:hover {
+  background-color: #9a6ee2 !important;
+  color: #fff !important;
+  border: 1px solid #9a6ee2 !important;
+}
+
+body.dark-theme .form-control.form-control-sm {
+  background-color: #2d2d3f !important;
+  color: #f5f5fa !important;
+  border: 1px solid #555 !important;
+}
+
+body.dark-theme .form-control.form-control-sm:focus {
+  border-color: #9a6ee2 !important;
+  box-shadow: 0 0 0 0.2rem rgba(154, 110, 226, 0.15) !important;
+}
+
+/* ===================== CARD DARK THEME ===================== */
+body.dark-theme .card,
+body.dark-theme .card.h-100,
+body.dark-theme .card.credit-card,
+body.dark-theme .card-header,
+body.dark-theme .card-body,
+body.dark-theme .card-footer {
+  background-color: #23233a !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+  box-shadow: 0 2px 8px rgba(154, 110, 226, 0.08);
+}
+
+body.dark-theme .card .card-heading,
+body.dark-theme .card .card-title,
+body.dark-theme .card .card-header h5,
+body.dark-theme .card .card-header h4 {
+  color: #9a6ee2 !important;
+}
+
+body.dark-theme .card .credict-card-content .h1,
+body.dark-theme .card .credict-card-content i {
+  color: #9a6ee2 !important;
+}
+
+body.dark-theme .card .credict-card-bottom .fw-bold {
+  color: #f5f5fa !important;
+}
+
+body.dark-theme .card .credict-card-bottom small {
+  color: #bdbdd7 !important;
+}

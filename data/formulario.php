@@ -296,122 +296,170 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <i class="fas fa-map"></i>
                                                                 <select class="form-control" id="municipio" name="municipio"
                                                                     required disabled>
-                                                                    <option selected disabled value="">Seleccione un
-                                                                        municipio</option>
-                                                                    <option value="Acatlán">Acatlán</option>
-                                                                    <option value="Acaxochitlán">Acaxochitlán</option>
-                                                                    <option value="Actopan">Actopan</option>
-                                                                    <option value="Agua Blanca de Iturbide">Agua Blanca de
-                                                                        Iturbide</option>
-                                                                    <option value="Ajacuba">Ajacuba</option>
-                                                                    <option value="Alfajayucan">Alfajayucan</option>
-                                                                    <option value="Almoloya">Almoloya</option>
-                                                                    <option value="Apan">Apan</option>
-                                                                    <option value="El Arenal">El Arenal</option>
-                                                                    <option value="Atitalaquia">Atitalaquia</option>
-                                                                    <option value="Atlapexco">Atlapexco</option>
-                                                                    <option value="Atotonilco el Grande">Atotonilco el
-                                                                        Grande</option>
-                                                                    <option value="Atotonilco de Tula">Atotonilco de Tula
-                                                                    </option>
-                                                                    <option value="Calnali">Calnali</option>
-                                                                    <option value="Cardonal">Cardonal</option>
-                                                                    <option value="Cuautepec de Hinojosa">Cuautepec de
-                                                                        Hinojosa</option>
-                                                                    <option value="Chapantongo">Chapantongo</option>
-                                                                    <option value="Chapulhuacán">Chapulhuacán</option>
-                                                                    <option value="Chilcuautla">Chilcuautla</option>
-                                                                    <option value="Eloxochitlán">Eloxochitlán</option>
-                                                                    <option value="Emiliano Zapata">Emiliano Zapata</option>
-                                                                    <option value="Epazoyucan">Epazoyucan</option>
-                                                                    <option value="Francisco I. Madero">Francisco I. Madero
-                                                                    </option>
-                                                                    <option value="Huasca de Ocampo">Huasca de Ocampo
-                                                                    </option>
-                                                                    <option value="Huautla">Huautla</option>
-                                                                    <option value="Huazalingo">Huazalingo</option>
-                                                                    <option value="Huehuetla">Huehuetla</option>
-                                                                    <option value="Huejutla de Reyes">Huejutla de Reyes
-                                                                    </option>
-                                                                    <option value="Huichapan">Huichapan</option>
-                                                                    <option value="Ixmiquilpan">Ixmiquilpan</option>
-                                                                    <option value="Jacala de Ledezma">Jacala de Ledezma
-                                                                    </option>
-                                                                    <option value="Jaltocán">Jaltocán</option>
-                                                                    <option value="Juárez Hidalgo">Juárez Hidalgo</option>
-                                                                    <option value="Lolotla">Lolotla</option>
-                                                                    <option value="Metepec">Metepec</option>
-                                                                    <option value="San Agustín Metzquititlán">San Agustín
-                                                                        Metzquititlán</option>
-                                                                    <option value="Metztitlán">Metztitlán</option>
-                                                                    <option value="Mineral del Chico">Mineral del Chico
-                                                                    </option>
-                                                                    <option value="Mineral del Monte">Mineral del Monte
-                                                                    </option>
-                                                                    <option value="La Misión">La Misión</option>
-                                                                    <option value="Mixquiahuala de Juárez">Mixquiahuala de
-                                                                        Juárez</option>
-                                                                    <option value="Molango de Escamilla">Molango de
-                                                                        Escamilla</option>
-                                                                    <option value="Nicolás Flores">Nicolás Flores</option>
-                                                                    <option value="Nopala de Villagrán">Nopala de Villagrán
-                                                                    </option>
-                                                                    <option value="Omitlán de Juárez">Omitlán de Juárez
-                                                                    </option>
-                                                                    <option value="San Felipe Orizatlán">San Felipe
-                                                                        Orizatlán</option>
-                                                                    <option value="Pacula">Pacula</option>
-                                                                    <option value="Pachuca de Soto">Pachuca de Soto</option>
-                                                                    <option value="Pisaflores">Pisaflores</option>
-                                                                    <option value="Progreso de Obregón">Progreso de Obregón
-                                                                    </option>
-                                                                    <option value="Mineral de la Reforma">Mineral de la
-                                                                        Reforma</option>
-                                                                    <option value="San Agustín Tlaxiaca">San Agustín
-                                                                        Tlaxiaca</option>
-                                                                    <option value="San Bartolo Tutotepec">San Bartolo
-                                                                        Tutotepec</option>
-                                                                    <option value="San Salvador">San Salvador</option>
-                                                                    <option value="Santiago de Anaya">Santiago de Anaya
-                                                                    </option>
-                                                                    <option value="Santiago Tulantepec de Lugo Guerrero">
-                                                                        Santiago Tulantepec de Lugo Guerrero</option>
-                                                                    <option value="Singuilucan">Singuilucan</option>
-                                                                    <option value="Tasquillo">Tasquillo</option>
-                                                                    <option value="Tecozautla">Tecozautla</option>
-                                                                    <option value="Tenango de Doria">Tenango de Doria
-                                                                    </option>
-                                                                    <option value="Tepeapulco">Tepeapulco</option>
-                                                                    <option value="Tepehuacán de Guerrero">Tepehuacán de
-                                                                        Guerrero</option>
-                                                                    <option value="Tepeji del Río de Ocampo">Tepeji del Río
-                                                                        de Ocampo</option>
-                                                                    <option value="Tepetitlán">Tepetitlán</option>
-                                                                    <option value="Tetepango">Tetepango</option>
-                                                                    <option value="Villa de Tezontepec">Villa de Tezontepec
-                                                                    </option>
-                                                                    <option value="Tezontepec de Aldama">Tezontepec de
-                                                                        Aldama</option>
-                                                                    <option value="Tianguistengo">Tianguistengo</option>
-                                                                    <option value="Tizayuca">Tizayuca</option>
-                                                                    <option value="Tlahuelilpan">Tlahuelilpan</option>
-                                                                    <option value="Tlahuiltepa">Tlahuiltepa</option>
-                                                                    <option value="Tlanalapa">Tlanalapa</option>
-                                                                    <option value="Tlanchinol">Tlanchinol</option>
-                                                                    <option value="Tlaxcoapan">Tlaxcoapan</option>
-                                                                    <option value="Tolcayuca">Tolcayuca</option>
-                                                                    <option value="Tula de Allende">Tula de Allende</option>
-                                                                    <option value="Tulancingo de Bravo">Tulancingo de Bravo
-                                                                    </option>
-                                                                    <option value="Xochiatipan">Xochiatipan</option>
-                                                                    <option value="Xochicoatlán">Xochicoatlán</option>
-                                                                    <option value="Yahualica">Yahualica</option>
-                                                                    <option value="Zacualtipán de Ángeles">Zacualtipán de
-                                                                        Ángeles</option>
-                                                                    <option value="Zapotlán de Juárez">Zapotlán de Juárez
-                                                                    </option>
-                                                                    <option value="Zempoala">Zempoala</option>
-                                                                    <option value="Zimapán">Zimapán</option>
+                                                                    <select class="form-control" id="municipio"
+                                                                        name="municipio" required disabled>
+                                                                        <option selected disabled value="">Seleccione un
+                                                                            municipio</option>
+                                                                        <option value="Acatlán">Acatlán</option>
+                                                                        <option value="Acaxochitlán">Acaxochitlán
+                                                                        </option>
+                                                                        <option value="Actopan">Actopan</option>
+                                                                        <option value="Agua Blanca de Iturbide">Agua
+                                                                            Blanca
+                                                                            de
+                                                                            Iturbide</option>
+                                                                        <option value="Ajacuba">Ajacuba</option>
+                                                                        <option value="Alfajayucan">Alfajayucan</option>
+                                                                        <option value="Almoloya">Almoloya</option>
+                                                                        <option value="Apan">Apan</option>
+                                                                        <option value="El Arenal">El Arenal</option>
+                                                                        <option value="Atitalaquia">Atitalaquia</option>
+                                                                        <option value="Atlapexco">Atlapexco</option>
+                                                                        <option value="Atotonilco el Grande">Atotonilco
+                                                                            el
+                                                                            Grande</option>
+                                                                        <option value="Atotonilco de Tula">Atotonilco de
+                                                                            Tula
+                                                                        </option>
+                                                                        <option value="Calnali">Calnali</option>
+                                                                        <option value="Cardonal">Cardonal</option>
+                                                                        <option value="Cuautepec de Hinojosa">Cuautepec
+                                                                            de
+                                                                            Hinojosa</option>
+                                                                        <option value="Chapantongo">Chapantongo</option>
+                                                                        <option value="Chapulhuacán">Chapulhuacán
+                                                                        </option>
+                                                                        <option value="Chilcuautla">Chilcuautla</option>
+                                                                        <option value="Eloxochitlán">Eloxochitlán
+                                                                        </option>
+                                                                        <option value="Emiliano Zapata">Emiliano Zapata
+                                                                        </option>
+                                                                        <option value="Epazoyucan">Epazoyucan</option>
+                                                                        <option value="Francisco I. Madero">Francisco I.
+                                                                            Madero
+                                                                        </option>
+                                                                        <option value="Huasca de Ocampo">Huasca de
+                                                                            Ocampo
+                                                                        </option>
+                                                                        <option value="Huautla">Huautla</option>
+                                                                        <option value="Huazalingo">Huazalingo</option>
+                                                                        <option value="Huehuetla">Huehuetla</option>
+                                                                        <option value="Huejutla de Reyes">Huejutla de
+                                                                            Reyes
+                                                                        </option>
+                                                                        <option value="Huichapan">Huichapan</option>
+                                                                        <option value="Ixmiquilpan">Ixmiquilpan</option>
+                                                                        <option value="Jacala de Ledezma">Jacala de
+                                                                            Ledezma
+                                                                        </option>
+                                                                        <option value="Jaltocán">Jaltocán</option>
+                                                                        <option value="Juárez Hidalgo">Juárez Hidalgo
+                                                                        </option>
+                                                                        <option value="Lolotla">Lolotla</option>
+                                                                        <option value="Metepec">Metepec</option>
+                                                                        <option value="San Agustín Metzquititlán">San
+                                                                            Agustín
+                                                                            Metzquititlán</option>
+                                                                        <option value="Metztitlán">Metztitlán</option>
+                                                                        <option value="Mineral del Chico">Mineral del
+                                                                            Chico
+                                                                        </option>
+                                                                        <option value="Mineral del Monte">Mineral del
+                                                                            Monte
+                                                                        </option>
+                                                                        <option value="La Misión">La Misión</option>
+                                                                        <option value="Mixquiahuala de Juárez">
+                                                                            Mixquiahuala
+                                                                            de
+                                                                            Juárez</option>
+                                                                        <option value="Molango de Escamilla">Molango de
+                                                                            Escamilla</option>
+                                                                        <option value="Nicolás Flores">Nicolás Flores
+                                                                        </option>
+                                                                        <option value="Nopala de Villagrán">Nopala de
+                                                                            Villagrán
+                                                                        </option>
+                                                                        <option value="Omitlán de Juárez">Omitlán de
+                                                                            Juárez
+                                                                        </option>
+                                                                        <option value="San Felipe Orizatlán">San Felipe
+                                                                            Orizatlán</option>
+                                                                        <option value="Pacula">Pacula</option>
+                                                                        <option value="Pachuca de Soto">Pachuca de Soto
+                                                                        </option>
+                                                                        <option value="Pisaflores">Pisaflores</option>
+                                                                        <option value="Progreso de Obregón">Progreso de
+                                                                            Obregón
+                                                                        </option>
+                                                                        <option value="Mineral de la Reforma">Mineral de
+                                                                            la
+                                                                            Reforma</option>
+                                                                        <option value="San Agustín Tlaxiaca">San Agustín
+                                                                            Tlaxiaca</option>
+                                                                        <option value="San Bartolo Tutotepec">San
+                                                                            Bartolo
+                                                                            Tutotepec</option>
+                                                                        <option value="San Salvador">San Salvador
+                                                                        </option>
+                                                                        <option value="Santiago de Anaya">Santiago de
+                                                                            Anaya
+                                                                        </option>
+                                                                        <option
+                                                                            value="Santiago Tulantepec de Lugo Guerrero">
+                                                                            Santiago Tulantepec de Lugo Guerrero
+                                                                        </option>
+                                                                        <option value="Singuilucan">Singuilucan</option>
+                                                                        <option value="Tasquillo">Tasquillo</option>
+                                                                        <option value="Tecozautla">Tecozautla</option>
+                                                                        <option value="Tenango de Doria">Tenango de
+                                                                            Doria
+                                                                        </option>
+                                                                        <option value="Tepeapulco">Tepeapulco</option>
+                                                                        <option value="Tepehuacán de Guerrero">
+                                                                            Tepehuacán de
+                                                                            Guerrero</option>
+                                                                        <option value="Tepeji del Río de Ocampo">Tepeji
+                                                                            del
+                                                                            Río
+                                                                            de Ocampo</option>
+                                                                        <option value="Tepetitlán">Tepetitlán</option>
+                                                                        <option value="Tetepango">Tetepango</option>
+                                                                        <option value="Villa de Tezontepec">Villa de
+                                                                            Tezontepec
+                                                                        </option>
+                                                                        <option value="Tezontepec de Aldama">Tezontepec
+                                                                            de
+                                                                            Aldama</option>
+                                                                        <option value="Tianguistengo">Tianguistengo
+                                                                        </option>
+                                                                        <option value="Tizayuca">Tizayuca</option>
+                                                                        <option value="Tlahuelilpan">Tlahuelilpan
+                                                                        </option>
+                                                                        <option value="Tlahuiltepa">Tlahuiltepa</option>
+                                                                        <option value="Tlanalapa">Tlanalapa</option>
+                                                                        <option value="Tlanchinol">Tlanchinol</option>
+                                                                        <option value="Tlaxcoapan">Tlaxcoapan</option>
+                                                                        <option value="Tolcayuca">Tolcayuca</option>
+                                                                        <option value="Tula de Allende">Tula de Allende
+                                                                        </option>
+                                                                        <option value="Tulancingo de Bravo">Tulancingo
+                                                                            de
+                                                                            Bravo
+                                                                        </option>
+                                                                        <option value="Xochiatipan">Xochiatipan</option>
+                                                                        <option value="Xochicoatlán">Xochicoatlán
+                                                                        </option>
+                                                                        <option value="Yahualica">Yahualica</option>
+                                                                        <option value="Zacualtipán de Ángeles">
+                                                                            Zacualtipán
+                                                                            de
+                                                                            Ángeles</option>
+                                                                        <option value="Zapotlán de Juárez">Zapotlán de
+                                                                            Juárez
+                                                                        </option>
+                                                                        <option value="Zempoala">Zempoala</option>
+                                                                        <option value="Zimapán">Zimapán</option>
+                                                                    </select>
                                                                 </select>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
@@ -458,11 +506,11 @@ if (empty($_SESSION["idusuario"])) {
                                                                 <select class="form-control" id="gradoEstudios"
                                                                     name="gradoEstudios" required disabled>
                                                                     <option value="">Seleccione una opción</option>
-                                                                    <option value="secundaria">Secundaria</option>
-                                                                    <option value="bachillerato">Bachillerato</option>
-                                                                    <option value="licenciatura">Licenciatura</option>
-                                                                    <option value="maestria">Maestría</option>
-                                                                    <option value="doctorado">Doctorado</option>
+                                                                    <option value="Secundaria">Secundaria</option>
+                                                                    <option value="Bachillerato">Bachillerato</option>
+                                                                    <option value="Licenciatura">Licenciatura</option>
+                                                                    <option value="Maestría">Maestría</option>
+                                                                    <option value="Doctorado">Doctorado</option>
                                                                 </select>
                                                             </div>
                                                             <div class="valid-feedback">Muy bien!</div>
