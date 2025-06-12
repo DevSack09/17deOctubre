@@ -67,7 +67,7 @@ while ($row = $query->fetch_assoc()) {
     $nestedData['municipio'] = $row["municipio"];
     $nestedData['edad'] = $row["edad"];
     $nestedData['encuesta'] = ($row["status"] == 1) ? "Realizada" : "No finalizada";
-    $nestedData['estatus'] = ($row["status"] == 1) ? "Activo" : "Pendiente";
+    $nestedData['estatus'] = ($row["status"] == 1) ? "Finalizado" : "Pendiente";
     $nestedData['folio'] = $row["folio"];
     $data[] = $nestedData;
 }

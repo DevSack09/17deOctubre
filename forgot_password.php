@@ -49,7 +49,8 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
         <div class="panels-container">
           <div class="panel left-panel">
             <div class="content">
-              <h1>Premio 17 de octubre | IEEH</h1>
+              <h1>Premio 17 de octubre 2025 | IEEH</h1>
+              <h2>Décima Tercera Edición</h2>
               <p style="font-size: 20px;">
                 Por tu seguridad, te recomendamos no compartir tu contraseña con nadie. Esta es personal e intransferible y
                 su confidencialidad es esencial para proteger el acceso a tu cuenta.

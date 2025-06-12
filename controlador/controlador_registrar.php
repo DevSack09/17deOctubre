@@ -9,6 +9,13 @@ include "../modelo/conexion.php";
 header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verificar si el registro está abierto
+    $control = $db_connection->query("SELECT abierto FROM control_registros ORDER BY id DESC LIMIT 1")->fetch_assoc();
+    if (!$control || $control['abierto'] == 0) {
+        echo json_encode(["status" => "error", "message" => "La convocatoria ha concluido. Actualmente no se permiten nuevos registros de usuarios.."]);
+        exit;
+    }
+
     $email = $_POST["email"] ?? '';
     $nombre = $_POST["nombre"] ?? '';
     $apellidoP = $_POST["apellidoP"] ?? '';

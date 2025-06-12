@@ -16,7 +16,7 @@ ORDER BY r.id;";
 $result = $db_connection->query($sql);
 
 if ($result && $result->num_rows > 0) {
-    $filename = "REGISTRO_ENCUESTA_SATISFACCION_" . date("Ymd_His") . ".csv";
+    $filename = "REGISTRO_17_OCTUBRE_2025_" . date("Ymd_His") . ".csv";
 
     header('Content-Type: text/csv; charset=UTF-8');
     header('Content-Disposition: attachment;filename="' . $filename . '"');

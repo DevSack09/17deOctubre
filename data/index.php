@@ -104,7 +104,7 @@ if (empty($_SESSION["idusuario"])) {
           <!-- INDICADORES -->
           <section class="mb-3 ">
             <div class="row">
-              <div class="col-xl-4 col-md-6 mb-4">
+              <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card-widget h-100">
                   <div class="card-widget-body">
                     <div class="dot me-3 bg-indigo"></div>
@@ -116,7 +116,7 @@ if (empty($_SESSION["idusuario"])) {
                   <div class="icon text-white bg-indigo"><i class="fas fa-server"></i></div>
                 </div>
               </div>
-              <div class="col-xl-4 col-md-6 mb-4">
+              <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card-widget h-100">
                   <div class="card-widget-body">
                     <div class="dot me-3 bg-green"></div>
@@ -128,16 +128,33 @@ if (empty($_SESSION["idusuario"])) {
                   <div class="icon text-white bg-green"><i class="far fa-clipboard"></i></div>
                 </div>
               </div>
-              <div class="col-xl-4 col-md-6 mb-4">
+              <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card-widget h-100">
                   <div class="card-widget-body">
                     <div class="dot me-3 bg-blue"></div>
                     <div class="text">
-                      <h6 class="mb-0">Total Encuesta de retroalimentación</h6>
+                      <h6 class="mb-0">Encuesta de retroalimentación</h6>
                       <span id="totalEncuestas" class="text-gray-500">...</span>
                     </div>
                   </div>
                   <div class="icon text-white bg-blue"><i class="fa fa-dolly-flatbed"></i></div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card-widget h-100">
+                  <div class="card-widget-body d-flex align-items-center">
+                    <div class="dot me-3 bg-warning"></div>
+                    <div class="text w-100">
+                      <h6 class="mb-0">Cuenta regresiva</h6>
+                      <span id="countdownTimer" class="text-gray-500"></span>
+                      <div class="progress mt-2" style="height: 8px;">
+                        <div id="progressBarCountdown" class="progress-bar bg-warning" role="progressbar"
+                          style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <small id="countdownPercent" class="text-muted"></small>
+                    </div>
+                  </div>
+                  <div class="icon text-white bg-warning"><i class="fas fa-hourglass-half"></i></div>
                 </div>
               </div>
             </div>
@@ -238,6 +255,21 @@ if (empty($_SESSION["idusuario"])) {
                     </div>
                   </div>
                   <a class="stretched-link" href="../controlador/dashboard/generar_excel.php"></a>
+                </div>
+              </div>
+              <!-- CARD PARA ABRIR/CERRAR REGISTROS -->
+              <div class="col-md-6 col-xl-6 mb-">
+                <div class="card credit-card bg-hover-gradient-green" id="abrirCerrarRegistrosCard"
+                  style="cursor:pointer;">
+                  <div class="credict-card-content">
+                    <div class="h1 mb-3 mb-lg-1" id="iconoAbrirCerrar"><i class="fas fa-lock"></i></div>
+                    <div class="credict-card-bottom">
+                      <div class="text-uppercase flex-shrink-0 me-1 mb-1">
+                        <div class="fw-bold" id="textoAbrirCerrar">Cerrar registros</div>
+                        <small class="text-gray-500" id="subTextoAbrirCerrar">Finalizar y bloquear</small>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -649,7 +681,126 @@ if (empty($_SESSION["idusuario"])) {
         }
       });
     </script>
+    <!-- Cerrar registros -->
+    <script>
+      $(document).ready(function () {
+        // Consultar el estado actual al cargar la página
+        $.ajax({
+          url: '../controlador/dashboard/abrirCerrarRegistros.php',
+          type: 'POST',
+          data: { consulta_estado: 1 },
+          dataType: 'json',
+          success: function (resp) {
+            if (resp.abierto == 1) {
+              // Registros abiertos: card azul
+              $('#iconoAbrirCerrar').html('<i class="fas fa-lock"></i>');
+              $('#textoAbrirCerrar').text('Cerrar registros');
+              $('#subTextoAbrirCerrar').text('Finalizar y bloquear');
+              $('#abrirCerrarRegistrosCard')
+                .removeClass('bg-hover-gradient-green bg-hover-gradient-blue')
+                .addClass('bg-hover-gradient-red');
+            } else {
+              // Registros cerrados: card roja
+              $('#iconoAbrirCerrar').html('<i class="fas fa-lock-open"></i>');
+              $('#textoAbrirCerrar').text('Abrir registros');
+              $('#subTextoAbrirCerrar').text('Permitir nuevos registros');
+              $('#abrirCerrarRegistrosCard')
+                .removeClass('bg-hover-gradient-green bg-hover-gradient-red')
+                .addClass('bg-hover-gradient-blue');
+            }
+          }
+        });
 
+        $('#abrirCerrarRegistrosCard').on('click', function () {
+          let accion = $('#textoAbrirCerrar').text().includes('Cerrar') ? 'cerrar' : 'abrir';
+          let titulo = accion === 'cerrar' ? 'Cerrar registros' : 'Abrir registros';
+          let texto = accion === 'cerrar'
+            ? 'Ingresa la contraseña para cerrar los registros y finalizar los pendientes:'
+            : 'Ingresa la contraseña para abrir los registros:';
+          let confirmBtn = accion === 'cerrar' ? 'Cerrar registros' : 'Abrir registros';
+
+          Swal.fire({
+            title: titulo,
+            text: texto,
+            input: 'password',
+            inputPlaceholder: 'Contraseña',
+            inputAttributes: { autocapitalize: 'off', autocomplete: 'off' },
+            showCancelButton: true,
+            confirmButtonText: confirmBtn,
+            cancelButtonText: 'Cancelar',
+            preConfirm: (password) => {
+              if (!password) {
+                Swal.showValidationMessage('Debes ingresar la contraseña');
+              }
+              return password;
+            }
+          }).then((result) => {
+            if (result.isConfirmed && result.value) {
+              $.ajax({
+                url: '../controlador/dashboard/abrirCerrarRegistros.php',
+                type: 'POST',
+                data: { password: result.value, accion: accion },
+                dataType: 'json',
+                success: function (resp) {
+                  if (resp.status === 'success') {
+                    Swal.fire('¡Listo!', resp.message, 'success').then(() => {
+                      location.reload();
+                    });
+                  } else {
+                    Swal.fire('Error', resp.message, 'error');
+                  }
+                },
+                error: function () {
+                  Swal.fire('Error', 'No se pudo procesar la solicitud.', 'error');
+                }
+              });
+            }
+          });
+        });
+      });
+    </script>
+
+    <script>
+      // Fecha objetivo: 1 de octubre 2025 23:59:59
+      const targetDateWidget = new Date('2025-10-01T23:59:59');
+      // Fecha de apertura: 10 de junio 2025 00:00:00
+      const startDateWidget = new Date('2025-06-10T00:00:00');
+
+      function getTimeRemainingWidget(endtime) {
+        const now = new Date();
+        const t = endtime - now;
+        const days = Math.floor(t / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((t / 1000 / 60) % 60);
+        const seconds = Math.floor((t / 1000) % 60);
+        return {
+          total: t,
+          days,
+          hours,
+          minutes,
+          seconds
+        };
+      }
+
+      function updateCountdownWidget() {
+        const t = getTimeRemainingWidget(targetDateWidget);
+        const formatted = `${t.days}d ${String(t.hours).padStart(2, '0')}h ${String(t.minutes).padStart(2, '0')}m ${String(t.seconds).padStart(2, '0')}s`;
+        $('#countdownTimer').text(formatted);
+
+        // Barra de progreso
+        const totalTime = targetDateWidget - startDateWidget;
+        const restante = t.total > 0 ? t.total : 0;
+        const transcurrido = totalTime - restante;
+        const percent = Math.min(100, Math.max(0, (transcurrido / totalTime) * 100));
+        $('#progressBarCountdown').css('width', percent + '%').attr('aria-valuenow', percent);
+        $('#countdownPercent').text(`Avance: ${percent.toFixed(1)}%`);
+      }
+
+      $(document).ready(function () {
+        updateCountdownWidget();
+        setInterval(updateCountdownWidget, 1000);
+      });
+    </script>
   </body>
 
   </html>

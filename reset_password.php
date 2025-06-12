@@ -37,7 +37,8 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
             <link rel="stylesheet" href="css/style.css" />
             <link rel="stylesheet" href="css/alert.css" />
             <link rel="stylesheet" href="css/main.css" />
-            <title>Premio 17 de octubre | IEEH</title>
+            <h1>Premio 17 de octubre 2025 | IEEH</h1>
+            <h2>Décima Tercera Edición</h2>
         </head>
 
         <body>
