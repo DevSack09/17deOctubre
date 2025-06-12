@@ -55,9 +55,6 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                 Por tu seguridad, te recomendamos no compartir tu contraseña con nadie. Esta es personal e intransferible y
                 su confidencialidad es esencial para proteger el acceso a tu cuenta.
               </p>
-              <!-- <button class="btn transparent" id="sign-up-btn">
-              Registrarse
-            </button> -->
             </div>
             <img src="img/undraw_secure-login_m11a.svg" class="image" alt="" />
           </div>

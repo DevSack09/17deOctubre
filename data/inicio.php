@@ -38,7 +38,6 @@ if (empty($_SESSION["idusuario"])) {
     <style>
         .navbar .nav-item.dropdown.ms-auto {
             margin-right: 20px;
-            /* Ajusta este valor según necesites */
         }
     </style>
 
@@ -79,11 +78,6 @@ if (empty($_SESSION["idusuario"])) {
             <?php include 'menu.php'; ?>
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
-                    <!-- Page Header-->
-                    <!--  <div class="page-header">
-                        <h1 class="page-heading text-center">Formulario de registro</h1>
-                        <h1 class="page-heading text-center">Edición 2024</h1>
-                    </div> -->
 
                     <section>
                         <div class="card mb-4">

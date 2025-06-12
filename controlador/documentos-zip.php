@@ -1,17 +1,14 @@
 <?php
-// Habilitar errores para depuración
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Verificar que el tipo sea válido
 $tipo = $_GET['tipo'] ?? '';
 if (!in_array($tipo, ['menores', 'mayores', 'todas'])) {
     header("HTTP/1.1 400 Bad Request");
     exit("Tipo de documento no válido");
 }
 
-// Definir rutas base (ajusta según tu estructura real)
 $basePath = realpath(__DIR__ . '/../Docs');
 $documentos = [];
 
@@ -34,7 +31,6 @@ switch ($tipo) {
     case 'todas':
         $documentos = [
 
-            // Documentos comunes
             $basePath . '../data/Docs/Todos/API 2025.pdf',
             $basePath . '../data/Docs/Todos/APS 2025.pdf',
             $basePath . '../data/Docs/Todos/CONVOCATORIA EXTENSA_VF_10.06.25.pdf',
@@ -47,7 +43,6 @@ switch ($tipo) {
         break;
 }
 
-// Verificar existencia de archivos
 foreach ($documentos as $doc) {
     if (!file_exists($doc)) {
         header("HTTP/1.1 404 Not Found");
@@ -55,7 +50,6 @@ foreach ($documentos as $doc) {
     }
 }
 
-// Crear ZIP
 $zip = new ZipArchive();
 $zipFilename = tempnam(sys_get_temp_dir(), 'zip');
 
@@ -64,7 +58,6 @@ if ($zip->open($zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRU
 }
 
 foreach ($documentos as $doc) {
-    // Usamos basename para evitar estructura de directorios en el ZIP
     $zip->addFile($doc, basename($doc));
 }
 
@@ -72,7 +65,6 @@ if (!$zip->close()) {
     exit("Error al finalizar el archivo ZIP");
 }
 
-// Enviar headers
 header('Content-Type: application/zip');
 header('Content-Disposition: attachment; filename="documentos_' . $tipo . '.zip"');
 header('Content-Length: ' . filesize($zipFilename));
@@ -80,6 +72,6 @@ header('Pragma: no-cache');
 header('Expires: 0');
 
 readfile($zipFilename);
-unlink($zipFilename); // Limpiar
+unlink($zipFilename);
 exit;
 ?>

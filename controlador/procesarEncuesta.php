@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pregunta3 = $_POST['q3'] ?? '';
     $sugerencia = $_POST['suggestion'] ?? '';
 
-    // Verifica si ya existe una encuesta para este usuario
     $stmt = $db_connection->prepare("SELECT id FROM encuesta_satisfaccion WHERE usuario_id = ?");
     $stmt->bind_param("i", $usuario_id);
     $stmt->execute();
@@ -21,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $stmt->close();
 
-    // Si no existe, guarda la respuesta
     $stmt = $db_connection->prepare("INSERT INTO encuesta_satisfaccion (usuario_id, pregunta1, pregunta2, pregunta3, sugerencia) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("issss", $usuario_id, $pregunta1, $pregunta2, $pregunta3, $sugerencia);
     if ($stmt->execute()) {

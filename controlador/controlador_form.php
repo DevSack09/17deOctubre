@@ -25,7 +25,6 @@ try {
     $acepta_privacidad = isset($_POST['terminos_privacidad']) ? 1 : 0;
     $acepta_consentimiento = isset($_POST['terminos_consentimiento']) ? 1 : 0;
 
-    // === DOMICILIO ===
     $calle = !empty($_POST['calle']) ? $_POST['calle'] : null;
     $numeroExterior = !empty($_POST['numeroExterior']) ? $_POST['numeroExterior'] : null;
     $numeroInterior = !empty($_POST['numeroInterior']) ? $_POST['numeroInterior'] : null;
@@ -91,7 +90,6 @@ try {
         'ine_tutor'
     ];
 
-    // Cambia la base de subida a una temporal
     $upload_base_dir = "../uploads/tmp/";
     $db_upload_base_dir = "uploads/tmp/";
 
@@ -136,7 +134,6 @@ try {
         exit;
     }
 
-    // Verificar si existe el registro
     $sql_check = "SELECT id, folio, archivo_ensayo, credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos, identificacion_fotografia, carta_autorizacion, declaracion_originalidad_menores, comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor FROM registration WHERE curp = ?";
     $stmt_check = $db_connection->prepare($sql_check);
 
@@ -145,7 +142,6 @@ try {
         $stmt_check->execute();
         $stmt_check->store_result();
 
-        // Obtener los nombres actuales de los archivos para limpiar si se actualizan
         $current_files = [
             'credencial_votar' => null,
             'declaracion_originalidad' => null,
@@ -191,8 +187,6 @@ try {
         }
 
         if ($stmt_check->num_rows > 0) {
-            // UPDATE
-            // Recupera el id y folio del registro
             $sql_folio = "SELECT id, folio FROM registration WHERE curp = ?";
             $stmt_folio = $db_connection->prepare($sql_folio);
             $stmt_folio->bind_param("s", $curp);
@@ -217,14 +211,12 @@ try {
                 mkdir($user_folder, 0777, true);
             }
 
-            // Mueve archivos nuevos a la carpeta personalizada
             foreach ($file_fields as $file_field) {
                 if (isset($uploaded_files[$file_field])) {
                     $new_path = $user_folder . $uploaded_files[$file_field]['filename'];
                     $db_new_path = $db_user_folder . $uploaded_files[$file_field]['filename'];
                     rename($uploaded_files[$file_field]['tmp_path'], $new_path);
                     $uploaded_files[$file_field] = $db_new_path;
-                    // Elimina archivo anterior si existía
                     if (!empty($current_files[$file_field])) {
                         $prev_file = "../" . $current_files[$file_field];
                         if (file_exists($prev_file)) {
@@ -296,12 +288,11 @@ try {
                 $update_params[] = $archivo_ensayo;
             }
 
-            $types = "ssssiiissssssssssssssssssssssssssssssssss"; // Ajusta la cantidad de caracteres según los campos
+            $types = "ssssiiissssssssssssssssssssssssssssssssss";
             if ($archivo_ensayo) {
                 $types .= "s";
             }
 
-            // Agrega archivos si existen
             foreach ($file_fields as $file_field) {
                 if (isset($uploaded_files[$file_field])) {
                     $sql_update .= ", $file_field = ?";
@@ -313,7 +304,6 @@ try {
             $update_params[] = $curp;
             $types .= "s";
 
-            // Chequeo antes de bind_param
             if (strlen($types) !== count($update_params)) {
                 echo json_encode([
                     'status' => 'error',
@@ -336,7 +326,6 @@ try {
             }
             $stmt_update->close();
         } else {
-            // INSERT
             $columns = [
                 'usuario_id',
                 'curp',
@@ -380,7 +369,6 @@ try {
                 'diversidad_cual',
                 'medio_convocatoria',
                 'archivo_ensayo',
-                // ...archivos y otros campos...
                 'credencial_votar',
                 'declaracion_originalidad',
                 'consentimiento_expreso_adultos',
@@ -483,7 +471,6 @@ try {
                         mkdir($user_folder, 0777, true);
                     }
 
-                    // Mueve archivos a la carpeta personalizada y actualiza rutas
                     $update_file_paths = [];
                     foreach ($file_fields as $file_field) {
                         if (isset($uploaded_files[$file_field])) {
@@ -494,7 +481,6 @@ try {
                         }
                     }
 
-                    // Actualiza las rutas y el folio en la base de datos
                     if (!empty($update_file_paths) || true) {
                         $set_files = [];
                         $params = [];

@@ -39,7 +39,6 @@ if (empty($_SESSION["idusuario"])) {
     <style>
       .navbar .nav-item.dropdown.ms-auto {
         margin-right: 20px;
-        /* Ajusta este valor según necesites */
       }
 
       .dataTables_filter {
@@ -79,6 +78,11 @@ if (empty($_SESSION["idusuario"])) {
 
       .toggle-password:hover {
         color: #000;
+      }
+
+      .switch-lg .form-check-input {
+        width: 3rem;
+        height: 1.5rem;
       }
     </style>
   </head>
@@ -193,14 +197,6 @@ if (empty($_SESSION["idusuario"])) {
                       </div>
                     </div>
                   </div>
-                  <style>
-                    .switch-lg .form-check-input {
-                      width: 3rem;
-                      /* Aumenta el ancho del switch */
-                      height: 1.5rem;
-                      /* Aumenta la altura del switch */
-                    }
-                  </style>
                   <br>
                   <div class="table-responsive">
                     <table class="table table-hover mb-0 display nowrap" id="user" width="100%">

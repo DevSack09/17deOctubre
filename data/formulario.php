@@ -38,7 +38,6 @@ if (empty($_SESSION["idusuario"])) {
         <style>
             .navbar .nav-item.dropdown.ms-auto {
                 margin-right: 20px;
-                /* Ajusta este valor según necesites */
             }
         </style>
     </head>
@@ -111,15 +110,12 @@ if (empty($_SESSION["idusuario"])) {
                                         <a href="https://www.gob.mx/curp/" target="_blank">Si no conoces tu CURP, haz clic
                                             aquí.</a>
                                         <div id="curp-feedback" class="text-danger mt-2" style="display: none;">
-                                            <!-- Mensaje de error se mostrará aquí -->
                                         </div>
                                         <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Por favor, introduzca su CURP.</div>
                                     </div>
 
-                                    <!-- Alertas -->
                                     <div id="alert-container" style="position: relative; margin-top: 20px;">
-                                        <!-- Aquí se mostrarán las alertas -->
                                     </div>
 
                                     <div class="accordion" id="accordionExample">
@@ -1221,7 +1217,6 @@ if (empty($_SESSION["idusuario"])) {
                                                         </div>
                                                     </div>
 
-                                                    <!-- Mensaje importante -->
                                                     <div class="alert alert-primary">
                                                         <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
                                                         Todos los documentos deben estar en <strong>formato PDF</strong>,
@@ -1586,7 +1581,6 @@ if (empty($_SESSION["idusuario"])) {
         <!-- Main Theme JS File-->
         <script src="js/theme.js"></script>
         <script src="../js/darkLight.js"></script>
-        <!-- <script src="js/forms-validation.js"></script> -->
         <!-- Prism for syntax highlighting-->
         <script src="vendor/prismjs/prism.js"></script>
         <script src="vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
@@ -1604,9 +1598,7 @@ if (empty($_SESSION["idusuario"])) {
         <!-- FUNCIONES INPUT FILE -->
         <script>
             function getArchivoUrl(archivoRuta) {
-                // Quita "/data" si lo tiene
                 archivoRuta = archivoRuta.replace(/^data\//, '');
-                // Añade el prefijo del proyecto si hace falta
                 if (!archivoRuta.startsWith('/')) archivoRuta = '/' + archivoRuta;
                 return '/17deoctubre' + archivoRuta;
             }
@@ -1670,21 +1662,18 @@ if (empty($_SESSION["idusuario"])) {
                     "input[required], select[required], textarea[required]"
                 );
 
-                // --- NUEVO: IDs de los campos file requeridos ---
                 const fileFieldIds = [
                     'credencial_votar',
                     'declaracion_originalidad',
                     'consentimiento_expreso_adultos'
                 ];
 
-                // --- NUEVO: Variable global para archivos cargados (debes actualizarla cuando cargues datos del backend) ---
                 let archivosCargados = window.archivosCargados || {
                     credencial_votar: '',
                     declaracion_originalidad: '',
                     consentimiento_expreso_adultos: ''
                 };
 
-                // --- NUEVO: Función para saber si un archivo requerido ya está cargado ---
                 function archivoYaCargado(fieldId) {
                     return archivosCargados[fieldId] && archivosCargados[fieldId].trim() !== '';
                 }
@@ -1753,14 +1742,12 @@ if (empty($_SESSION["idusuario"])) {
                     console.log('--- Campos que se están contabilizando en la progress bar ---');
 
                     camposAContar.forEach(selector => {
-                        // --- INICIO BLOQUE MEJORADO PARA RADIO BUTTON ---
                         if (selector.startsWith('input[name=')) {
                             const nameMatch = selector.match(/name="([^"]+)"/);
                             if (nameMatch) {
                                 const name = nameMatch[1];
                                 if (radiosContados[name]) return;
                                 radiosContados[name] = true;
-                                // Selecciona todos los radios del grupo, sin importar si están habilitados o visibles
                                 const $radios = $(`input[name="${name}"]`);
                                 let estado = $radios.is(':checked') ? 'completado' : 'pendiente';
                                 if ($radios.is(':checked')) {
@@ -1769,10 +1756,8 @@ if (empty($_SESSION["idusuario"])) {
                                 console.log(`input[name="${name}"]: ${estado}`);
                             }
                         }
-                        // --- FIN BLOQUE PARA RADIO BUTTON ---
                         else {
                             const $field = $(selector);
-                            // Para #curp, cuenta aunque esté deshabilitado
                             if (selector === '#curp') {
                                 let estado = ($field.val() && $field.val().trim() !== "") ? 'completado' : 'pendiente';
                                 if ($field.val() && $field.val().trim() !== "") completados++;
@@ -1810,7 +1795,6 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
-                // --- NUEVO: Cuando cargues datos del backend, actualiza archivosCargados y la barra ---
                 function cargarDatos() {
                     $.ajax({
                         url: "../controlador/get_registration.php",
@@ -1860,7 +1844,6 @@ if (empty($_SESSION["idusuario"])) {
                                 $('#categoria').val(response.data.categoria);
 
 
-                                // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
                                     archivo_ensayo: response.data.archivo_ensayo,
                                     credencial_votar: data.credencial_votar,
@@ -1936,7 +1919,6 @@ if (empty($_SESSION["idusuario"])) {
                 feedback.style.display = 'none';
                 btnSubmit.disabled = true;
 
-                // Validación 1: Campo vacío
                 if (!curp) {
                     mostrarAlerta('warning', 'Por favor, introduzca su CURP.');
                     curpInput.focus();
@@ -1944,7 +1926,6 @@ if (empty($_SESSION["idusuario"])) {
                     return;
                 }
 
-                // Validación 2: Longitud incorrecta
                 if (curp.length !== 18) {
                     mostrarAlerta('warning', 'El CURP debe tener exactamente 18 caracteres.');
                     curpInput.focus();
@@ -1952,7 +1933,6 @@ if (empty($_SESSION["idusuario"])) {
                     return;
                 }
 
-                // Validación 3: Formato mejorado (fecha, género, entidad federativa)
                 const curpRegex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z\d]{2}$/i;;
                 if (!curpRegex.test(curp)) {
                     mostrarAlerta('warning', 'El CURP no tiene el formato correcto');
@@ -1961,10 +1941,8 @@ if (empty($_SESSION["idusuario"])) {
                     return;
                 }
 
-                // Mostrar carga
                 mostrarAlerta('info', '<i class="fas fa-spinner fa-spin"></i> Validando CURP...', false);
 
-                // Consultar al backend
                 fetch('../controlador/validar_curp.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1982,7 +1960,6 @@ if (empty($_SESSION["idusuario"])) {
                             bloquearFormulario();
                         } else if (data.exists) {
                             feedback.style.display = 'block';
-                            // feedback.textContent = 'El CURP ya está registrado.';
                             mostrarAlerta('danger', 'El CURP ya está registrado. Por favor, use otro');
                             bloquearFormulario();
                         } else {
@@ -2001,11 +1978,9 @@ if (empty($_SESSION["idusuario"])) {
                     });
             }
 
-            // ==================== EVENT LISTENERS ====================
             document.addEventListener('DOMContentLoaded', () => {
-                bloquearFormulario(); // Bloquear al inicio
+                bloquearFormulario();
 
-                // Validación en tiempo real (mayúsculas y longitud)
                 document.getElementById('curp').addEventListener('input', (e) => {
                     e.target.value = e.target.value.toUpperCase();
                     if (e.target.value.trim().length !== 18) {
@@ -2016,7 +1991,6 @@ if (empty($_SESSION["idusuario"])) {
         </script>
         <!-- validaciones input file -->
         <script>
-            // Requiere SweetAlert2 y FontAwesome
             document.addEventListener('DOMContentLoaded', function () {
                 const fileFields = [
                     'credencial_votar',
@@ -2087,7 +2061,6 @@ if (empty($_SESSION["idusuario"])) {
         <!-- procesamiento -->
         <script>
             $(document).ready(function () {
-                // ==================== CONSTANTES Y VARIABLES ====================
                 const $form = $('#formRegistro');
                 const $curpField = $('#curp');
                 const $btnGuardar = $('#btnGuardar');
@@ -2096,7 +2069,7 @@ if (empty($_SESSION["idusuario"])) {
                 const $btnFinalizar = $('#btnFinalizar');
                 let originalFormData = {};
                 let loadingAlert;
-                let formHasBeenSaved = false; // Nueva variable para controlar el estado de guardado
+                let formHasBeenSaved = false;
                 let archivosCargados = {
                     credencial_votar: '',
                     declaracion_originalidad: '',
@@ -2107,21 +2080,17 @@ if (empty($_SESSION["idusuario"])) {
                 // ==================== FUNCIONES DE ESTADO ====================
                 function setInitialState() {
                     if (formHasBeenSaved) {
-                        // Estado después de guardar (CURP bloqueado)
                         $form.find(':input').not('.accordion-button').prop('disabled', true);
-                        $curpField.prop('disabled', true); // CURP no editable después de guardar
+                        $curpField.prop('disabled', true);
 
-                        // Mostrar solo Actualizar y Finalizar
                         $btnGuardar.hide();
                         $btnActualizar.show().prop('disabled', false);
                         $btnCancelar.hide();
                         $btnFinalizar.show().prop('disabled', false);
                     } else {
-                        // Estado inicial (solo Guardar visible)
                         $form.find(':input').not('#curp, .accordion-button').prop('disabled', true);
                         $curpField.prop('disabled', false);
 
-                        // Mostrar solo Guardar
                         $btnGuardar.show();
                         $btnActualizar.hide();
                         $btnCancelar.hide();
@@ -2130,10 +2099,8 @@ if (empty($_SESSION["idusuario"])) {
                 }
 
                 function enableEditMode() {
-                    // Habilitar todos los campos excepto CURP (si ya fue guardado) y botones del acordeón
                     $form.find(':input').not('#curp, .accordion-button').prop('disabled', false);
 
-                    // Configurar botones para modo edición
                     $btnGuardar.show();
                     $btnActualizar.hide();
                     $btnCancelar.show();
@@ -2141,7 +2108,6 @@ if (empty($_SESSION["idusuario"])) {
                 }
 
                 function disableForm() {
-                    // Volver al estado después de guardar
                     $form.find(':input').not('.accordion-button').prop('disabled', true);
                     $curpField.prop('disabled', true);
 
@@ -2152,7 +2118,6 @@ if (empty($_SESSION["idusuario"])) {
                 }
 
                 function lockFormPermanently() {
-                    // Bloquear completamente el formulario
                     $form.find(':input').not('.accordion-button').prop('disabled', true);
                     $btnGuardar.add($btnActualizar).add($btnCancelar).add($btnFinalizar).hide();
 
@@ -2221,27 +2186,23 @@ if (empty($_SESSION["idusuario"])) {
                 }
 
                 function prepareFormForSubmit() {
-                    // Habilitar temporalmente campos deshabilitados (incluyendo CURP)
                     const disabledFields = $form.find(':input:disabled');
                     disabledFields.prop('disabled', false);
                     return disabledFields;
                 }
 
                 function restoreAfterSubmit(disabledFields) {
-                    // Restaurar estado original
                     disabledFields.prop('disabled', true);
                 }
 
                 function validateRequiredFields() {
                     let isValid = true;
 
-                    // Limpiar todas las validaciones anteriores
                     $form.find('.is-invalid').removeClass('is-invalid');
                     $form.find('.is-valid').removeClass('is-valid');
                     $form.find('.invalid-feedback').removeClass('d-block').addClass('d-none');
                     $form.find('.valid-feedback').removeClass('d-block').addClass('d-none');
 
-                    // Validar cada campo requerido
                     $form.find('[required]').each(function () {
                         const $field = $(this);
                         const $feedbackContainer = $field.closest('.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-6, .col-md-7, .col-md-12, .form-check');
@@ -2249,17 +2210,14 @@ if (empty($_SESSION["idusuario"])) {
                         const $validFeedback = $feedbackContainer.find('.valid-feedback');
                         let fieldValid = true;
 
-                        // Validación específica para checkboxes
                         if ($field.is(':checkbox')) {
                             fieldValid = $field.is(':checked');
                         }
-                        // Validación especial para input file
                         else if ($field.attr('type') === 'file') {
                             const fieldId = $field.attr('id');
                             fieldValid = ($field.val() && $field.val().trim() !== '') ||
                                 (archivosCargados[fieldId] && archivosCargados[fieldId].trim() !== '');
                         }
-                        // Validación para otros campos
                         else {
                             fieldValid = $field.val() && $field.val().trim() !== '';
                         }
@@ -2285,7 +2243,6 @@ if (empty($_SESSION["idusuario"])) {
                         const $invalidFeedback = $container.find('.invalid-feedback');
                         const $validFeedback = $container.find('.valid-feedback');
 
-                        // Solo validar una vez por grupo
                         if ($group.data('validated')) return;
                         $group.data('validated', true);
 
@@ -2295,7 +2252,7 @@ if (empty($_SESSION["idusuario"])) {
                             $validFeedback.removeClass('d-none').addClass('d-block');
                         } else {
                             $group.removeClass('is-valid').addClass('is-invalid');
-                            $invalidFeedback.removeClass('d-none').addClass('d-block'); // <-- Esto muestra el texto
+                            $invalidFeedback.removeClass('d-none').addClass('d-block');
                             $validFeedback.removeClass('d-block').addClass('d-none');
                             isValid = false;
                         }
@@ -2313,10 +2270,8 @@ if (empty($_SESSION["idusuario"])) {
                     sendRequest('../controlador/get_registration.php', {}, 'GET')
                         .then(response => {
                             if (response.status === "success") {
-                                // Marcar como guardado si hay datos
                                 formHasBeenSaved = true;
 
-                                // Rellenar datos
                                 $('#curp').val(response.data.curp);
                                 $('#nombre').val(response.data.nombre);
                                 $('#apellidopaterno').val(response.data.apellidoP);
@@ -2344,9 +2299,9 @@ if (empty($_SESSION["idusuario"])) {
 
                                 $('#correo').val(response.data.correo);
                                 $('#numerofijo').val(response.data.numerofijo);
-                                $('#confirmarnumerofijo').val(response.data.numerofijo); // Si tienes confirmación en backend
+                                $('#confirmarnumerofijo').val(response.data.numerofijo);
                                 $('#numeromovil').val(response.data.numeromovil);
-                                $('#confirmarnumeromovil').val(response.data.numeromovil); // Si tienes confirmación en backend
+                                $('#confirmarnumeromovil').val(response.data.numeromovil);
 
                                 $('#facebook').val(response.data.facebook);
                                 $('#tiktok').val(response.data.tiktok);
@@ -2412,15 +2367,13 @@ if (empty($_SESSION["idusuario"])) {
                                 // Medio de convocatoria
                                 $('#medio_convocatoria').val(response.data.medio_convocatoria || '');
 
-                                // Dispara los triggers para que se apliquen las reglas de habilitación/requerido
                                 $('input[name="discapacidad"]').trigger('change');
                                 $('input[name="lengua_indigena"]').trigger('change');
-                                $('input[name="auto_indigena"]').trigger('change'); // <-- FALTABA ESTE
+                                $('input[name="auto_indigena"]').trigger('change');
                                 $('input[name="auto_indigena"]').trigger('change');
                                 $('input[name="comunidad_indigena"]').trigger('change');
                                 $('input[name="diversidad"]').trigger('change');
 
-                                // Llama a la barra de progreso después de los triggers
                                 if (typeof actualizarProgreso === 'function') {
                                     actualizarProgreso();
                                 }
@@ -2442,9 +2395,8 @@ if (empty($_SESSION["idusuario"])) {
                                     $('#archivo_ensayo').val('');
                                 }
 
-                                // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
-                                    archivo_ensayo: response.data.archivo_ensayo, // <-- agrega esta línea
+                                    archivo_ensayo: response.data.archivo_ensayo,
                                     credencial_votar: response.data.credencial_votar,
                                     declaracion_originalidad: response.data.declaracion_originalidad,
                                     consentimiento_expreso_adultos: response.data.consentimiento_expreso_adultos,
@@ -2460,10 +2412,8 @@ if (empty($_SESSION["idusuario"])) {
 
                                 response.data.status == 1 ? lockFormPermanently() : setInitialState();
                             } else if (response.message === "No se encontraron registros para este usuario.") {
-                                // Caso normal sin registros
                                 formHasBeenSaved = false;
 
-                                // NUEVO: Asegurarse de que los campos de archivo estén en modo "subir archivo"
                                 inicializarCamposArchivos({
                                     credencial_votar: '',
                                     declaracion_originalidad: '',
@@ -2495,7 +2445,6 @@ if (empty($_SESSION["idusuario"])) {
                         });
                 }
 
-                // Botón "Actualizar"
                 $btnActualizar.click(e => {
                     e.preventDefault();
                     Swal.fire({
@@ -2511,7 +2460,6 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
-                // Botón "Cancelar"
                 $btnCancelar.click(e => {
                     e.preventDefault();
                     Swal.fire({
@@ -2529,7 +2477,6 @@ if (empty($_SESSION["idusuario"])) {
                     });
                 });
 
-                // Al finalizar (botón finalizar)
                 $btnFinalizar.click(e => {
                     e.preventDefault();
 
@@ -2580,7 +2527,7 @@ if (empty($_SESSION["idusuario"])) {
                                             data: { curp: $curpField.val() },
                                             dataType: 'json',
                                             success: function (response2) {
-                                                if (loadingAlert) Swal.close(); // Cierra el loading justo antes de mostrar la alerta final
+                                                if (loadingAlert) Swal.close();
                                                 if (response2.status === "success") {
                                                     Swal.fire({
                                                         title: "¡Formulario finalizado!",
@@ -2590,7 +2537,6 @@ if (empty($_SESSION["idusuario"])) {
                                                         allowOutsideClick: false
                                                     }).then((result) => {
                                                         if (result.isConfirmed) {
-                                                            // Abrir la encuesta en una pestaña nueva
                                                             window.open(
                                                                 "http://localhost/17deoctubre/data/encuestasatisfaccion.php?usuario_id=" + encodeURIComponent(response2.usuario_id),
                                                                 "_blank"
@@ -2608,7 +2554,7 @@ if (empty($_SESSION["idusuario"])) {
                                                 if (loadingAlert) Swal.close();
                                                 handleError(error);
                                             },
-                                            complete: function () { /* No cerrar SweetAlert aquí */ }
+                                            complete: function () { /* No cerrar SweetAlert  */ }
                                         });
                                     } else {
                                         if (loadingAlert) Swal.close();
@@ -2619,13 +2565,12 @@ if (empty($_SESSION["idusuario"])) {
                                     if (loadingAlert) Swal.close();
                                     handleError(error);
                                 },
-                                complete: function () { /* No cerrar SweetAlert aquí */ }
+                                complete: function () { /* No cerrar SweetAlert */ }
                             });
                         }
                     });
                 });
 
-                // Envío del formulario - Guardar con confirmación
                 $form.submit(e => {
                     e.preventDefault();
 
@@ -2655,7 +2600,6 @@ if (empty($_SESSION["idusuario"])) {
                                 success: function (response) {
                                     if (response.status === "success") {
                                         formHasBeenSaved = true;
-                                        // Espera a que la alerta de loading se cierre antes de mostrar la de éxito
                                         Swal.close();
                                         setTimeout(() => {
                                             Swal.fire({
@@ -2666,20 +2610,18 @@ if (empty($_SESSION["idusuario"])) {
                                                 disableForm();
                                                 loadInitialData();
                                             });
-                                        }, 200); // Pequeño retraso para asegurar cierre de loading
+                                        }, 200);
                                     } else {
                                         handleError({ responseJSON: response });
                                     }
                                 },
                                 error: handleError,
-                                complete: function () { /* No cerrar SweetAlert aquí */ }
+                                complete: function () { /* No cerrar SweetAlert */ }
                             });
                         }
                     });
                 });
 
-
-                // Evento para limpiar validaciones al interactuar con los campos
                 $form.on('input change', '[required]', function () {
                     const $field = $(this);
                     const $feedbackContainer = $field.closest('.col-md-4, .col-md-12, .form-check');
@@ -2688,20 +2630,17 @@ if (empty($_SESSION["idusuario"])) {
                     $feedbackContainer.find('.invalid-feedback').removeClass('d-block').addClass('d-none');
                     $feedbackContainer.find('.valid-feedback').removeClass('d-block').addClass('d-none');
 
-                    // Validación en tiempo real para campos de texto
                     if (!$field.is(':checkbox') && $field.val().trim() !== '') {
                         $field.addClass('is-valid');
                         $feedbackContainer.find('.valid-feedback').removeClass('d-none').addClass('d-block');
                     }
 
-                    // Validación en tiempo real para checkboxes
                     if ($field.is(':checkbox') && $field.is(':checked')) {
                         $field.addClass('is-valid');
                         $feedbackContainer.find('.valid-feedback').removeClass('d-none').addClass('d-block');
                     }
                 });
 
-                // ==================== INICIALIZACIÓN ====================
                 setInitialState();
                 loadInitialData();
             });
@@ -2938,7 +2877,6 @@ if (empty($_SESSION["idusuario"])) {
                 // ==================== MANEJO DE SECCIONES POR EDAD ====================
                 ocultarSeccionesDocumentos();
 
-                // Guardar la edad inicial al cargar datos
                 function loadInitialData() {
                     showLoading('Cargando datos...');
                     sendRequest('../controlador/get_registration.php', {}, 'GET')
@@ -2972,9 +2910,9 @@ if (empty($_SESSION["idusuario"])) {
 
                                 $('#correo').val(response.data.correo);
                                 $('#numerofijo').val(response.data.numerofijo);
-                                $('#confirmarnumerofijo').val(response.data.numerofijo); // Si tienes confirmación en backend
+                                $('#confirmarnumerofijo').val(response.data.numerofijo);
                                 $('#numeromovil').val(response.data.numeromovil);
-                                $('#confirmarnumeromovil').val(response.data.numeromovil); // Si tienes confirmación en backend
+                                $('#confirmarnumeromovil').val(response.data.numeromovil);
 
                                 $('#facebook').val(response.data.facebook);
                                 $('#tiktok').val(response.data.tiktok);
@@ -3040,15 +2978,13 @@ if (empty($_SESSION["idusuario"])) {
                                 // Medio de convocatoria
                                 $('#medio_convocatoria').val(response.data.medio_convocatoria || '');
 
-                                // Dispara los triggers para que se apliquen las reglas de habilitación/requerido
                                 $('input[name="discapacidad"]').trigger('change');
                                 $('input[name="lengua_indigena"]').trigger('change');
-                                $('input[name="auto_indigena"]').trigger('change'); // <-- FALTABA ESTE
+                                $('input[name="auto_indigena"]').trigger('change'); // 
                                 $('input[name="auto_indigena"]').trigger('change');
                                 $('input[name="comunidad_indigena"]').trigger('change');
                                 $('input[name="diversidad"]').trigger('change');
 
-                                // Llama a la barra de progreso después de los triggers
                                 if (typeof actualizarProgreso === 'function') {
                                     actualizarProgreso();
                                 }
@@ -3070,7 +3006,6 @@ if (empty($_SESSION["idusuario"])) {
                                     $('#archivo_ensayo').val('');
                                 }
 
-                                // --- NUEVO: Actualiza archivosCargados ---
                                 archivosCargados = {
                                     credencial_votar: response.data.credencial_votar,
                                     declaracion_originalidad: response.data.declaracion_originalidad,
@@ -3085,7 +3020,6 @@ if (empty($_SESSION["idusuario"])) {
                                 inicializarCamposArchivos(archivosCargados);
 
 
-                                // Mostrar la sección correcta según la edad cargada
                                 const edadCargada = parseInt(response.data.edad, 10);
                                 mostrarSeccionPorEdad(edadCargada);
                                 ultimaEdad = edadCargada;
@@ -3137,7 +3071,6 @@ if (empty($_SESSION["idusuario"])) {
                         });
                 }
 
-                // Evento para cambio de edad con confirmación y limpieza de sección
                 $('#edad').on('focus', function () {
                     ultimaEdad = $(this).val();
                 });
@@ -3180,7 +3113,6 @@ if (empty($_SESSION["idusuario"])) {
                         allowOutsideClick: false
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Llamada AJAX para limpiar en base de datos
                             $.ajax({
                                 url: '../controlador/limpiar_seccion.php',
                                 type: 'POST',
@@ -3282,14 +3214,7 @@ if (empty($_SESSION["idusuario"])) {
         </script>
 
         <script>
-            // ...existing code...
-
-            /**
-             * Valida que los campos de confirmación de teléfono coincidan con su original.
-             * Muestra feedback con SweetAlert si no coinciden al salir del campo de confirmación.
-             */
             function validarConfirmacionTelefonosSweetAlert() {
-                // Número fijo
                 $('#confirmarnumerofijo').on('blur', function () {
                     const fijo = $('#numerofijo').val();
                     const confirmarFijo = $('#confirmarnumerofijo').val();
@@ -3305,7 +3230,6 @@ if (empty($_SESSION["idusuario"])) {
                     }
                 });
 
-                // Número móvil
                 $('#confirmarnumeromovil').on('blur', function () {
                     const movil = $('#numeromovil').val();
                     const confirmarMovil = $('#confirmarnumeromovil').val();
@@ -3323,9 +3247,7 @@ if (empty($_SESSION["idusuario"])) {
             }
 
             $(document).ready(function () {
-                // ...existing code...
                 validarConfirmacionTelefonosSweetAlert();
-                // ...existing code...
             });
         </script>
         <!-- ==================== CALCULAR EDAD DESDE FECHA DE NACIMIENTO ==================== -->
@@ -3364,10 +3286,8 @@ if (empty($_SESSION["idusuario"])) {
         </script>
 
         <script>
-            // ...coloca este bloque después de cargar jQuery y antes de cualquier integración de progress bar...
 
             $(document).ready(function () {
-                // --- 1. Discapacidad ---
                 $('input[name="discapacidad"]').on('change', function () {
                     if ($('#discapacidad_si').is(':checked')) {
                         $('#discapacidad_cual').prop('disabled', false).prop('required', true);
@@ -3381,7 +3301,6 @@ if (empty($_SESSION["idusuario"])) {
                     actualizarProgreso && actualizarProgreso();
                 });
 
-                // --- 2. Lengua indígena ---
                 $('input[name="lengua_indigena"]').on('change', function () {
                     if ($('#lengua_si').is(':checked')) {
                         $('#lengua_cual').prop('disabled', false).prop('required', true);
@@ -3392,7 +3311,6 @@ if (empty($_SESSION["idusuario"])) {
                     actualizarProgreso && actualizarProgreso();
                 });
 
-                // --- 3. Comunidad indígena ---
                 $('input[name="comunidad_indigena"]').on('change', function () {
                     if ($('#comunidad_si').is(':checked')) {
                         $('#comunidad_cual').prop('disabled', false).prop('required', true);
@@ -3403,7 +3321,6 @@ if (empty($_SESSION["idusuario"])) {
                     actualizarProgreso && actualizarProgreso();
                 });
 
-                // --- 4. Diversidad sexual y de género ---
                 $('input[name="diversidad"]').on('change', function () {
                     if ($('#diversidad_si').is(':checked')) {
                         $('#diversidad_cual').prop('disabled', false).prop('required', true);
@@ -3414,14 +3331,12 @@ if (empty($_SESSION["idusuario"])) {
                     actualizarProgreso && actualizarProgreso();
                 });
 
-                // Al cargar la página, deja los campos en el estado correcto según lo seleccionado
                 $('input[name="discapacidad"]').trigger('change');
                 $('input[name="lengua_indigena"]').trigger('change');
-                $('input[name="auto_indigena"]').trigger('change'); // <-- FALTABA ESTE
+                $('input[name="auto_indigena"]').trigger('change');
                 $('input[name="comunidad_indigena"]').trigger('change');
                 $('input[name="diversidad"]').trigger('change');
 
-                // Llama a la barra de progreso después de los triggers
                 if (typeof actualizarProgreso === 'function') {
                     actualizarProgreso();
                 }
@@ -3432,16 +3347,13 @@ if (empty($_SESSION["idusuario"])) {
                 const correoInput = document.getElementById('correo');
                 let alertaActiva = null;
 
-                // Función para validar cualquier correo electrónico válido
                 function esCorreoValido(correo) {
                     if (!correo) return false;
                     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                     return regex.test(correo);
                 }
 
-                // Función mejorada para mostrar/ocultar alerta
                 function manejarAlerta(correo) {
-                    // Si ya hay una alerta activa, no hacer nada
                     if (alertaActiva !== null) return;
 
                     const esValido = esCorreoValido(correo);
@@ -3461,12 +3373,10 @@ if (empty($_SESSION["idusuario"])) {
                     }
                 }
 
-                // Validación solo cuando se pierde el foco
                 correoInput.addEventListener('blur', function () {
                     manejarAlerta(correoInput.value.trim());
                 });
 
-                // Eliminado el event listener de 'input' para evitar validación mientras escribe
             });
         </script>
 

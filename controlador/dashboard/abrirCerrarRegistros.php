@@ -1,7 +1,6 @@
 <?php
 include "../../modelo/conexion.php";
 
-// Consulta de estado actual
 if (isset($_POST['consulta_estado'])) {
     $sql = "SELECT abierto FROM control_registros ORDER BY id DESC LIMIT 1";
     $res = $db_connection->query($sql);
@@ -10,7 +9,6 @@ if (isset($_POST['consulta_estado'])) {
     exit;
 }
 
-// Lógica para abrir/cerrar registros
 $sql = "SELECT * FROM control_registros ORDER BY id DESC LIMIT 1";
 $res = $db_connection->query($sql);
 $control = $res->fetch_assoc();

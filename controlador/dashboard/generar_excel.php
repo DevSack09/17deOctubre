@@ -81,7 +81,6 @@ if ($result && $result->num_rows > 0) {
         "acepta_consentimiento",
         "fecha_registro",
         "status",
-        // Campos de encuesta_satisfaccion
         "pregunta1",
         "pregunta2",
         "pregunta3",

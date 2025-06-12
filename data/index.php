@@ -40,7 +40,6 @@ if (empty($_SESSION["idusuario"])) {
   <style>
     .navbar .nav-item.dropdown.ms-auto {
       margin-right: 20px;
-      /* Ajusta este valor según necesites */
     }
 
     .excelButton {
@@ -257,7 +256,6 @@ if (empty($_SESSION["idusuario"])) {
                   <a class="stretched-link" href="../controlador/dashboard/generar_excel.php"></a>
                 </div>
               </div>
-              <!-- CARD PARA ABRIR/CERRAR REGISTROS -->
               <div class="col-md-6 col-xl-6 mb-">
                 <div class="card credit-card bg-hover-gradient-green" id="abrirCerrarRegistrosCard"
                   style="cursor:pointer;">
@@ -300,7 +298,6 @@ if (empty($_SESSION["idusuario"])) {
     <!-- Main Theme JS File-->
     <script src="js/theme.js"></script>
     <script src="../js/darkLight.js"></script>
-
     <!-- DataTable --->
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.1.1/js/dataTables.buttons.min.js"></script>
@@ -435,7 +432,6 @@ if (empty($_SESSION["idusuario"])) {
           }
         });
 
-        // Evento para ver registro completo
         $('#lookup tbody').on('click', '.ver-registro', function () {
           var usuario_id = $(this).data('id');
           if (usuario_id) {
@@ -449,10 +445,8 @@ if (empty($_SESSION["idusuario"])) {
           }
         });
 
-        // Evento para eliminar registro
         $('#lookup tbody').on('click', '.eliminar-registro', function () {
           var id = $(this).data('id');
-          // Obtener la fila de la tabla
           var row = table.row($(this).closest('tr')).data();
           if (row) {
             Swal.fire({
@@ -506,7 +500,6 @@ if (empty($_SESSION["idusuario"])) {
           method: 'GET',
           dataType: 'json',
           success: function (data) {
-            // Indicadores generales
             if (data.totalRegistros !== undefined) {
               $('#totalRegistros').text(data.totalRegistros);
             }
@@ -527,18 +520,15 @@ if (empty($_SESSION["idusuario"])) {
     <script>
       let chartInstance = null;
 
-      // Función para generar colores aleatorios
       function getRandomColors(num) {
         const colors = [];
         for (let i = 0; i < num; i++) {
-          // Genera un color pastel aleatorio
           const hue = Math.floor(Math.random() * 360);
           colors.push(`hsl(${hue}, 70%, 65%)`);
         }
         return colors;
       }
 
-      // Función para renderizar la gráfica with opciones visuales mejoradas
       function renderChart(labels, data, label, type = 'bar') {
         const ctx = document.getElementById('graficaDashboard').getContext('2d');
         if (chartInstance) chartInstance.destroy();
@@ -606,10 +596,8 @@ if (empty($_SESSION["idusuario"])) {
       $(document).ready(function () {
         let dashboardData = null;
 
-        // Oculta el canvas al inicio
         $('#graficaDashboard').hide();
 
-        // Cargar datos al iniciar
         $.ajax({
           url: '../controlador/dashboard/getDataAdmin.php',
           method: 'GET',
@@ -622,7 +610,6 @@ if (empty($_SESSION["idusuario"])) {
           }
         });
 
-        // Evento cambio de select
         $('#grafica').on('change', function () {
           const val = $(this).val();
           if (!val) {
@@ -684,7 +671,6 @@ if (empty($_SESSION["idusuario"])) {
     <!-- Cerrar registros -->
     <script>
       $(document).ready(function () {
-        // Consultar el estado actual al cargar la página
         $.ajax({
           url: '../controlador/dashboard/abrirCerrarRegistros.php',
           type: 'POST',
@@ -787,7 +773,6 @@ if (empty($_SESSION["idusuario"])) {
         const formatted = `${t.days}d ${String(t.hours).padStart(2, '0')}h ${String(t.minutes).padStart(2, '0')}m ${String(t.seconds).padStart(2, '0')}s`;
         $('#countdownTimer').text(formatted);
 
-        // Barra de progreso
         const totalTime = targetDateWidget - startDateWidget;
         const restante = t.total > 0 ? t.total : 0;
         const transcurrido = totalTime - restante;

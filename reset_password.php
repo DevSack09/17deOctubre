@@ -54,7 +54,7 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                                 <i class="fas fa-lock"></i>
                                 <input type="password" name="password" id="password" placeholder="Nueva contraseña" />
                                 <span id="togglePassword" class="toggle-password">
-                                    <i class="far fa-eye"></i> <!-- Ícono inicial -->
+                                    <i class="far fa-eye"></i>
                                 </span>
                             </div>
                             <div class="input-field">
@@ -62,7 +62,7 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                                 <input type="password" name="confirm_password" id="confirm_password"
                                     placeholder="Confirma tu contraseña" />
                                 <span id="toggleConfirmPassword" class="toggle-password">
-                                    <i class="far fa-eye"></i> <!-- Ícono inicial -->
+                                    <i class="far fa-eye"></i>
                                 </span>
                             </div>
                             <input type="submit" value="Restablecer" class="btn solid" />

@@ -38,7 +38,6 @@ if (empty($_SESSION["idusuario"])) {
         <style>
             .navbar .nav-item.dropdown.ms-auto {
                 margin-right: 20px;
-                /* Ajusta este valor según necesites */
             }
 
             .row>[class*="col-"]>section>.card.h-100 {
@@ -99,7 +98,6 @@ if (empty($_SESSION["idusuario"])) {
                         <h1 class="page-heading text-center">consulta de información</h1>
                     </div>
                     <div class="row">
-                        <!-- Formulario: ocupa la mitad en pantallas grandes, 100% en pantallas chicas -->
                         <div class="col-12 col-lg-7 mb-4">
                             <!-- formulario -->
                             <section>
@@ -142,7 +140,6 @@ if (empty($_SESSION["idusuario"])) {
                                                         disabled>
                                                 </div>
                                                 <div id="curp-feedback" class="text-danger mt-2" style="display: none;">
-                                                    <!-- Mensaje de error se mostrará aquí -->
                                                 </div>
                                                 <div class="valid-feedback"></div>
                                                 <div class="invalid-feedback">Por favor, introduzca su CURP.</div>
@@ -150,7 +147,6 @@ if (empty($_SESSION["idusuario"])) {
 
                                             <!-- Alertas -->
                                             <div id="alert-container" style="position: relative; margin-top: 20px;">
-                                                <!-- Aquí se mostrarán las alertas -->
                                             </div>
 
                                             <div class="accordion" id="accordionExample">
@@ -1267,7 +1263,6 @@ if (empty($_SESSION["idusuario"])) {
                                 </div>
                             </section>
                         </div>
-                        <!-- Visor de documentos: ocupa la mitad en pantallas grandes, 100% en pantallas chicas -->
                         <div class="col-12 col-lg-5 mb-4">
                             <!-- visor de documentos -->
                             <section>
@@ -1315,7 +1310,6 @@ if (empty($_SESSION["idusuario"])) {
         <!-- Main Theme JS File-->
         <script src="js/theme.js"></script>
         <script src="../js/darkLight.js"></script>
-        <!-- <script src="js/forms-validation.js"></script> -->
         <!-- Prism for syntax highlighting-->
         <script src="vendor/prismjs/prism.js"></script>
         <script src="vendor/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js"></script>
@@ -1332,7 +1326,6 @@ if (empty($_SESSION["idusuario"])) {
         </script>
         <script>
             $(document).ready(function () {
-                // Obtener el parámetro usuario_id de la URL
                 function getParameterByName(name) {
                     const url = window.location.href;
                     name = name.replace(/[\[\]]/g, '\\$&');
@@ -1353,7 +1346,6 @@ if (empty($_SESSION["idusuario"])) {
                     return;
                 }
 
-                // Solicitar la información del registro usando getInformation.php
                 $.ajax({
                     url: '../controlador/dashboard/getInformation.php',
                     type: 'POST',
@@ -1362,7 +1354,6 @@ if (empty($_SESSION["idusuario"])) {
                     success: function (response) {
                         if (response.status === 'success') {
                             const data = response.data;
-                            // Llena los campos del formulario con los datos recibidos
                             $('#curp').val(data.curp);
                             $('#nombre').val(data.nombre);
                             $('#apellidopaterno').val(data.apellidoP);
@@ -1435,9 +1426,7 @@ if (empty($_SESSION["idusuario"])) {
                             $('#terminos_privacidad').prop('checked', data.acepta_privacidad == 1 || data.acepta_privacidad === true || data.acepta_privacidad === "1");
                             $('#terminos_consentimiento').prop('checked', data.acepta_consentimiento == 1 || data.acepta_consentimiento === true || data.acepta_consentimiento === "1");
 
-                            // Agrega esto dentro del success del AJAX, después de llenar los campos del formulario y de actualizar el header:
 
-                            // 1. Mapea los archivos y nombres a mostrar
                             const archivos = [
                                 { campo: 'archivo_ensayo', nombre: 'Ensayo' },
                                 { campo: 'credencial_votar', nombre: 'Credencial para votar' },
@@ -1451,22 +1440,18 @@ if (empty($_SESSION["idusuario"])) {
                                 { campo: 'ine_tutor', nombre: 'INE tutor' }
                             ];
 
-                            // 2. Llena el select con los archivos existentes
                             let options = '<option selected disabled value="">Seleccione una opción</option>';
                             archivos.forEach(a => {
                                 if (data[a.campo]) {
-                                    // Solo muestra si existe archivo
                                     options += `<option value="${data[a.campo]}">${a.nombre}</option>`;
                                 }
                             });
                             $('#viewDocument').html(options);
 
-                            // 3. Evento para visualizar el archivo seleccionado debajo del select
                             $('#viewDocument').off('change').on('change', function () {
                                 const fileUrl = $(this).val();
                                 let visor = '';
                                 if (fileUrl) {
-                                    // Si es PDF, usa <iframe>, si es imagen, usa <img>
                                     const ext = fileUrl.split('.').pop().toLowerCase();
                                     if (ext === 'pdf') {
                                         visor = `<iframe src="../${fileUrl}" width="100%" height="750px" style="border:1px solid #ccc;"></iframe>`;
@@ -1476,19 +1461,16 @@ if (empty($_SESSION["idusuario"])) {
                                         visor = `<a href="../${fileUrl}" target="_blank">Ver archivo</a>`;
                                     }
                                 }
-                                // Si no existe el contenedor, lo crea
                                 if ($('#visorDocumento').length === 0) {
                                     $('#viewDocument').parent().after('<div id="visorDocumento" class="mt-3"></div>');
                                 }
                                 $('#visorDocumento').html(visor);
                             });
 
-                            // Agrega esto dentro del success del AJAX, después de llenar los campos del formulario:
                             const folio = data.folio || '';
                             const estatus = (data.status == 1) ? 'Finalizado' : 'Pendiente';
                             const encuesta = (data.status == 1) ? 'Realizada' : 'No finalizada';
 
-                            // Iconos y colores personalizados
                             let iconFolio = '<i class="fas fa-hashtag text-secondary"></i>';
                             let iconEstatus = (estatus === 'Finalizado')
                                 ? '<i class="fas fa-check-circle text-success"></i>'
@@ -1497,8 +1479,7 @@ if (empty($_SESSION["idusuario"])) {
                                 ? '<i class="fas fa-poll text-success"></i>'
                                 : '<i class="fas fa-times-circle text-danger"></i>';
 
-                            // HTML con hr vertical usando utilidades de Bootstrap
-                            // HTML con hr vertical usando utilidades de Bootstrap, todo en una sola línea
+
                             $('.card-header .row.g-5').html(`
                                 <div class="col-xl-4 col-md-6 d-flex align-items-center">
                                     <h6 class="subtitle fw-normal text-muted mb-0 me-2"><b>Folio</b></h6>

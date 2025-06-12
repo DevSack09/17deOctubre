@@ -221,7 +221,7 @@ if ($usuario_id) {
             text: 'Ya has respondido la encuesta. ¡Gracias por tu participación!',
             confirmButtonColor: '#9a6ee2'
           }).then(() => {
-            // window.location.href = 'https://tusitio.com/17deOctubre/';
+            // window.location.href = 'https://localhost/17deOctubre/';
           });
         });
       </script>
@@ -312,7 +312,6 @@ if ($usuario_id) {
         return;
       }
 
-      // Si todo está validado, proceder con el envío
       const form = e.target;
       const formData = new FormData(form);
 
@@ -353,7 +352,6 @@ if ($usuario_id) {
         });
     });
 
-    // Opcional: Resaltar visualmente los campos no respondidos
     document.querySelectorAll('.radio-group').forEach(group => {
       group.addEventListener('change', function () {
         const questionName = this.querySelector('input[type="radio"]').name;

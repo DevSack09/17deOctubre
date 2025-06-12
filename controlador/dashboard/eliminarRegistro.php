@@ -5,7 +5,6 @@ include "../../modelo/conexion.php";
 if (isset($_POST['id']) && is_numeric($_POST['id'])) {
     $id = intval($_POST['id']);
 
-    // Cambia la bandera "eliminado" a 1 en lugar de borrar el registro
     $sql = "UPDATE registration SET eliminado = 1 WHERE id = ?";
     $stmt = $db_connection->prepare($sql);
     $stmt->bind_param("i", $id);

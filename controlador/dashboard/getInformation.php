@@ -12,7 +12,6 @@ if (!isset($_POST['usuario_id']) || !is_numeric($_POST['usuario_id'])) {
 
 $usuario_id = intval($_POST['usuario_id']);
 
-// Consulta para obtener la información del registro
 $sql = "SELECT * FROM registration WHERE id = ? AND eliminado = 0 LIMIT 1";
 $stmt = $db_connection->prepare($sql);
 $stmt->bind_param("i", $usuario_id);

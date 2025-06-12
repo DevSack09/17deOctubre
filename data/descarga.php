@@ -70,7 +70,6 @@ if (empty($_SESSION["idusuario"])) {
                 transform: translateY(-5px);
             }
 
-            /* Animación de descarga: flecha arriba derecha */
             .arrow-animation {
                 position: fixed;
                 right: 145px;
@@ -137,7 +136,6 @@ if (empty($_SESSION["idusuario"])) {
                 }
             }
 
-            /* Responsive para móviles */
             @media (max-width: 576px) {
                 .row-cols-sm-2 {
                     grid-template-columns: repeat(1, 1fr);
@@ -160,7 +158,6 @@ if (empty($_SESSION["idusuario"])) {
 
             .navbar .nav-item.dropdown.ms-auto {
                 margin-right: 20px;
-                /* Ajusta este valor según necesites */
             }
         </style>
 
@@ -296,7 +293,6 @@ if (empty($_SESSION["idusuario"])) {
             }); 
         </script>
         <script>
-            // Documentos disponibles
             const documentos = {
                 menores: [
                     { nombre: "CARTA DE AUTORIZACIÓN", url: "Docs/Menores/CARTA DE AUTORIZACIÓN.docx" },
@@ -319,7 +315,6 @@ if (empty($_SESSION["idusuario"])) {
                 ]
             };
 
-            // Elementos del DOM
             const selectEdad = document.getElementById('download');
             const documentosContainer = document.getElementById('documentosContainer');
             const listaDocumentos = document.getElementById('listaDocumentos');
@@ -328,23 +323,19 @@ if (empty($_SESSION["idusuario"])) {
             const loadingIcon = document.getElementById('loadingIcon');
             const arrowAnimation = document.getElementById('arrowAnimation');
 
-            // Evento al cambiar la selección
             selectEdad.addEventListener('change', function () {
                 const valor = this.value;
                 documentosContainer.style.display = valor ? 'block' : 'none';
                 listaDocumentos.innerHTML = '';
 
                 if (valor === 'todas') {
-                    // Mostrar documentos de TODAS las categorías (menores + mayores + comunes)
                     const todosDocumentos = [...documentos.todas];
                     renderDocumentos(todosDocumentos);
                 } else if (valor) {
-                    // Mostrar documentos de la categoría seleccionada
                     renderDocumentos(documentos[valor]);
                 }
             });
 
-            // Función auxiliar para evitar código repetido
             function renderDocumentos(documentosArray) {
                 documentosArray.forEach(doc => {
                     const docElement = document.createElement('div');
@@ -364,14 +355,12 @@ if (empty($_SESSION["idusuario"])) {
                 });
             }
 
-            // Cambia el contenido y diseño de la animación de flecha
             arrowAnimation.innerHTML = `
                                                         <div class="arrow-circle-glow">
                                                             <i class="fas fa-arrow-up"></i>
                                                         </div>
                                                     `;
 
-            // Cambia la posición y tamaño de la flecha para que apunte a la parte superior derecha
             const style = document.createElement('style');
             style.innerHTML = `
                                             .arrow-animation {
@@ -432,7 +421,7 @@ if (empty($_SESSION["idusuario"])) {
 
             // Evento para descargar ZIP
             descargarZipBtn.addEventListener('click', function () {
-                if (!selectEdad.value) return; // Validación
+                if (!selectEdad.value) return;
 
                 zipText.style.display = 'none';
                 loadingIcon.style.display = 'inline-block';

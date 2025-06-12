@@ -14,7 +14,6 @@ if ($db_connection->connect_error) {
     exit;
 }
 
-// Incluir los campos de archivos y los de domicilio
 $sql = "SELECT curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento, status,
                calle, numeroExterior, numeroInterior, colonia, cp, municipio, localidad, gradoEstudios, ocupacionActual,
                gradoActual, estudiosActuales, cargoActual, centroEstudiosTrabajo,
@@ -39,7 +38,6 @@ if ($stmt) {
     if ($result->num_rows > 0) {
         $data = $result->fetch_assoc();
 
-        // Agregar un campo adicional "disabled" basado en el valor de "status"
         $data['disabled'] = $data['status'] == 1 ? 'true' : 'false';
 
         echo json_encode(['status' => 'success', 'data' => $data]);

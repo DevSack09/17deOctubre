@@ -36,7 +36,6 @@ if ($stmt_check) {
         $stmt_check->bind_result($id, $folio, $categoria, $fecha_registro);
         $stmt_check->fetch();
 
-        // Actualizar el estado del formulario a "finalizado"
         $sql_update = "UPDATE registration SET status = 1 WHERE curp = ? AND usuario_id = ?";
         $stmt_update = $db_connection->prepare($sql_update);
 
@@ -44,7 +43,6 @@ if ($stmt_check) {
             $stmt_update->bind_param("si", $curp, $usuario_id);
 
             if ($stmt_update->execute()) {
-                // Obtener el correo y nombre del usuario
                 $sql_user = "SELECT email, nombre FROM usuario WHERE idusuario = ?";
                 $stmt_user = $db_connection->prepare($sql_user);
                 $stmt_user->bind_param("i", $usuario_id);
@@ -53,7 +51,6 @@ if ($stmt_check) {
                 $stmt_user->fetch();
                 $stmt_user->close();
 
-                // Preparar y enviar correo
                 $template = file_get_contents('../template/succes.html');
                 $template = str_replace('{nombre}', $nombre, $template);
                 $template = str_replace('{folio}', $folio, $template);
@@ -77,7 +74,6 @@ if ($stmt_check) {
                 $mail->isHTML(true);
                 $mail->Body = $template;
 
-                // Enviar correo y responder según resultado
                 try {
                     $mail->send();
                     echo json_encode([

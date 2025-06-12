@@ -2,7 +2,6 @@
 session_start();
 include "../../modelo/conexion.php";
 
-// Columnas para DataTable (deben coincidir con el frontend)
 $columns = array(
     0 => 'id',
     1 => 'nombre',
@@ -17,10 +16,8 @@ $columns = array(
 
 $requestData = $_REQUEST;
 
-// Consulta base: solo registros NO eliminados
 $sql_base = "FROM registration WHERE eliminado = 0";
 
-// Filtros por columna
 $searchSql = "";
 foreach ($columns as $i => $col) {
     if (!empty($requestData['columns'][$i]['search']['value'])) {

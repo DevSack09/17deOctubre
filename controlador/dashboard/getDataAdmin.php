@@ -2,7 +2,6 @@
 include "../../modelo/conexion.php";
 header('Content-Type: application/json');
 
-// Indicadores generales
 // Total de registros
 $sql1 = "SELECT COUNT(*) as total FROM registration";
 $res1 = $db_connection->query($sql1);

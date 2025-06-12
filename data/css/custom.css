@@ -91,12 +91,10 @@
   margin: 0 auto;
 }
 
-/* Fondo en modo oscuro */
 .dark-theme .theme-switch {
   background: #2c3e50;
 }
 
-/* Estilos para ambos iconos */
 .theme-switch i {
   font-size: 16px;
   transition: all 0.3s ease;
@@ -104,17 +102,14 @@
   z-index: 2;
 }
 
-/* Icono del sol */
 .theme-switch .light-icon {
   color: #f39c12;
 }
 
-/* Icono de la luna */
 .theme-switch .dark-icon {
   color: #2c3e50;
 }
 
-/* Cambio de colores en modo oscuro */
 .dark-theme .theme-switch .light-icon {
   color: #f1c40f;
 }
@@ -123,7 +118,6 @@
   color: #ecf0f1;
 }
 
-/* Indicador de estado (opcional) */
 .theme-switch::before {
   content: "";
   position: absolute;
@@ -184,13 +178,11 @@
 
 /* ===================== TEMA OSCURO ===================== */
 
-/* Fondo y texto general */
 body.dark-theme {
   background-color: #1e1e2f !important;
   color: #f5f5fa !important;
 }
 
-/* Contenedores principales */
 body.dark-theme .container,
 body.dark-theme .container-fluid,
 body.dark-theme .page-holder,
@@ -200,7 +192,6 @@ body.dark-theme .modal-content {
   border-color: #2d2d44 !important;
 }
 
-/* Tarjetas */
 body.dark-theme .card-header,
 body.dark-theme .accordion,
 body.dark-theme .accordion-header,
@@ -226,7 +217,6 @@ body.dark-theme .swal2-show {
   border-color: #2d2d44 !important;
 }
 
-/* Títulos y subtítulos */
 body.dark-theme h1,
 body.dark-theme h2,
 body.dark-theme h3,
@@ -243,7 +233,6 @@ body.dark-theme .card-heading {
   color: #f5f5fa !important;
 }
 
-/* Navbar y menú lateral */
 body.dark-theme .navbar,
 body.dark-theme .navbar-brand,
 body.dark-theme .sidebar,
@@ -265,13 +254,11 @@ body.dark-theme .navbar .dropdown-menu {
   color: #f5f5fa !important;
 }
 
-/* Footer */
 body.dark-theme .footer {
   background-color: #23233a !important;
   color: #bdbdd7 !important;
 }
 
-/* Botones */
 body.dark-theme .btn-primary {
   background-color: #9a6ee2 !important;
   border-color: #9a6ee2 !important;
@@ -307,7 +294,6 @@ body.dark-theme .btn:hover {
   background-color: #666 !important;
 }
 
-/* Inputs y selects */
 body.dark-theme .form-control,
 body.dark-theme .form-select,
 body.dark-theme input,
@@ -329,13 +315,11 @@ body.dark-theme .form-select:focus {
   box-shadow: 0 0 0 0.2rem rgba(154, 110, 226, 0.15) !important;
 }
 
-/* Placeholders */
 body.dark-theme ::placeholder {
   color: #bdbdd7 !important;
   opacity: 1;
 }
 
-/* Tablas */
 body.dark-theme table,
 body.dark-theme .table {
   background-color: #23233a !important;
@@ -349,14 +333,12 @@ body.dark-theme .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #29294a !important;
 }
 
-/* Alertas */
 body.dark-theme .alert {
   background-color: #2d2d44 !important;
   color: #f5f5fa !important;
   border-color: #9a6ee2 !important;
 }
 
-/* Iconos del theme switch */
 body.dark-theme .theme-switch i.light-icon {
   color: #f5f5fa !important;
 }
@@ -364,7 +346,6 @@ body.dark-theme .theme-switch i.dark-icon {
   color: #9a6ee2 !important;
 }
 
-/* Animación de flecha de descarga */
 body.dark-theme .arrow-circle-glow {
   background: radial-gradient(circle, #9a6ee2 60%, #23233a 100%) !important;
   box-shadow: 0 0 40px 10px #9a6ee2, 0 4px 12px rgba(154, 110, 226, 0.3) !important;
@@ -374,14 +355,12 @@ body.dark-theme .arrow-circle-glow i {
   text-shadow: 0 0 12px #9a6ee2, 0 0 20px #9a6ee2 !important;
 }
 
-/* Menú lateral */
 body.dark-theme .sidebar,
 body.dark-theme .sidebar-menu {
   background-color: #1e1e2f !important;
   color: #f5f5fa !important;
 }
 
-/* Select2 (si usas) */
 body.dark-theme .select2-container--default .select2-selection--single {
   background-color: #23233a !important;
   color: #f5f5fa !important;
@@ -392,7 +371,6 @@ body.dark-theme .select2-container--default .select2-results__option {
   color: #f5f5fa !important;
 }
 
-/* Scrollbar personalizado para dark */
 body.dark-theme ::-webkit-scrollbar {
   background: #23233a;
 }
@@ -401,7 +379,6 @@ body.dark-theme ::-webkit-scrollbar-thumb {
   border-radius: 8px;
 }
 
-/* Links */
 body.dark-theme a {
   color: #bdbdd7;
 }
@@ -409,7 +386,6 @@ body.dark-theme a:hover {
   color: #9a6ee2;
 }
 
-/* Otros elementos útiles */
 body.dark-theme .dropdown-menu {
   background-color: #23233a !important;
   color: #f5f5fa !important;
@@ -424,7 +400,6 @@ body.dark-theme .dropdown-item:focus {
   color: #9a6ee2 !important;
 }
 
-/* Indicadores en modo oscuro */
 body.dark-theme .card-widget {
   background: #23233a !important;
   color: #f5f5fa !important;

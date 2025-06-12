@@ -56,7 +56,6 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                                 href="#">
                                 Si aun no tienes una cuenta registrate aquí.
                             </a> -->
-                            <!-- Campo oculto para almacenar el token de reCAPTCHA -->
                             <input type="hidden" name="recaptcha_response" id="recaptchaResponse"><br>
                             <input name="btningresar" type="submit" value="Iniciar sesión" class="btn solid" />
 
@@ -94,7 +93,6 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                         <div class="content">
                             <h1>Premio 17 de octubre 2025 | IEEH</h1>
                             <h2>Décima Tercera Edición</h2>
-                            <!-- <p>El corazón del Instituto está en su almacén: donde cada entrada y salida impulsa el crecimiento, la eficiencia y el éxito.</p> -->
                             <p style="font-size: 20px;">¿Aún no tienes una cuenta? Regístrate aquí.</p>
                             <button class="btn transparent" id="sign-up-btn">Registrarse</button>
                         </div>
@@ -104,7 +102,6 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                         <div class="content">
                             <h1>Premio 17 de octubre 2025 | IEEH</h1>
                             <h2>Décima Tercera Edición</h2>
-                            <!-- <p>Un almacén organizado es la clave para un trabajo exitoso.</p> -->
                             <p style="font-size: 20px;">Si ya tienes una cuenta inicia sesión aquí.</p>
                             <button class="btn transparent" id="sign-in-btn"> Iniciar sesión</button>
                         </div>

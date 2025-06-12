@@ -15,7 +15,6 @@ if (!$curp || !$seccion) {
     exit;
 }
 
-// Define los campos a limpiar según la sección
 $campos_adultos = [
     'credencial_votar',
     'declaracion_originalidad',
@@ -40,7 +39,6 @@ if ($seccion === 'adultos') {
     exit;
 }
 
-// Buscar los archivos actuales para eliminarlos físicamente
 $sql_select = "SELECT " . implode(',', $campos) . " FROM registration WHERE curp = ?";
 $stmt_select = $db_connection->prepare($sql_select);
 if ($stmt_select) {
@@ -52,7 +50,7 @@ if ($stmt_select) {
             if (!empty($row[$campo])) {
                 $ruta = "../" . ltrim($row[$campo], "/");
                 if (file_exists($ruta)) {
-                    @unlink($ruta); // Elimina el archivo físico
+                    @unlink($ruta);
                 }
             }
         }
@@ -60,7 +58,6 @@ if ($stmt_select) {
     $stmt_select->close();
 }
 
-// Construye la consulta SQL para limpiar los campos
 $set = [];
 foreach ($campos as $campo) {
     $set[] = "$campo = NULL";
