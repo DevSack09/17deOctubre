@@ -1,7 +1,6 @@
 <?php
 include "../../modelo/conexion.php";
 
-
 $sql = "SELECT 
     r.*,
     e.pregunta1,
@@ -11,6 +10,7 @@ $sql = "SELECT
     e.fecha as fecha_encuesta
 FROM registration AS r
 LEFT JOIN encuesta_satisfaccion AS e ON r.usuario_id = e.usuario_id
+WHERE r.eliminado = 0
 ORDER BY r.id;";
 
 $result = $db_connection->query($sql);
