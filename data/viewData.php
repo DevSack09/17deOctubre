@@ -1247,6 +1247,26 @@ if (empty($_SESSION["idusuario"])) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingEncuestaSatisfaccion">
+                                                        <button class="accordion-button fw-bold fs-5 collapsed"
+                                                            type="button" data-bs-toggle="collapse"
+                                                            data-bs-target="#collapseEncuestaSatisfaccion"
+                                                            aria-expanded="false"
+                                                            aria-controls="collapseEncuestaSatisfaccion">
+                                                            Encuesta de satisfacción
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapseEncuestaSatisfaccion"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="headingEncuestaSatisfaccion"
+                                                        data-bs-parent="#accordionExample">
+                                                        <div class="accordion-body" id="encuestaSatisfaccionBody">
+                                                            <div class="text-center text-muted">No hay datos de encuesta de
+                                                                satisfacción.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="d-flex justify-content-end gap-2 mt-4">
                                                 <button type="submit" id="btnGuardar" class="btn btn-primary"
@@ -1513,6 +1533,65 @@ if (empty($_SESSION["idusuario"])) {
                         });
                     }
                 });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                function getParameterByName(name, url) {
+                    if (!url) url = window.location.href;
+                    name = name.replace(/[\[\]]/g, "\\$&");
+                    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                        results = regex.exec(url);
+                    if (!results) return null;
+                    if (!results[2]) return '';
+                    return decodeURIComponent(results[2].replace(/\+/g, " "));
+                }
+
+                function cargarEncuestaSatisfaccion(usuario_id) {
+                    $.ajax({
+                        url: '../controlador/dashboard/getEncuestaSatisfaccion.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { usuario_id: usuario_id },
+                        success: function (resp) {
+                            if (resp.status === 'success' && resp.data) {
+                                let html = `
+                        <div class="mb-3">
+                            <strong>¿Tuviste alguna dificultad para llevar a cabo el Proceso de Registro?</strong><br>
+                            <span>${resp.data.pregunta1 ? resp.data.pregunta1 : '-'}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>¿Consideras que los Requisitos para participar en la Convocatoria son accesibles?</strong><br>
+                            <span>${resp.data.pregunta2 ? resp.data.pregunta2 : '-'}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>¿La Rúbrica de Evaluación te sirvió para desarrollar tu Ensayo?</strong><br>
+                            <span>${resp.data.pregunta3 ? resp.data.pregunta3 : '-'}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Sugerencia:</strong><br>
+                            <span>${resp.data.sugerencia ? resp.data.sugerencia : '-'}</span>
+                        </div>
+                        <div class="mb-3">
+                            <strong>Fecha de respuesta:</strong><br>
+                            <span>${resp.data.fecha ? resp.data.fecha : '-'}</span>
+                        </div>
+                    `;
+                                $('#encuestaSatisfaccionBody').html(html);
+                            } else {
+                                $('#encuestaSatisfaccionBody').html('<div class="text-center text-muted">No hay datos de encuesta de satisfacción.</div>');
+                            }
+                        },
+                        error: function () {
+                            $('#encuestaSatisfaccionBody').html('<div class="text-center text-danger">Error al consultar la encuesta de satisfacción.</div>');
+                        }
+                    });
+                }
+
+                const usuario_id = getParameterByName('usuario_id');
+                if (usuario_id) {
+                    cargarEncuestaSatisfaccion(usuario_id);
+                }
             });
         </script>
 
