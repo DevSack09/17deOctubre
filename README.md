@@ -1,4 +1,4 @@
-# Premio 17 de Octubre | Sistema de Control de Almacén - IEEH
+# Premio 17 de Octubre | Sistema de Control - IEEH
 
 Este proyecto es una plataforma web para la gestión de usuarios, registro de participantes y control de documentos para el Premio 17 de Octubre, desarrollado para el Instituto Estatal Electoral de Hidalgo (IEEH).
 
