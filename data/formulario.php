@@ -1231,7 +1231,7 @@ if (empty($_SESSION["idusuario"])) {
                                                 <button class="accordion-button fw-bold fs-5 collapsed" type="button"
                                                     data-bs-toggle="collapse" data-bs-target="#collapseAccionesAfirmativas"
                                                     aria-expanded="false" aria-controls="collapseAccionesAfirmativas">
-                                                    Grupos de atencion prioritaria
+                                                    Grupos de atención prioritaria
                                                 </button>
                                             </h2>
                                             <div id="collapseAccionesAfirmativas" class="accordion-collapse collapse"
@@ -2530,7 +2530,7 @@ if (empty($_SESSION["idusuario"])) {
                                                 if (response2.status === "success") {
                                                     Swal.fire({
                                                         title: "¡Formulario finalizado!",
-                                                        text: "Formulario finalizado correctamente. Se ha enviado un correo de confirmación a la dirección registrada.\n\nAyúdanos a mejorar respondiendo la siguiente encuesta:",
+                                                        text: "Formulario finalizado correctamente. Se ha enviado un correo de confirmación a la dirección registrada.\n\n Ayúdanos a mejorar contestando la siguiente encuesta:",
                                                         icon: "success",
                                                         confirmButtonText: "Encuesta de retroalimentación",
                                                         allowOutsideClick: false
