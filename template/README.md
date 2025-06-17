@@ -1,63 +1,105 @@
-# Premio 17 de Octubre | Sistema de Control de Almacén - IEEH
+# 🏆 Premio 17 de Octubre - Sistema de Registro y Gestión | IEEH
 
-Este proyecto es una plataforma web para la gestión de usuarios, registro de participantes y control de documentos para el Premio 17 de Octubre, desarrollado para el Instituto Estatal Electoral de Hidalgo (IEEH).
+¡Bienvenido al sistema de registro y administración de usuarios.
+Aquí podrás gestionar registros, administrar participantes, consultar reportes y mucho más, todo en una plataforma moderna, segura y fácil de usar. 🚀
 
-## Características principales
+---
 
-- **Gestión de usuarios**: Registro, inicio de sesión, recuperación y restablecimiento de contraseñas, asignación de roles y permisos.
-- **Formulario de registro**: Captura de datos personales, validación avanzada de formularios, cálculo automático de edad, y control de acceso a secciones según edad.
-- **Gestión de documentos**: Subida y descarga de documentos requeridos para el registro.
-- **Reportes**: Generación y exportación de reportes en Excel, PDF, impresión y copia.
-- **Notificaciones por correo**: Envío automático de correos de confirmación y restablecimiento de contraseña usando PHPMailer.
-- **Seguridad**: Integración con Google reCAPTCHA v3 y manejo seguro de sesiones.
-- **Interfaz moderna**: Basada en Bootstrap 5, con soporte para temas claro/oscuro y diseño responsivo.
+## ✨ ¿Qué es este sistema?
 
-## Estructura del proyecto
+Es una plataforma web desarrollada para la gestión integral de registros. Permite el registro de participantes, la administración de usuarios, la generación de reportes y la aplicación de encuestas de satisfacción, todo bajo altos estándares de seguridad y usabilidad.
 
-- `/controlador`: Lógica de backend (PHP), controladores de usuarios, formularios, login, registro, envío de correos, etc.
-- `/modelo`: Archivos de conexión y lógica de base de datos.
-- `/data`: Vistas principales, formularios, reportes, menú, y recursos JS/CSS.
-- `/js`, `/css`: Archivos de scripts y estilos personalizados.
-- `/template`: Plantillas HTML para correos electrónicos.
-- `/uploads`: Carpeta para archivos subidos.
-- `/vendor`: Dependencias externas (PHPMailer, etc.).
+---
 
-## Instalación
+## 🛠️ Tecnologías Utilizadas
 
-1. **Clonar el repositorio**
-   ```sh
-   git clone <url-del-repositorio>
+- **PHP** (backend y lógica de negocio)
+- **MySQL** (gestión de base de datos)
+- **JavaScript** (interactividad y AJAX)
+- **jQuery** (facilita la manipulación del DOM y peticiones AJAX)
+- **Bootstrap 5** (diseño responsivo y componentes UI)
+- **SweetAlert2** (notificaciones y diálogos modernos)
+- **Chart.js** (gráficas y visualización de datos)
+- **PHPMailer** (envío de correos electrónicos)
+- **Google reCAPTCHA v3** (protección contra bots)
+- **DataTables** (tablas dinámicas y exportación)
+- **XAMPP** (entorno local recomendado para desarrollo)
+
+---
+
+## 🎯 Características Destacadas
+
+- **Registro de participantes** con validaciones y confirmación por correo.
+- **Inicio de sesión seguro** con reCAPTCHA v3.
+- **Panel de administración** para gestión de usuarios y reportes.
+- **Exportación de datos** a Excel, PDF e impresión directa.
+- **Encuesta de satisfacción** vinculada a cada usuario.
+- **Notificaciones amigables** con SweetAlert2.
+- **Control de apertura/cierre de registros** con indicadores visuales.
+- **Barra de progreso y cuenta regresiva** para la convocatoria.
+- **Soporte para modo claro/oscuro**.
+
+---
+
+## 📁 Estructura del Proyecto
+
+La estructura del proyecto está organizada para facilitar el desarrollo, mantenimiento y escalabilidad del sistema. A continuación se describe cada carpeta y su propósito principal:
+
+```plaintext
+17deOctubre/
+├── app/                  # Contiene la lógica de la aplicación, controladores, modelos y helpers.
+├── public/               # Carpeta pública accesible desde el navegador. Incluye index.php, archivos CSS, JS e imágenes.
+├── resources/            # Recursos de la aplicación, como vistas (plantillas), archivos CSS, JS e imágenes.
+│   ├── css/              # Hojas de estilo personalizadas.
+│   ├── js/               # Scripts JavaScript propios del sistema.
+│   └── img/              # Imágenes utilizadas en la interfaz.
+├── storage/              # Archivos generados por el sistema: logs, caché, archivos temporales y exportaciones.
+├── vendor/               # Dependencias instaladas mediante Composer.
+├── database/             # Archivos relacionados con la base de datos, como migraciones y el script de creación inicial.
+├── composer.json         # Archivo de configuración de Composer para gestionar dependencias PHP.
+├── README.md             # Documentación principal del proyecto.
+└── .env                  # Archivo de variables de entorno para configuración sensible (no debe compartirse públicamente).
+```
+
+## 🚀 ¿Cómo instalar y usar el sistema?
+
+1. **Clona el repositorio** en tu entorno local:
+   ```bash
+   git clone https://github.com/tu-usuario/17deOctubre.git
    ```
-2. **Configurar la base de datos**
+2. **Configura XAMPP** e inicia los servicios de Apache y MySQL.
+3. **Copia el proyecto** a la carpeta `htdocs` de XAMPP.
+4. **Crea la base de datos** importando el archivo SQL incluido en `/database/`.
+5. **Configura los parámetros** de conexión a la base de datos en el archivo de configuración (por ejemplo, `app/config.php`).
+6. **Instala las dependencias** de Composer (si aplica):
+   ```bash
+   composer install
+   ```
+7. **Accede al sistema** desde tu navegador en `http://localhost/17deOctubre/public`.
 
-   Importa el archivo dbpremio17_2025-05-28_134411.sql en tu servidor MySQL<vscode_annotation details='%5B%7B%22title%22%3A%22hardcoded-credentials%22%2C%22description%22%3A%22Embedding%20credentials%20in%20source%20code%20risks%20unauthorized%20access%22%7D%5D'>. </vscode_annotation> - Actualiza las credenciales de conexión en modelo/conexion.php.
+---
 
-3. **Instalar dependencias PHP**
+## 💡 Consejos y buenas prácticas
 
-4. **Configurar PHPMailer**
+- Mantén actualizado el sistema y las dependencias.
+- Realiza respaldos periódicos de la base de datos y archivos importantes.
+- Usa contraseñas seguras y únicas para los usuarios administradores.
+- No expongas archivos de configuración sensibles en entornos públicos.
+- Prueba las funcionalidades después de cada actualización.
+- Utiliza el entorno local para pruebas antes de desplegar en producción.
 
-   Edita los datos de correo en los controladores que envían emails (controlador_registrar.php, send_reset_link.php, etc.).
+---
 
-5. **Configurar Google reCAPTCHA**
+## 🦸‍♂️ Autor
 
-   - Actualiza las claves de reCAPTCHA en los formularios de login/registro y en el backend.
+**Wilibaldo Salitre**  
+Desarrollador Web | Apasionado por la tecnología y el diseño  
+[LinkedIn](#) | [GitHub](#) | [Correo](#)
 
-6. **Configurar el servidor web**
+---
 
-   Asegúrate de que tu servidor (Apache, Nginx, XAMPP, etc.) apunte a la carpeta raíz del proyecto.
+## 📬 Contacto
 
-## Uso
-
-    Accede a la página principal (index.php) para iniciar sesión o registrarte.
-    Los usuarios pueden completar el formulario de registro, subir documentos y consultar el estado de su registro.
-    Los administradores pueden gestionar usuarios, asignar permisos y generar reportes.
-
-## Créditos
-
-    Desarrollado por el Ing. Wilibaldo Salitre Cervantes
-    Basado en Bootstrap 5 y librerías de código abierto como PHPMailer, DataTables, SweetAlert2, Quill, Choices.js, entre otras.
-
-## Contacto:
-
-    Ing. Wilibaldo Salitre Cervantes
-    salwilcer@gmail.com
+¿Te gustó lo que viste?  
+¡Hablemos!  
+Encuentra mis redes y correo en la sección de contacto del portafolio.
