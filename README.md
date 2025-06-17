@@ -1,4 +1,4 @@
-# 🏆 Premio 17 de Octubre - Sistema de Registro y Gestión | IEEH
+# 🏆Sistema de Registro y Gestión 
 
 ¡Bienvenido al sistema de registro y administración de usuarios.
 Aquí podrás gestionar registros, administrar participantes, consultar reportes y mucho más, todo en una plataforma moderna, segura y fácil de usar. 🚀
