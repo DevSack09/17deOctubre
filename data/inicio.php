@@ -34,22 +34,21 @@ if (empty($_SESSION["idusuario"])) {
         <link rel="stylesheet" href="css/custom.css">
         <!-- Favicon-->
         <link rel="shortcut icon" href="../img/IEEH.png">
-
-
     </head>
+    <style>
+        .navbar .nav-item.dropdown.ms-auto {
+            margin-right: 20px;
+        }
+    </style>
 
     <body>
-        <div class="theme-switch" id="themeSwitch">
-            <i class="fas fa-sun light-icon" id="lightIcon"></i>
-            <i class="fas fa-moon dark-icon" id="darkIcon" style="display: none;"></i>
-        </div>
         <!-- navbar-->
         <header class="header">
             <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
                 <a class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#"><i class="fas fa-align-left"></i></a>
                 <a class="navbar-brand fw-bold text-uppercase text-base" style="text-align: center;" href="index.php">
                     <span class="d-none d-brand-partial">Premio 17 de octubre </span><br>
-                    <span class="d-none d-sm-inline">Dédima Tercera Edición </span>
+                    <span class="d-none d-sm-inline">Décima Tercera Edición </span>
                 </a>
                 <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">
                     <li class="nav-item dropdown ms-auto">
@@ -65,6 +64,12 @@ if (empty($_SESSION["idusuario"])) {
                             <a class="dropdown-item" href="../controlador/controlador_cerrar.php">Cerrar Sesión</a>
                         </div>
                     </li>
+                    <li>
+                        <div class="theme-switch" id="themeSwitch">
+                            <i class="fas fa-sun light-icon" id="lightIcon"></i>
+                            <i class="fas fa-moon dark-icon" id="darkIcon" style="display: none;"></i>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </header>
@@ -73,11 +78,6 @@ if (empty($_SESSION["idusuario"])) {
             <?php include 'menu.php'; ?>
             <div class="page-holder bg-gray-100">
                 <div class="container-fluid px-lg-4 px-xl-5">
-                    <!-- Page Header-->
-                    <!--  <div class="page-header">
-                        <h1 class="page-heading text-center">Formulario de registro</h1>
-                        <h1 class="page-heading text-center">Edición 2024</h1>
-                    </div> -->
 
                     <section>
                         <div class="card mb-4">
@@ -89,38 +89,41 @@ if (empty($_SESSION["idusuario"])) {
                                 <div>
                                     <br>
                                     <ol>
-                                        <li><strong>Preparación del Registro:</strong> Antes de iniciar tu registro,
-                                            asegúrate de tener a mano
-                                            todos los documentos mencionados en la convocatoria. Esto es esencial para
-                                            completar tu registro de
-                                            manera exitosa.</li>
+                                        <li>Consulta las bases de la Convocatoria.</li>
                                         <br>
-                                        <li><strong>Tiempo de llenado:</strong> La completitud del formulario puede tomar
-                                            hasta 60 minutos. Te
-                                            recomendamos dedicar el tiempo necesario para evitar interrupciones y asegurar
-                                            que la información
-                                            proporcionada sea precisa.</li>
+                                        <li>Descarga los documentos de uso general.</li>
                                         <br>
-                                        <li><strong>Guardar tu progreso:</strong> Al seleccionar el botón
-                                            <strong>"Guardar"</strong>, tu
-                                            progreso se almacenará, permitiéndote retomar el proceso de registro en
-                                            cualquier momento. Esto te
-                                            ofrece flexibilidad en caso de que necesites más tiempo o documentación
-                                            adicional.
+                                        <li>Elige tu rango de edad y descarga los documentos que te corresponden.
                                         </li>
                                         <br>
-                                        <li><strong>Finalizar el registro:</strong> Una vez que estés listo para enviar tu
-                                            registro, haz clic
-                                            en el botón <strong>"Finalizar"</strong>. Ten en cuenta que, después de esta
-                                            acción, no podrás
-                                            realizar cambios ni añadir información adicional. Asegúrate de revisar tu
-                                            información detenidamente
-                                            antes de finalizar.</li>
+                                        <li>Llena el formulario de registro, te recomendamos tener a la mano los formatos
+                                            que descargaste, debidamente requisitados; considera que deberás destinar al
+                                            menos 60 minutos de tu tiempo, para registrar tus datos y subir los documentos.
+                                        </li>
+                                        <br>
+                                        <li>Guarda tu progreso, en caso de que no puedas concluir tu proceso de registro,
+                                            haz clic en el botón <strong>“Guardar”</strong> para que no se pierda tu
+                                            progreso, esto te
+                                            permitirá retomarlo en otro momento.
+                                        </li>
+                                        <br>
+                                        <li>Una vez que termines tu registro, haz clic en el botón
+                                            <strong>“Finalizar”</strong>. Toma en
+                                            cuenta que después de realizar esta acción, no podrás actualizar tus datos, ni
+                                            añadir otros documentos, por lo que previamente deberás de revisar que la
+                                            información que registraste es la correcta y que cargaste adecuadamente todos
+                                            los documentos.
+                                        </li>
+                                        <br>
+                                        <li>Finalmente, ayúdanos a mejorar, contestando la encuesta de retroalimentación que
+                                            recibirás con la confirmación de tu registro.
+                                        </li>
                                     </ol>
-                                    <p class="mensajeInformativo">Todos los campos marcados con un asterisco (<span
-                                            style="color: red;">*</span>) son obligatorios. La omisión de esta información
-                                        puede resultar en la
-                                        imposibilidad de procesar tu registro adecuadamente.</p>
+                                    <div class="alert alert-primary">
+                                        <i class="fas fa-info-circle"></i> <strong>Importante:</strong>
+                                        Todos los campos marcados con (<span style="color: red;">*</span>) son
+                                        obligatorios. Omitir esta información puede impedirnos procesar tu registro.
+                                    </div>
                                 </div><br><br>
                                 <div style="text-align: center; margin-top: 20px;">
                                     <a href="formulario.php" class="btn btn-primary">Ir al formulario</a>

@@ -284,10 +284,60 @@ body.dark-theme .panel .content {
   margin: 0;
   background: none;
   border: 2px solid #fff;
-  width: 130px;
+  width: 150px;
   height: 41px;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border-radius: 4px; /* Añadido para mejor apariencia */
+}
+
+/* Efecto hover */
+.btn.transparent:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto al hacer clic */
+.btn.transparent:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease;
+}
+
+/* Efecto de onda al hacer clic */
+.btn.transparent::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+.btn.transparent:focus:not(:active)::after {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20);
+    opacity: 0;
+  }
 }
 
 .right-panel .image,
@@ -496,34 +546,86 @@ body.dark-theme .link-forgot-password {
 body.dark-theme .link-forgot-password:hover {
   color: #ffffff;
 }
+
+body.dark-theme .swal2-popup,
+body.dark-theme .swal2-modal,
+body.dark-theme .swal2-icon-info,
+body.dark-theme .swal2-show {
+  background-color: #4c4c50 !important;
+  color: #f5f5fa !important;
+  border-color: #2d2d44 !important;
+}
 /* ************************************************************************************** */
 /* Switch para cambiar entre dark y light */
+
 .theme-switch {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
   top: 10px;
   right: 10px;
   z-index: 1000;
-  display: flex;
-  align-items: center;
+  height: 30px;
+  padding: 0 8px;
+  background: #666666;
+  border-radius: 15px;
   cursor: pointer;
+  transition: background 0.3s ease;
+  margin: 0 auto;
 }
 
+/* Fondo en modo oscuro */
+.dark-theme .theme-switch {
+  background: #2c3e50;
+}
+
+/* Estilos para ambos iconos */
 .theme-switch i {
-  font-size: 24px;
-  margin-left: 5px;
-  transition: transform 0.3s ease, color 0.3s ease;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
-.theme-switch i.light-icon {
+/* Icono del sol */
+.theme-switch .light-icon {
   color: #f39c12;
 }
 
-.theme-switch i.dark-icon {
+/* Icono de la luna */
+.theme-switch .dark-icon {
   color: #2c3e50;
 }
 
-.theme-switch i.animate {
-  transform: scale(1.2) rotate(360deg);
+/* Cambio de colores en modo oscuro */
+.dark-theme .theme-switch .light-icon {
+  color: #f1c40f;
+}
+
+.dark-theme .theme-switch .dark-icon {
+  color: #ecf0f1;
+}
+
+/* Indicador de estado (opcional) */
+.theme-switch::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dark-theme .theme-switch::before {
+  transform: translateX(30px);
+  background: #34495e;
 }
 
 /* ************************************************************************************** */

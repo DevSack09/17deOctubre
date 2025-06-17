@@ -49,13 +49,12 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
         <div class="panels-container">
           <div class="panel left-panel">
             <div class="content">
-              <h3>IEEH | Sistema de Almacén</h3>
-              <p>
-                Cuidar lo que almacenamos es proteger lo que construimos juntoso.
+              <h1>Premio 17 de octubre 2025 | IEEH</h1>
+              <h2>Décima Tercera Edición</h2>
+              <p style="font-size: 20px;">
+                Por tu seguridad, te recomendamos no compartir tu contraseña con nadie. Esta es personal e intransferible y
+                su confidencialidad es esencial para proteger el acceso a tu cuenta.
               </p>
-              <!-- <button class="btn transparent" id="sign-up-btn">
-              Registrarse
-            </button> -->
             </div>
             <img src="img/undraw_secure-login_m11a.svg" class="image" alt="" />
           </div>

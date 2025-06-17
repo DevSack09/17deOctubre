@@ -1,5 +1,9 @@
 <?php
 include "../modelo/conexion.php";
+use controlador\phpmailer\PHPMailer;
+require '../controlador/phpmailer/Exception.php';
+require '../controlador/phpmailer/PHPMailer.php';
+require '../controlador/phpmailer/SMTP.php';
 session_start();
 
 if (!isset($_SESSION["idusuario"])) {
@@ -20,7 +24,7 @@ if ($db_connection->connect_error) {
     exit;
 }
 
-$sql_check = "SELECT id FROM registration WHERE curp = ? AND usuario_id = ?";
+$sql_check = "SELECT id, folio, categoria, fecha_registro FROM registration WHERE curp = ? AND usuario_id = ?";
 $stmt_check = $db_connection->prepare($sql_check);
 
 if ($stmt_check) {
@@ -29,7 +33,9 @@ if ($stmt_check) {
     $stmt_check->store_result();
 
     if ($stmt_check->num_rows > 0) {
-        // Actualizar el estado del formulario a "finalizado"
+        $stmt_check->bind_result($id, $folio, $categoria, $fecha_registro);
+        $stmt_check->fetch();
+
         $sql_update = "UPDATE registration SET status = 1 WHERE curp = ? AND usuario_id = ?";
         $stmt_update = $db_connection->prepare($sql_update);
 
@@ -37,7 +43,51 @@ if ($stmt_check) {
             $stmt_update->bind_param("si", $curp, $usuario_id);
 
             if ($stmt_update->execute()) {
-                echo json_encode(['status' => 'success', 'message' => 'Formulario finalizado correctamente']);
+                $sql_user = "SELECT email, nombre FROM usuario WHERE idusuario = ?";
+                $stmt_user = $db_connection->prepare($sql_user);
+                $stmt_user->bind_param("i", $usuario_id);
+                $stmt_user->execute();
+                $stmt_user->bind_result($email, $nombre);
+                $stmt_user->fetch();
+                $stmt_user->close();
+
+                $template = file_get_contents('../template/succes.html');
+                $template = str_replace('{nombre}', $nombre, $template);
+                $template = str_replace('{folio}', $folio, $template);
+                $template = str_replace('{categoria}', $categoria, $template);
+                $template = str_replace('{fecha_registro}', $fecha_registro, $template);
+                $template = str_replace('{usuario_id}', $usuario_id, $template);
+
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com';
+                $mail->SMTPAuth = true;
+                $mail->Username = 'reclutanotifi23@gmail.com';
+                $mail->Password = 'wadoxputcllryfqf';
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+                $mail->CharSet = "UTF-8";
+
+                $mail->setFrom('reclutanotifi23@gmail.com', 'Premio 17 de octubre | IEEH');
+                $mail->addAddress($email, $nombre);
+                $mail->Subject = 'Confirmación de registro - Premio 17 de Octubre';
+                $mail->isHTML(true);
+                $mail->Body = $template;
+
+                try {
+                    $mail->send();
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'Formulario finalizado correctamente. Se ha enviado un correo de confirmación.',
+                        'usuario_id' => $usuario_id
+                    ]);
+                } catch (Exception $e) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'Formulario finalizado correctamente, pero no se pudo enviar el correo de confirmación.',
+                        'usuario_id' => $usuario_id
+                    ]);
+                }
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el estado del formulario']);
             }

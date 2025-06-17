@@ -14,7 +14,6 @@ $start = isset($_POST['start']) ? intval($_POST['start']) : 0;
 $length = isset($_POST['length']) ? intval($_POST['length']) : 10;
 $searchValue = isset($_POST['search']['value']) ? $conn->real_escape_string($_POST['search']['value']) : "";
 
-// Crear cláusula WHERE
 $whereClause = "WHERE u.`delete` = 1";
 
 if (!empty($searchValue)) {
@@ -37,7 +36,6 @@ $filteredQuery = "SELECT COUNT(*) as total
 $filteredResult = $conn->query($filteredQuery);
 $totalFiltered = $filteredResult->fetch_assoc()['total'];
 
-// Consultar datos para la tabla
 $dataQuery = "SELECT u.idusuario, u.email, u.nombre, u.apellidoP, u.apellidoM, u.password, 
                      u.rol, u.activo, u.fecha_creacion 
               FROM usuario u 
@@ -79,6 +77,6 @@ $response = [
 header('Content-Type: application/json');
 echo json_encode($response);
 
-// Cerrar conexión
+
 $conn->close();
 ?>

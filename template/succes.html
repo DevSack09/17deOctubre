@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>✨ Acceso al Sistema | IEEH</title>
+    <title>✨ Registro Exitoso! | IEEH</title>
     <style type="text/css">
       /* RESET PARA CLIENTES DE CORREO */
       body,
@@ -136,6 +136,15 @@
       .social-icon {
         margin: 0 10px;
       }
+      .contacto-box {
+        background: #f5f2fa;
+        border-left: 4px solid #9a6ee2;
+        padding: 18px 20px;
+        margin-top: 28px;
+        border-radius: 0 8px 8px 0;
+        font-size: 1rem;
+        color: #444;
+      }
 
       /* ANIMACIONES COMPATIBLES */
       @media screen and (max-width: 480px) {
@@ -151,6 +160,11 @@
         h1 {
           font-size: 24px;
         }
+      }
+    </style>
+    <style>
+      .social-icons img {
+        filter: brightness(0) invert(1);
       }
     </style>
   </head>
@@ -176,63 +190,96 @@
 
         <!-- TARJETA DE CREDENCIALES -->
         <div class="credential-card">
-          <div style="max-width: 150px; margin: 0 auto">
+          <div style="max-width: 250px; margin: 0 auto">
             <img
-              src="http://200.57.172.51/succesemail.png"
+              src="http://200.57.172.51/succes.png"
               alt="Congratulations"
               style="width: 100%; height: auto; display: block"
             />
           </div>
 
-          <h1>¡Bienvenido/a, {nombre}!</h1>
-          <p style="color: #666; font-size: 16px">
-            Tu cuenta para el <strong>Registro Premio 17 de octubre</strong> ha
-            sido creada exitosamente.
+          <h1>¡Confirmación de registro!</h1>
+          <p
+            style="
+              color: #666;
+              font-size: 16px;
+              text-align: justify;
+              line-height: 1.6;
+              margin: 0 0 20px;
+            "
+          >
+            ¡Hola, {nombre}! Agradecemos su interés por participar en el
+            Concurso por el
+            <strong
+              >“Premio 17 de Octubre” 2025, décima tercera edición, modalidad de
+              ensayo</strong
+            >, en la categoría de <strong>{categoria}</strong>. Confirmamos que
+            su registro se efectuó con éxito y que el número de folio que le fue
+            asignado por el sistema de registro es el siguiente:
           </p>
 
-          <p style="font-weight: 500; color: #555">Tu contraseña es:</p>
-          <div class="password-display">{password}</div>
+          <div class="password-display">{folio}</div>
 
-          <p style="color: #777; font-size: 14px">Usuario: {email}</p>
+          <p style="color: #777; font-size: 14px">
+            Fecha de registro: {fecha_registro}
+          </p>
+        </div>
+
+        <div style="text-align: center; margin: 32px 0 0 0">
+          <p
+            style="
+              color: #666;
+              font-size: 16px;
+              text-align: center;
+              line-height: 1.6;
+              margin: 0 0 20px;
+            "
+          >
+            Ayúdanos a mejorar contestando la siguiente encuesta:
+          </p>
+          <a
+            href="http://localhost/17deoctubre/data/encuestasatisfaccion.php?usuario_id={usuario_id}"
+            target="_blank"
+            style="
+              display: inline-block;
+              background: #9a6ee2;
+              color: #fff !important;
+              text-decoration: none;
+              padding: 14px 38px;
+              border-radius: 15px;
+              font-size: 17px;
+              box-shadow: 0 4px 14px rgba(154, 110, 226, 0.18);
+              margin-top: 10px;
+              transition: background 0.2s;
+              cursor: pointer;
+            "
+            >Encuesta de retroalimentación</a
+          >
         </div>
 
         <!-- SECCIÓN DE ACCIÓN -->
         <div class="action-section">
-          <p style="color: #666; font-size: 16px">
-            Haz clic para acceder al sistema de registro:
-          </p>
-          <a href="http://localhost/17deoctubre/" class="btn-primary"
-            >Ingresar</a
-          >
-
-          <div class="security-note">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td style="width: 50px; vertical-align: top">
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/1055/1055683.png"
-                    width="40"
-                    alt="Security Icon"
-                  />
-                </td>
-                <td style="padding-left: 15px">
-                  <h3 style="color: #d33; margin: 0 0 8px; font-size: 16px">
-                    ¿No reconoces esta actividad?
-                  </h3>
-                  <p
-                    style="
-                      color: #666;
-                      font-size: 14px;
-                      line-height: 1.5;
-                      margin: 0;
-                    "
-                  >
-                    Por seguridad, contacta inmediatamente al área de UTIC:<br />
-                    <strong>utic@ieeh.mx</strong>
-                  </p>
-                </td>
-              </tr>
-            </table>
+          <div class="contacto-box" style="text-align: justify">
+            Le recordamos que toda consulta, referente a este Concurso, será
+            atendida por personal de la
+            <b
+              >Dirección Ejecutiva de Equidad de Género y Participación
+              Ciudadana</b
+            >, únicamente a través de los siguientes medios de contacto:<br /><br />
+            <strong>Teléfono:</strong>
+            <a
+              href="tel:+527717170207"
+              style="color: #7d4ac7; text-decoration: none"
+            >
+              (771) 717 0207 </a
+            >, extensiones 216 y 296<br />
+            <strong>Correo electrónico:</strong>
+            <a
+              href="mailto:equidad.participacion@ieeh.mx"
+              style="color: #7d4ac7; text-decoration: none"
+            >
+              equidad.participacion@ieeh.mx
+            </a>
           </div>
         </div>
 
@@ -258,7 +305,7 @@
               rel="noopener noreferrer"
             >
               <img
-                src="https://cdn-icons-png.flaticon.com/512/1384/1384023.png"
+                src="https://cdn-icons-png.flaticon.com/512/597/597177.png"
                 width="24"
                 alt="Teléfono"
               />
@@ -270,7 +317,7 @@
               rel="noopener noreferrer"
             >
               <img
-                src="https://cdn-icons-png.flaticon.com/512/5969/5969020.png"
+                src="https://cdn-icons-png.flaticon.com/512/733/733635.png"
                 width="24"
                 alt="Twitter"
               />

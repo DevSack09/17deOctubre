@@ -18,7 +18,7 @@ if (isset($_POST['idusuario'])) {
     $apellidoM = $_POST['apellidoM'];
     $rol = $_POST['rol'];
     $activo = isset($_POST['activo']) ? 1 : 0;
-    $password = $_POST['password']; // Contraseña
+    $password = $_POST['password'];
 
     $stmt = $conn->prepare("UPDATE usuario SET email = ?, nombre = ?, apellidoP = ?, apellidoM = ?, rol = ?, activo = ?, password = ? WHERE idusuario = ?");
     $stmt->bind_param("sssssisi", $email, $nombre, $apellidoP, $apellidoM, $rol, $activo, $password, $idusuario);

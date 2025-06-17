@@ -1,49 +1,53 @@
 <?php
 include "../modelo/conexion.php";
 
-$data = json_decode(file_get_contents("php://input"), true);
-$curp = $data['curp'] ?? '';
+header('Content-Type: application/json; charset=utf-8');
 
-if (empty($curp)) {
-    echo json_encode(['success' => false, 'message' => 'No se recibió el CURP']);
-    exit;
-}
+try {
+    $data = json_decode(file_get_contents("php://input"), true);
+    $curp = strtoupper(trim($data['curp'] ?? ''));
 
-if (strlen($curp) !== 18) {
-    echo json_encode(['success' => false, 'message' => 'El CURP debe tener exactamente 18 caracteres']);
-    exit;
-}
+    if (empty($curp)) {
+        throw new Exception('No se recibió el CURP');
+    }
 
-if (!preg_match("/^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z\d]{2}$/i", $curp)) {
-    echo json_encode(['success' => false, 'message' => 'El CURP no tiene un formato válido']);
-    exit;
-}
+    if (strlen($curp) !== 18) {
+        throw new Exception('El CURP debe tener exactamente 18 caracteres');
+    }
 
-if ($db_connection->connect_error) {
-    echo json_encode(['success' => false, 'message' => 'Error al conectar a la base de datos']);
-    exit;
-}
+    if (!preg_match("/^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z\d]{2}$/", $curp)) {
+        throw new Exception('El CURP no tiene un formato válido');
+    }
 
-$sql = "SELECT id FROM registration WHERE curp = ?";
-$stmt = $db_connection->prepare($sql);
+    if ($db_connection->connect_error) {
+        throw new Exception('Error al conectar a la base de datos');
+    }
 
-if ($stmt) {
+    $sql = "SELECT id FROM registration WHERE curp = ?";
+    $stmt = $db_connection->prepare($sql);
+
+    if (!$stmt) {
+        throw new Exception('Error en la preparación de la consulta: ' . $db_connection->error);
+    }
+
     $stmt->bind_param("s", $curp);
     $stmt->execute();
     $stmt->store_result();
 
-    $response = [
+    echo json_encode([
         'success' => true,
         'exists' => $stmt->num_rows > 0,
-    ];
-
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode($response);
+        'message' => $stmt->num_rows > 0 ? 'CURP ya registrada' : 'CURP válida'
+    ]);
 
     $stmt->close();
-} else {
-    echo json_encode(['success' => false, 'message' => 'Error en la consulta a la base de datos']);
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false,
+        'exists' => false,
+        'message' => $e->getMessage()
+    ]);
+} finally {
+    $db_connection->close();
 }
-
-$db_connection->close();
 ?>

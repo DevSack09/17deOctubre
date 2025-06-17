@@ -1,16 +1,5 @@
 <?php
 session_start();
-require __DIR__ . '../vendor/autoload.php';
-$config = require 'controlador/google_config.php';
-
-$client = new Google_Client();
-$client->setClientId($config['client_id']);
-$client->setClientSecret($config['client_secret']);
-$client->setRedirectUri($config['redirect_uri']);
-$client->addScope("email");
-$client->addScope("profile");
-
-$google_login_url = $client->createAuthUrl();
 
 if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
     header("location: data/dashboard.php");
@@ -30,6 +19,7 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
             <link rel="stylesheet" href="css/style.css" />
             <link rel="stylesheet" href="css/alert.css" />
+
         </head>
 
         <body>
@@ -49,7 +39,7 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                             ?>
                             <div class="input-field">
                                 <i class="fas fa-user"></i>
-                                <input id="email" name="email" type="text" placeholder="Email" />
+                                <input id="email" name="email" type="text" placeholder="Correo electrónico" />
                             </div>
                             <div class="input-field">
                                 <i class="fas fa-lock"></i>
@@ -62,28 +52,13 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                                 href="forgot_password.php">
                                 Olvidé mi contraseña
                             </a>
-                            <!-- Campo oculto para almacenar el token de reCAPTCHA -->
-                            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
+                            <!-- <a style="font-size: 15px; text-align: left;" class="link-forgot-password" id="sign-up-btn"
+                                href="#">
+                                Si aun no tienes una cuenta registrate aquí.
+                            </a> -->
+                            <input type="hidden" name="recaptcha_response" id="recaptchaResponse"><br>
                             <input name="btningresar" type="submit" value="Iniciar sesión" class="btn solid" />
-                            <div class="social-login">
-                                <a href="<?php echo htmlspecialchars($google_login_url); ?>" class="google-login-button">
-                                    <span class="google-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path
-                                                d="M113.47 309.408L95.648 375.94l-65.139 1.378C11.042 341.211 0 299.9 0 256c0-42.451 10.324-82.483 28.624-117.732h.014L86.63 148.9l25.404 57.644c-5.317 15.501-8.215 32.141-8.215 49.456.002 18.792 3.406 36.797 9.651 53.408z"
-                                                fill="#fbbb00" />
-                                            <path
-                                                d="M507.527 208.176C510.467 223.662 512 239.655 512 256c0 18.328-1.927 36.206-5.598 53.451-12.462 58.683-45.025 109.925-90.134 146.187l-.014-.014-73.044-3.727-10.338-64.535c29.932-17.554 53.324-45.025 65.646-77.911h-136.89V208.176h245.899z"
-                                                fill="#518ef8" />
-                                            <path
-                                                d="M416.253 455.624l.014.014C372.396 490.901 316.666 512 256 512c-97.491 0-182.252-54.491-225.491-134.681l82.961-67.91c21.619 57.698 77.278 98.771 142.53 98.771 28.047 0 54.323-7.582 76.87-20.818l83.383 68.262z"
-                                                fill="#28b446" />
-                                            <path
-                                                d="M419.404 58.936l-82.933 67.896C313.136 112.246 285.552 103.82 256 103.82c-66.729 0-123.429 42.957-143.965 102.724l-83.397-68.276h-.014C71.23 56.123 157.06 0 256 0c62.115 0 119.068 22.126 163.404 58.936z"
-                                                fill="#f14336" />
-                                        </svg></span>
-                                    <span>Sign in with google</span>
-                                </a>
-                            </div>
+
                         </form>
 
                         <!-- formulario registrar -->
@@ -116,18 +91,18 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
                 <div class="panels-container">
                     <div class="panel left-panel">
                         <div class="content">
-                            <h3>Premio 17 de octubre | IEEH</h3>
-                            <!-- <p>El corazón del Instituto está en su almacén: donde cada entrada y salida impulsa el crecimiento, la eficiencia y el éxito.</p> -->
-                            <p>Si aun no tienes una cuenta registrate aquí.</p>
+                            <h1>Premio 17 de octubre 2025 | IEEH</h1>
+                            <h2>Décima Tercera Edición</h2>
+                            <p style="font-size: 20px;">¿Aún no tienes una cuenta? Regístrate aquí.</p>
                             <button class="btn transparent" id="sign-up-btn">Registrarse</button>
                         </div>
                         <img src="img/undraw_calendar_8r6s.svg" class="image" alt="" />
                     </div>
                     <div class="panel right-panel">
                         <div class="content">
-                            <h3>Premio 17 de octubre | IEEH</h3>
-                            <!-- <p>Un almacén organizado es la clave para un trabajo exitoso.</p> -->
-                            <p>Si ya tienes una cuenta inicia sesión aquí.</p>
+                            <h1>Premio 17 de octubre 2025 | IEEH</h1>
+                            <h2>Décima Tercera Edición</h2>
+                            <p style="font-size: 20px;">Si ya tienes una cuenta inicia sesión aquí.</p>
                             <button class="btn transparent" id="sign-in-btn"> Iniciar sesión</button>
                         </div>
                         <img src="img/undraw_workspace_s6wf.svg" class="image" alt="" />
@@ -137,10 +112,10 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
             <script src="js/app.js"></script>
             <script src="js/darkLight.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script src="https://www.google.com/recaptcha/api.js?render=6LcMXigqAAAAAC0N6KZ7uED5UyrQSgifIjSj0TjP"></script>
+            <script src="https://www.google.com/recaptcha/api.js?render=6LeNjtEeAAAAAOrQQrPhnszItMGLpovxZtXGKQAi"></script>
             <script>
                 grecaptcha.ready(function () {
-                    grecaptcha.execute('6LcMXigqAAAAAC0N6KZ7uED5UyrQSgifIjSj0TjP', { action: 'login' }).then(function (token) {
+                    grecaptcha.execute('6LeNjtEeAAAAAOrQQrPhnszItMGLpovxZtXGKQAi', { action: 'login' }).then(function (token) {
                         document.getElementById('recaptchaResponse').value = token;
                     });
                 });
@@ -197,6 +172,23 @@ if (!empty($_SESSION["idusuario"]) && $_SESSION['rol'] == 'Administrador') {
 
                     this.querySelector('i').classList.toggle('fa-eye');
                     this.querySelector('i').classList.toggle('fa-eye-slash');
+                });
+            </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        title: 'Consulta las bases',
+                        text: 'Consulta las bases en la convocatoria.',
+                        icon: 'info',
+                        showCancelButton: true,
+                        cancelButtonText: 'Cerrar',
+                        confirmButtonText: 'Ver convocatoria',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.open('data/Docs/Todos/CONVOCATORIA EXTENSA_VF_10.06.25.pdf', '_blank');
+                        }
+                    });
                 });
             </script>
         </body>

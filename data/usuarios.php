@@ -26,7 +26,7 @@ if (empty($_SESSION["idusuario"])) {
     <link rel="stylesheet" href="vendor/prismjs/plugins/toolbar/prism-toolbar.css">
     <link rel="stylesheet" href="vendor/prismjs/themes/prism-okaidia.css">
     <!-- The Main Theme stylesheet (Contains also Bootstrap CSS)-->
-    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="css/style.violet.css" id="theme-stylesheet">
     <!-- dataTables-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.css" rel="stylesheet">
@@ -37,6 +37,10 @@ if (empty($_SESSION["idusuario"])) {
     <!-- Favicon-->
     <link rel="shortcut icon" href="../img/IEEH.png">
     <style>
+      .navbar .nav-item.dropdown.ms-auto {
+        margin-right: 20px;
+      }
+
       .dataTables_filter {
         display: none;
       }
@@ -75,6 +79,11 @@ if (empty($_SESSION["idusuario"])) {
       .toggle-password:hover {
         color: #000;
       }
+
+      .switch-lg .form-check-input {
+        width: 3rem;
+        height: 1.5rem;
+      }
     </style>
   </head>
 
@@ -83,9 +92,9 @@ if (empty($_SESSION["idusuario"])) {
     <header class="header">
       <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
         <a class="sidebar-toggler text-gray-500 me-4 me-lg-5 lead" href="#"><i class="fas fa-align-left"></i></a>
-        <a class="navbar-brand fw-bold text-uppercase text-base" href="index.php">
-          <span class="d-none d-brand-partial"> </span>
-          <span class="d-none d-sm-inline">Sistema de Control de Almacén</span>
+        <a class="navbar-brand fw-bold text-uppercase text-base" style="text-align: center;" href="index.php">
+          <span class="d-none d-brand-partial">Premio 17 de octubre </span><br>
+          <span class="d-none d-sm-inline">Décima Tercera Edición </span>
         </a>
         <ul class="ms-auto d-flex align-items-center list-unstyled mb-0">
           <li class="nav-item dropdown ms-auto">
@@ -96,11 +105,15 @@ if (empty($_SESSION["idusuario"])) {
             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated" aria-labelledby="userInfo">
               <div class="dropdown-header text-gray-700">
                 <h6 class="text-uppercase font-weight-bold"><?php echo $nombreCompleto; ?></h6>
-                <smallsmall align='right'><b><?php echo $rolDescripcion; ?></b></small>
-
               </div>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="../controlador/controlador_cerrar.php">Cerrar Sesión</a>
+            </div>
+          </li>
+          <li>
+            <div class="theme-switch" id="themeSwitch">
+              <i class="fas fa-sun light-icon" id="lightIcon"></i>
+              <i class="fas fa-moon dark-icon" id="darkIcon" style="display: none;"></i>
             </div>
           </li>
         </ul>
@@ -184,14 +197,6 @@ if (empty($_SESSION["idusuario"])) {
                       </div>
                     </div>
                   </div>
-                  <style>
-                    .switch-lg .form-check-input {
-                      width: 3rem;
-                      /* Aumenta el ancho del switch */
-                      height: 1.5rem;
-                      /* Aumenta la altura del switch */
-                    }
-                  </style>
                   <br>
                   <div class="table-responsive">
                     <table class="table table-hover mb-0 display nowrap" id="user" width="100%">
@@ -373,6 +378,7 @@ if (empty($_SESSION["idusuario"])) {
 
     <!-- Main Theme JS File-->
     <script src="js/theme.js"></script>
+    <script src="../js/darkLight.js"></script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- DataTable --->
@@ -541,7 +547,7 @@ if (empty($_SESSION["idusuario"])) {
             {
               extend: 'excel',
               footer: true,
-              title: 'USUARIOS ALMACÉN | IEEH',
+              title: 'USUARIOS PREMIO 17 DE OCTUBRE | IEEH',
               filename: 'Usuarios_Excel',
               text: 'Excel <i class="fas fa-file-excel"></i>',
               className: 'excelButton',
@@ -549,7 +555,7 @@ if (empty($_SESSION["idusuario"])) {
             {
               extend: 'pdf',
               footer: true,
-              title: 'USUARIOS ALMACÉN | IEEH',
+              title: 'USUARIOS PREMIO 17 DE OCTUBRE | IEEH',
               filename: 'Usuarios_pdf',
               text: 'PDF <i class="far fa-file-pdf"></i>',
               orientation: 'landscape',
@@ -558,7 +564,7 @@ if (empty($_SESSION["idusuario"])) {
             {
               extend: 'print',
               footer: true,
-              title: 'USUARIOS ALMACÉN | IEEH',
+              title: 'USUARIOS PREMIO 17 DE OCTUBRE | IEEH',
               filename: 'Print_File',
               text: 'Imprimir <i class="fa fa-print"></i>',
               orientation: 'landscape',
@@ -567,7 +573,7 @@ if (empty($_SESSION["idusuario"])) {
             {
               extend: 'copy',
               footer: true,
-              title: 'USUARIOS ALMACÉN | IEEH',
+              title: 'USUARIOS PREMIO 17 DE OCTUBRE | IEEH',
               filename: 'Copy_File',
               text: 'Copiar <i class="fa fa-clone"></i>',
               className: 'copyButton',

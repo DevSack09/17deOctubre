@@ -14,8 +14,20 @@ if ($db_connection->connect_error) {
     exit;
 }
 
-// Modificar la consulta SQL para incluir el campo "status"
-$sql = "SELECT curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento, status FROM registration WHERE usuario_id = ?";
+$sql = "SELECT curp, nombre, apellidoP, apellidoM, fecha_nacimiento, edad, acepta_privacidad, acepta_consentimiento, status,
+               calle, numeroExterior, numeroInterior, colonia, cp, municipio, localidad, gradoEstudios, ocupacionActual,
+               gradoActual, estudiosActuales, cargoActual, centroEstudiosTrabajo,
+               correo, numerofijo, numeromovil, facebook, tiktok, instagram, otraRedSocial,
+               seudonimo, titulo_ensayo, categoria, archivo_ensayo,
+               credencial_votar, declaracion_originalidad, consentimiento_expreso_adultos,
+               identificacion_fotografia, carta_autorizacion, declaracion_originalidad_menores,
+               comprobante_domicilio_tutor, consentimiento_expreso_menores, ine_tutor,
+               discapacidad, discapacidad_cual, tipo_discapacidad,
+               lengua_indigena, lengua_cual,
+               auto_indigena, comunidad_indigena, comunidad_cual,
+               diversidad, diversidad_cual,
+               medio_convocatoria
+        FROM registration WHERE usuario_id = ?";
 $stmt = $db_connection->prepare($sql);
 
 if ($stmt) {
@@ -26,7 +38,6 @@ if ($stmt) {
     if ($result->num_rows > 0) {
         $data = $result->fetch_assoc();
 
-        // Agregar un campo adicional "disabled" basado en el valor de "status"
         $data['disabled'] = $data['status'] == 1 ? 'true' : 'false';
 
         echo json_encode(['status' => 'success', 'data' => $data]);
